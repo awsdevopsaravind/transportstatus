@@ -1,0 +1,36 @@
+{% extends "blog/base.html" %}
+{% block content %}
+    <div class="content-section">
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Delete Selected details</legend>
+                <h2>Are you sure you want to delete the below details ?</h2>
+                <table class="table table-sm">
+					<tr>
+						<th>Date</th>
+						<th>Load Type</th>
+						<th>TF number</th>
+						<th>Qty in m3</th>
+						<th>Vehicle number</th>
+						<th>Qty in tonne</th>
+						<th>Royalty bill image</th>
+						<th>Way bill image</th>
+					</tr>
+                    <tr>
+                        <td>{{delete_trip_detail.trip_date}}</td>
+                        <td>{{delete_trip_detail.loadtype}}</td>
+                        <td>{{delete_trip_detail.tf_number}}</td>
+                        <td>{{delete_trip_detail.qty_m3}}</td>
+                        <td>{{delete_trip_detail.vehicle_number}}</td>
+                        <td>{{delete_trip_detail.qty_ton}}</td>
+                    </tr>
+                </table>    
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-danger" type="submit">Yes, Delete</button>
+                <a class="btn btn-outline-secondary" href="{% url 'dashboard'  %}">Cancel</a>
+            </div>
+        </form>
+    </div>
+{% endblock content %}

@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog',
     'crispy_forms',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -108,8 +109,8 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
-
-USE_I18N = True
+DATE_FORMAT = "Y-m-d"
+USE_I18N = False #changed to avoid the incorrect data in date time stamps
 
 USE_TZ = True
 
@@ -119,7 +120,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/images')
 MEDIA_URL = '/media/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -131,3 +132,11 @@ LOGIN_URL = 'login'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+#AWS_QUERYSTRING_AUTH = False
+#DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+AWS_ACCESS_KEY_ID = 'AKIA5YHSXZV2VARZU4VS'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'allbillsphotos'

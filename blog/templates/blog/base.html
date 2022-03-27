@@ -29,7 +29,13 @@
           <div class="collapse navbar-collapse" id="navbarToggle">
             <div class="navbar-nav mr-auto">
               <a class="nav-item nav-link" href="{% url 'blog-home' %}">Home</a>
+              <a class="nav-item nav-link" href="{% url 'house-list' %}">House List</a>
+              <a class="nav-item nav-link" href="{% url 'gallery' %}">Gallery</a>
               <a class="nav-item nav-link" href="{% url 'blog-about' %}">About</a>
+              <a class="nav-item nav-link" href="{% url 'dashboard' %}">Dashboard</a>
+              
+              <a href="{% url 'addtrip' %}" class="btn btn-dark btn-block btn-sm m-1 nav-item nav-link">Add Trip details</a>
+
             </div>
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
