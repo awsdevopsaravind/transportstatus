@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
     <head>
@@ -13,7 +14,7 @@
         th {height: 35px;            vertical-align: center;}
         td {height: 30px;vertical-align: center;}
         @page { size: a4 portrait; @frame header_frame { -pdf-frame-content: header_content;
-                left: 50pt; width: 512pt; top: 50pt; height: 100pt;
+                left: 50pt; width: 512pt; top: 35pt; height: 100pt;
             }@frame content_frame { left: 50pt; width: 512pt; top: 90pt; height: 632pt;
             }@frame footer_frame { -pdf-frame-content: footer_content;left: 50pt; width: 512pt; top: 772pt; height: 20pt;}
         }
@@ -27,33 +28,104 @@
     </div>
 
     <div class="card card-body">
-        <h2> Trip Details</h2> 
+        <h2> Trip Details - {{pk_day}}</h2> 
+
+
+        <table class="table table-sm">
+            <tr>
+                <th>Load Type</th>
+                <th>TF number</th>
+                <th>Qty in m3</th>
+                <th>Vehicle number</th>
+                <th>Qty in tonne</th>
+                <th>Load type Rate</th>
+                <th>Total Amount</th>
+            </tr>
+            {% for trip_detail in trip_details %}
+                <tr>
+                    <td>{{trip_detail.load_type}}</td>
+                    <td>{{trip_detail.tf_number}}</td>
+                    <td>{{trip_detail.qty_m3}}</td>
+                    <td>{{trip_detail.vehicle_number}}</td>
+                    <td>{{trip_detail.qty_ton}}</td>
+                    <td>{{trip_detail.load_type.load_type_rate_per_tonne}}</td>
+                    <td>{% widthratio trip_detail.qty_ton 1 trip_detail.load_type.load_type_rate_per_tonne %}</td>
+                </tr>
+            {% endfor %}
+    
+        </table>
+        
+        <h2 align="right">Total Amount: {{totalamount}}</h2>
+        <hr>
+    </div>
+
+    <div >
+        <h2 align='left'>TO	<br>
+            ABHIRAV INFRA & REALTORS PVT LTD <br>	
+            4TH FLOOR, 735/3839 KALI MANDIR <br>	
+            AMBA PUA MAIN ROAD , BRAHAMPUR, AMBAPUA,<br>	
+            GOPALPUR, GANJAM, ODISHA	<br>
+            GSTTIN: 21AACCG6721F1Z4 </h2>
+        </div>
+        <hr>
+        {% for trip_detail in trip_details %}
+        <br>
+        <img src="{{ trip_detail.royalty_image_front.path }}" alt="Image" height='2300px' width='2000px'>
+    
+        <br>
+        {% endfor %}
+    <!--
+    <br>
+    <div class="card card-body">
+        <h2> New Billing Information</h2> 
 
 
         <table class="table table-sm">
             <tr>
                 <th>Date</th>
                 <th>Load Type</th>
-                <th>TF number</th>
-                <th>Qty in m3</th>
-                <th>Vehicle number</th>
                 <th>Qty in tonne</th>
+                <th>Load type Rate</th>
+                <th>Total Amount</th>
             </tr>
-            {% for trip_detail in trip_details %}
+            {% for tripdetail in trip_details %}
                 <tr>
-                    <td>{{trip_detail.trip_date}}</td>
-                    <td>{{trip_detail.loadtype}}</td>
-                    <td>{{trip_detail.tf_number}}</td>
-                    <td>{{trip_detail.qty_m3}}</td>
-                    <td>{{trip_detail.vehicle_number}}</td>
-                    <td>{{trip_detail.qty_ton}}</td>
-
+                    <td>{{tripdetail.trip_date}}</td>
+                    <td>{{tripdetail.load_type.load_type}}</td>
+                    <td>{{tripdetail.qty_ton}}</td>
+                    <td>{{tripdetail.load_type.load_type_rate_per_tonne}}</td>
+                    <td>{% widthratio tripdetail.qty_ton 1 tripdetail.load_type.load_type_rate_per_tonne %}</td>
+                    
                 </tr>
             {% endfor %}
     
         </table>
     </div>
+    <div class="card card-body">
+        <h2> Billing Information</h2> 
+
+
+        <table class="table table-sm">
+            <tr>
+                <th>Date</th>
+                <th>Load Type</th>
+                <th>Qty in tonne</th>
+                <th>Load type Rate</th>
+                <th>Total Amount</th>
+            </tr>
+            {% for distinct_date in distinct_dates %}
+                <tr>
+                    <td>{{distinct_date.trip_date}}</td>
+                    <td>{{distinct_date.load_type}}</td>
+                    <td>{{distinct_date.qty_ton__sum}}</td>
+                    <td>{{distinct_date.loadtype.load_type_rate_per_tonne}}</td>
+                    <td>{% widthratio distinct_date.qty_ton__sum 1 600 %}</td>
+                </tr>
+            {% endfor %}
     
+        </table>
+    </div>
+-->
     <div id="footer_content">(c) - page <pdf:pagenumber>
         of <pdf:pagecount>
     </div>

@@ -24,16 +24,25 @@
 </head>
 <body>
 	
-	
+	<div class="container-fluid">
+		<a class="nav-item nav-link" href="{% url 'blog-home' %}">Home</a>
 	</div>
 {% block content %}
 
 {%  include 'blog/transport_total_detils.html' %}
-
+<hr>
 	<div class="container-fluid">
+	
 	<div class="row">
-		<div class="col-md-4">
-			<h5>Vehicles:</h5>
+		
+		<div class="col-md-2">
+			<div class="card card-body">
+				<a class="btn btn-primary  btn-sm btn-block" href="{% url 'add_owner' %}">Add Owner </a>
+				<a class="btn btn-primary  btn-sm btn-block" href="{% url 'add_vehicle' %}">Add Vehicle </a>
+				<a class="btn btn-primary  btn-sm btn-block" href="">Add Payment </a>
+				<a class="btn btn-primary  btn-sm btn-block" href="{% url 'addtrip' %}">Add Trip</a> 
+			</div>
+			<!--
 			<hr>
 			<div class="card card-body">
 				<a class="btn btn-primary  btn-sm btn-block" href="">Add Payments </a>
@@ -44,45 +53,59 @@
 						<th>Total M3</th>
 						<th>Total Ton</th>
 					</tr>
-					<!--{% for distinct_dates in distinct_dates_m3 %}
+					{% for distinct_date in distinct_dates %}
 					<tr>
 						<td><a class="btn btn-sm btn-info" href="#">View</a></td>
-						<td>{{ distinct_dates.trip_date|date:"d-m-Y" }}</td>
-						<td>{{ distinct_dates.qty_m3__sum }}</td>
+						<td>{{ distinct_date.trip_date|date:"d-m-Y" }}</td>
+						<td>{{ distinct_date.qty_m3__sum }}</td>
+						<td>{{ distinct_date.qty_ton__sum }}</td>
 
 					</tr>
-						{% endfor %}
-						-->
+					{% endfor %}
 
 				</table>
 			</div>
-			<hr>
+			-->
+		</div>
+		<div class="col-md-2">
+			<h5></h5>
 			<div class="card card-body">
-				<a class="btn btn-primary  btn-sm btn-block" href="{% url 'addvehicle'%}">Add Vehicle</a>
+				<p>Details by Owner</p>
 				<table class="table table-sm">
 					<tr>
-						<th></th>
-						<th>Owner name</th>
-						<th>Vehicle number</th>
+						<th> Owner </th>
+						<th>name</th>
 					</tr>
 
-					{% for vehicle_detail in vehicle_details %}
+					{% for ownername in ownernames %}
 						<tr>
-							<td><a class="btn btn-sm btn-info" href="{% url 'vehicle_details' vehicle_detail.id %}">View</a></td>
-							<td>{{vehicle_detail.owner_name}}</td>
-							<td>{{vehicle_detail.vehicle_number}}</td>
+							<td>{{ownername.vehicle_owner_name}} </td>
+							<td><a class="btn btn-sm btn-info" href="{% url 'owner_details' ownername.id %}">View</a></td>
+						</tr>
+					{% endfor %}
+
+				</table>
+			</div>
+			<div class="card card-body">
+				<p>Details by Date</p>
+				<table class="table table-sm">
+					<tr>
+						<th> Date </th>
+					</tr>
+
+					{% for distinct_date in distinct_dates %}
+						<tr>
+							<td><a class="btn btn-sm btn-info" href="{% url 'pdf_day' distinct_date.trip_date|date:"Y-m-d" %}">{{distinct_date.trip_date}}</a></td>
 						</tr>
 					{% endfor %}
 
 				</table>
 			</div>
 		</div>
-
 		<div class="col-md-8">
-			<h5>Latest 5 Trips</h5>
-			<hr>
 			<div class="card card-body">
-				<a class="btn btn-primary  btn-sm btn-block" href="{% url 'addtrip' %}">Add Trip details</a> 
+				<h5 align="left">Latest 5 Trips</h5>
+				<h5 align="right">View All</h5>
 				<table class="table table-sm">
 					<tr>
 						<th>Date</th>
@@ -100,13 +123,13 @@
 					{% for trip_detail in trip_details %}
 						<tr>
 							<td>{{trip_detail.trip_date}}</td>
-							<td>{{trip_detail.loadtype}}</td>
+							<td>{{trip_detail.load_type}}</td>
 							<td>{{trip_detail.tf_number}}</td>
 							<td>{{trip_detail.qty_m3}}</td>
 							<td>{{trip_detail.vehicle_number}}</td>
 							<td>{{trip_detail.qty_ton}}</td>
-							<td><a class="btn btn-sm btn-info" href="{% url 'pdf_royalty_bill_image' trip_detail.id %}">Download</a></td>
-							<td><a class="btn btn-sm btn-info" href="{% url 'pdf_way_bill_image' trip_detail.id %} ">Download</a></td>
+							<td><a class="btn btn-sm btn-info" href="{% url 'pdf_royalty_bill_image' trip_detail.id %}">Get PDF</a></td>
+							<td><a class="btn btn-sm btn-info" href="{% url 'pdf_way_bill_image' trip_detail.id %} ">Get PDF</a></td>
 							<td><a class="btn btn-sm btn-info" href="{% url 'updatetrip' trip_detail.id %}">Update</a></td>
 							<td><a class="btn btn-sm btn-danger" href="{% url 'deletetrip' trip_detail.id %}">Delete</a></td>
 

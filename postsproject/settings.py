@@ -25,6 +25,7 @@ SECRET_KEY = 'django-insecure-d%)v(6-h(cf!mn!&+b(rhhdlqoe+o6zm=gh*imy#u*7i(-(k4l
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+#ALLOWED_HOSTS = ['18.220.216.102']
 ALLOWED_HOSTS = []
 
 
@@ -40,6 +41,7 @@ INSTALLED_APPS = [
     'blog',
     'crispy_forms',
     'storages',
+    'bootstrapform'
 ]
 
 MIDDLEWARE = [

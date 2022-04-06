@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Get Reports</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+</head>
+
+<body class="m-5">
+    <div class="container">
+
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <a href="{% url 'engineer_page' %}" class="btn btn-dark my-3">Go Back</a>
+                <div class="card">
+
+
+                    <form method='GET' action="{% url 'pdf_day_report' 1 '2022-03-25' %}%%" enctype="multipart/form-data">
+                        {% csrf_token %}
+						
+					
+                        <div class="form-group m-3">
+                            <label>Description</label>
+                            <input required name="description" id="description" type="text" placeholder="Enter a description"
+                                class="form-control">
+                        </div>
+
+                        <div class="form-group m-3">
+                            <label>Select a Material</label>
+                            <select name="selected_material" id="selected_material" class="form-control">
+                                <option value='none'>Select a Material...</option>
+
+                                {% for distinct_load_type in distinct_load_types %}
+                                <option value="{{distinct_load_type.load_type}}"> {{distinct_load_type.load_type}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="form-group m-3">
+                            <label>Select a Date</label>
+                            <select name="selected_date" id="selected_date" class="form-control">
+                                <option value='none'>Select a Date...</option>
+
+                                {% for distinct_date in distinct_dates %}
+                                <option value="{{distinct_date.trip_date|date:"Y-m-d"}}">{{distinct_date.trip_date}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+						<button type="submit" class="btn btn-primary m-3" onclick="getInputValue();">
+							<a class="nav-item nav-link" href=""></a>Get PDF</button>
+                        
+                            <button type="button" onclick="getInputValue();">Get Value</button>
+    
+                            <p> The value of the option selected is:
+                                <span class="output"></span>
+                            </p>
+                         
+                         
+                             
+                        </form>   
+                   
+					
+                </div>
+            </div>
+        </div>
+    </div>
+   <script>
+        function getInputValue(){
+            // Selecting the input element and get its value 
+            var inputVal = document.getElementById("description").value;
+            
+            // Displaying the value
+            alert(inputVal);
+            selectElement = document.querySelector('#selected_date');
+            output = selectElement.value;
+            document.querySelector('.output').textContent = output;
+        }
+    </script>
+</body>
+
+</html>

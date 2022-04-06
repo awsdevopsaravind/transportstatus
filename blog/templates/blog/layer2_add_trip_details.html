@@ -1,0 +1,115 @@
+{% extends "blog/base.html" %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+<body class="m-5">
+    <div class="container">
+      <div class="row"> 
+            <div class="col-md-12">
+                <div class="card card-body">
+        
+                    <form action="" method="POST" enctype="multipart/form-data" >
+                        {% csrf_token %}
+                        <!--<p>{{form | crispy }} </p>-->
+                        <br>
+                        
+                       
+                        {{ form.non_field_errors }}
+                        
+                        
+                        <div class="fieldWrapper">
+                            {{ form.trip_date.errors }}
+                            <label for="{{ form.trip_date.id_for_label }}">Trip date: * </label>
+                            {{ form.trip_date }}
+                        </div>
+
+                        <div class="fieldWrapper">
+                            {{ form.company_name.errors }}
+                            <label for="{{ form.company_name.id_for_label }}">Company name: *</label>
+                            {{ form.company_name }}
+                        </div>
+                        <div class="fieldWrapper">
+                            {{ form.vehicle_owner_name.errors }}
+                            <label for="{{ form.vehicle_owner_name.id_for_label }}">Vehicle owner name: *</label>
+                            {{ form.vehicle_owner_name }}
+                        </div>
+                        <div class="fieldWrapper">
+                            {{ form.vehicle_number.errors }}
+                            <label for="{{ form.vehicle_number.id_for_label }}">Vehicle number: *</label>
+                            {{ form.vehicle_number }}
+                        </div>
+                        <div class="fieldWrapper">
+                            {{ form.driver_name.errors }}
+                            <label for="{{ form.driver_name.id_for_label }}">Driver name: * </label>
+                            {{ form.driver_name }}
+                        </div>
+                        <div class="fieldWrapper">
+                            {{ form.quarry_owner_name.errors }}
+                            <label for="{{ form.quarry_owner_name.id_for_label }}">Quarry owner name: *</label>
+                            {{ form.quarry_owner_name }}
+                        </div>
+                        <div class="fieldWrapper">
+                            {{ form.load_type.errors }}
+                            <label for="{{ form.load_type.id_for_label }}">Load type: *</label>
+                            {{ form.load_type }}
+                        </div>
+                        <div class="fieldWrapper">
+                            {{ form.tf_number.errors }}
+                            <label for="{{ form.tf_number.id_for_label }}">Tf number:*</label>
+                            {{ form.tf_number }}
+                        </div>
+                        <div class="fieldWrapper">
+                            {{ form.qty_m3.errors }}
+                            <label for="{{ form.qty_m3.id_for_label }}">Qty m3: *</label>
+                            {{ form.qty_m3 }}
+                        </div>
+                        <div class="fieldWrapper">
+                            {{ form.royalty_image_front.errors }}
+                            <label for="{{ form.royalty_image_front.id_for_label }}">Royalty image front: *</label>
+                            {{ form.royalty_image_front }}
+                        </div>
+                        <div class="fieldWrapper">
+                            {{ form.royalty_image_back.errors }}
+                            <label for="{{ form.royalty_image_back.id_for_label }}">Royalty image back:</label>
+                            {{ form.royalty_image_back }}
+                        </div>
+                        <div class="fieldWrapper">
+                            {{ form.comments.errors }}
+                            <label for="{{ form.comments.id_for_label }}">Comments: *</label>
+                            {{ form.comments }}
+                        </div>
+                        <div class="fieldWrapper">
+                            {{ form.qty_ton.errors }}
+                            <label for="{{ form.qty_ton.id_for_label }}">Qty Ton: *</label>
+                            {{ form.qty_ton }}
+                        </div>
+                        <div class="fieldWrapper">
+                            {{ form.waybill_image_front.errors }}
+                            <label for="{{ form.waybill_image_front.id_for_label }}">Waybill image front: * </label>
+                            {{ form.waybill_image_front }}
+                        </div>
+                        <div class="fieldWrapper">
+                            {{ form.waybill_image_back.errors }}
+                            <label for="{{ form.waybill_image_back.id_for_label }}">Waybill image back:</label>
+                            {{ form.waybill_image_back }}
+                        </div>
+                        <div class="fieldWrapper">
+                            {{ form.verifiedbyengineer.errors }}
+                            <label for="{{ form.verifiedbyengineer.id_for_label }}">Verifiedbyengineer: </label>
+                            {{ form.verifiedbyengineer }}
+                        </div>
+                        <input type="submit" name="Submit">
+
+
+                        <a class="btn btn-outline-secondary" href="{% url 'engineer_page'  %}">Cancel</a>
+                        <br>
+                        
+                    </form>
+        
+                </div>
+            </div>
+      </div>
+    </div>
+      
+{% endblock %}  
+</body>

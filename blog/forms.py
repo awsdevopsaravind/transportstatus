@@ -1,3 +1,5 @@
+from faulthandler import disable
+from xml.etree.ElementInclude import include
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
@@ -25,9 +27,65 @@ class ProfileUpdateForm(forms.ModelForm):
         fields = ['image']
 
 class AddTripDetailsForm(forms.ModelForm):
-    trip_date = forms.DateField(input_formats=['%d-%m-%Y','%d/%m/%Y'])
+    trip_date = forms.DateField(input_formats=['%d-%m-%Y','%d/%m/%Y', '%Y-%m-%d'])
     class Meta:
         model = TripDetails
+        fields = '__all__'
+
+
+class InitialTripDetailsForm(forms.ModelForm):
+    trip_date = forms.DateField(input_formats=['%d-%m-%Y','%d/%m/%Y', '%Y-%m-%d'])
+    class Meta:
+        model = InitialTripDetails
+        fields = '__all__'
+
+class Layer2TripDetailsForm(forms.ModelForm):
+    trip_date = forms.DateField(input_formats=['%d-%m-%Y','%d/%m/%Y', '%Y-%m-%d'],disabled=True)
+    qty_m3 = forms.FloatField(disabled=True)
+    class Meta:
+        model = Layer2TripDetails
+        fields = '__all__'
+
+class Layerwise1TripDetailsForm(forms.ModelForm):
+    trip_date = forms.DateField(input_formats=['%d-%m-%Y','%d/%m/%Y', '%Y-%m-%d'])
+    class Meta:
+        model = LayerWiseTripDetails
+        fields = '__all__'
+        exclude = {'qty_ton','waybill_image_front','waybill_image_back','verifiedbyengineer','verifiedbymalli','verifiedbysuresh'}
+
+class Layerwise2TripDetailsForm(forms.ModelForm):
+    class Meta:
+        model = LayerWiseTripDetails
+        fields = '__all__'
+        exclude = {'verifiedbymalli','verifiedbysuresh'}
+
+class Layerwise3TripDetailsForm(forms.ModelForm):
+    class Meta:
+        model = LayerWiseTripDetails
+        fields = '__all__'
+        exclude = {'verifiedbysuresh'}
+
+class Layerwise4TripDetailsForm(forms.ModelForm):
+    class Meta:
+        model = LayerWiseTripDetails
+        fields = '__all__'
+        exclude = {'verifiedbyengineer'}
+
+
+class VehiclePaymentsForm(forms.ModelForm):
+    class Meta:
+        model = VehiclePayments
+        fields = '__all__'
+
+class ReportsForm(forms.ModelForm):
+    trip_date = forms.DateField(required=True)
+    class Meta:
+        model = LayerWiseTripDetails
+        fields = ['trip_date', 'vehicle_owner_name']
+
+class AddOwnerDetailsForm(forms.ModelForm):
+    class Meta:
+        model = TransporterDetails
         fields = '__all__'
 
 class AddVehicleDetailsForm(forms.ModelForm):
@@ -35,9 +93,23 @@ class AddVehicleDetailsForm(forms.ModelForm):
         model = VehicleDetails
         fields = '__all__'
 
-'''class AddTripDetailsFormNew(forms.ModelForm):
-    trip_date = forms.DateField(input_formats=['%d-%m-%Y','%d/%m/%Y',],help_text = "Enter Date value mm/dd/yyyy")
+from django import forms
+from .models import Person, City
+
+class PersonForm(forms.ModelForm):
     class Meta:
-        model = TripDetailsNew
-        fields = '__all__'
-        '''
+        model = Person
+        fields = ('name', 'birthdate', 'country', 'city')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['city'].queryset = City.objects.none()
+
+        if 'country' in self.data:
+            try:
+                country_id = int(self.data.get('country'))
+                self.fields['city'].queryset = City.objects.filter(country_id=country_id).order_by('name')
+            except (ValueError, TypeError):
+                pass  # invalid input from the client; ignore and fallback to empty City queryset
+        elif self.instance.pk:
+            self.fields['city'].queryset = self.instance.country.city_set.order_by('name')

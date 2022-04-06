@@ -1,0 +1,37 @@
+{% extends "blog/base.html" %}
+{% block content %}
+    <div class="content-section">
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Delete Selected details</legend>
+                <h2>Are you sure you want to delete these details ?</h2>
+                <div class="col-md">
+                    <div class="card card-body">
+                        <h5>{{ delete_vehicle_detail.vehicle_number }} vehicle details:</h5>
+                        <hr>
+                        <p>Owner name : {{delete_vehicle_detail.owner_name}}</p>
+                        <p>Phone number : {{delete_vehicle_detail.phonenumber}}</p>
+                        <p>Driver name : {{delete_vehicle_detail.driver_name}}</p>
+                        <p>Phone number : {{delete_vehicle_detail.driver_phonenumber}}</p>
+            
+                    </div>
+                </div>
+            
+                <div class="col-md">
+                    <div class="card card-body">
+                        <h5 >Billing Information</h5>
+                        <hr>
+                        <p>Rate per Ton : {{delete_vehicle_detail.rate_per_tonne}}</p>
+            
+            
+                    </div>
+                </div>   
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-danger" type="submit">Yes, Delete</button>
+                <a class="btn btn-outline-secondary" href="{% url 'home_page'  %}">Cancel</a>
+            </div>
+        </form>
+    </div>
+{% endblock content %}

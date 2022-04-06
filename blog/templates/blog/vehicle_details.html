@@ -46,8 +46,8 @@
 			<hr>
 			<p>Owner name : {{vehicle_details.owner_name}}</p>
 			<p>Phone number : {{vehicle_details.phonenumber}}</p>
-			<p>Driver name : {{vehicle_details.owner_name}}</p>
-			<p>Phone number : {{vehicle_details.phonenumber}}</p>
+			<p>Driver name : {{vehicle_details.driver_name}}</p>
+			<p>Phone number : {{vehicle_details.driver_phonenumber}}</p>
 
 		</div>
 	</div>
@@ -68,8 +68,8 @@
 			<hr>
 			<p>Total Trips : {{trips_count}}</p>
 			<p>Total Quantity : {{totalqty_in_m3}}</p>
-			<a class="btn btn-outline-info  btn-sm btn-block" href="">Update Vehicle Details </a>
-			<a class="btn btn-outline-danger  btn-sm btn-block" href="">Delete Vehicle Details </a>
+			<a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'updatevehicle' vehicle_details.id %}">Update Vehicle Details </a>
+			<a class="btn btn-outline-danger  btn-sm btn-block" href="{% url 'deletevehicle' vehicle_details.id %}">Delete Vehicle Details </a>
 			<a href="{% url 'dashboard' %}" class="btn btn-outline-info btn-sm btn-block">Go Back </a>
 		</div>
 	</div>
@@ -99,6 +99,7 @@
 					<th>Load Type</th>
 					<th>TF number</th>
 					<th>Qty in m3</th>
+					<th>Vehicle Number</th>
 					<th>Qty in tonne</th>
 					<th>Royalty bill image</th>
 					<th>Way bill image</th>
@@ -112,6 +113,7 @@
 					<td>{{trip_detail.loadtype}}</td>
 					<td>{{trip_detail.tf_number}}</td>
 					<td>{{trip_detail.qty_m3}}</td>
+					<td>{{trip_detail.vehicle_number}}</td>
 					<td>{{trip_detail.qty_ton}}</td>
 					<td><a class="btn btn-sm btn-info" href="{% url 'pdf_royalty_bill_image' trip_detail.id %}">Download</a></td>
 					<td><a class="btn btn-sm btn-info" href="{% url 'pdf_way_bill_image' trip_detail.id %} ">Download</a></td>
@@ -135,11 +137,11 @@
 					<th>Total Advances</th>
 					<th>total amount to pay</th>
 				</tr>
-				{% for distinct_dates in distinct_dates %}
+				{% for distinct_dates in distinct_dates_ton %}
 				<tr>
 					<td>{{ distinct_dates.trip_date|date:"d-m-Y" }}</td>
-					<td>{{ distinct_dates.qty_m3__sum }}</td>
-					<td>{% widthratio distinct_dates.qty_m3__sum 1 vehicle_details.rate_per_tonne %}</td>
+					<td>{{ distinct_dates.qty_ton__sum }}</td>
+					<td>{% widthratio distinct_dates.qty_ton__sum 1 vehicle_details.rate_per_tonne %}</td>
 					<td>total advances </td>
 					<td>{{ vehicle_details.rate_per_tonne  |add:1000}}</td>
 				</tr>

@@ -1,0 +1,171 @@
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Owner Details</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+	<style>
+		#logo{
+		}
+		body{
+			background-color: #ebeff5;
+		}
+		#total-orders{
+			background-color: #4cb4c7;
+		}
+		#orders-delivered{
+			background-color: #7abecc;
+		}
+		#orders-pending{
+			background-color: #7CD1C0;
+		}
+	</style>
+
+	
+</head>
+<body>
+	
+	<div class="container-fluid">
+		<a class="nav-item nav-link" href="{% url 'blog-home' %}">Home</a>
+	</div>
+
+<div class="container">
+
+{% block content %}
+
+<br>
+<div class="container-fluid">
+<div class="row">
+	<div class="col-md">
+		<div class="card card-body">
+			<h5> Owner details: </h5>
+			<hr>
+			<p>Owner name : {{owner_details.vehicle_owner_name}}</p>
+			<p>Phone number : {{owner_details.owner_phone_number}}</p>
+			<p>Vehicle number : {{vehicle_details.vehicle_number}}</p>
+			<p>Driver name : {{vehicle_details.driver_name}}</p>
+			<p>Phone number : {{vehicle_details.driver_phonenumber}}</p>
+
+		</div>
+	</div>
+
+	<div class="col-md">
+		<div class="card card-body">
+			<h5 >Billing Information</h5>
+			<hr>
+			<table class="table table-sm">
+				<tr>
+					<th>S.No.</th>
+					<th>Vehicle Number</th>
+				</tr>
+				{% for vehicle_detail in vehicle_details %}
+
+				<tr>
+					<td>{{vehicle_detail.id}}</td>
+					<td>{{vehicle_detail.vehicle_number}}</td>
+				</tr>
+				{% endfor %}
+
+			</table>
+		</div>
+	</div>
+
+	<div class="col-md">
+		<div class="card card-body">
+			<h5>Other Info</h5>
+			<hr>
+			<p>Total Trips : {{trips_count}}</p>
+			<p>Total Quantity : </p>
+			<a class="btn btn-outline-info  btn-sm btn-block" href="">Update Vehicle Details </a>
+			<a class="btn btn-outline-danger  btn-sm btn-block" href="">Delete Vehicle Details </a>
+			<a href="{% url 'dashboard' %}" class="btn btn-outline-info btn-sm btn-block">Go Back </a>
+		</div>
+	</div>
+</div>
+
+
+<br>
+<div class="row">
+	<div class="col">
+		<div class="card card-body">
+			<form method="get">
+				
+		    <button class="btn btn-primary" type="submit">Search</button>
+		  </form>
+		</div>
+	</div>
+	
+</div>
+<br>
+
+<div class="row">
+	<div class="col-md-9">
+		<div class="card card-body">
+			<table class="table table-sm">
+				<tr>
+					<th>Date</th>
+					<th>Load Type</th>
+					<th>TF number</th>
+					<th>Qty in m3</th>
+					<th>Vehicle Number</th>
+					<th>Qty in tonne</th>
+					<th>Royalty bill image</th>
+					<th>Way bill image</th>
+					<th>Update</th>
+					<th>Remove</th>
+				</tr>
+				{% for trip_detail in trip_details_all %}
+
+				<tr>
+					<td>{{trip_detail.trip_date|date:"d-m-Y"}}</td>
+					<td>{{trip_detail.load_type}}</td>
+					<td>{{trip_detail.tf_number}}</td>
+					<td>{{trip_detail.qty_m3}}</td>
+					<td>{{trip_detail.vehicle_number}}</td>
+					<td>{{trip_detail.qty_ton}}</td>
+					
+					<td><a class="btn btn-sm btn-info" href="{% url 'pdf_royalty_bill_image' trip_detail.id %}">Download</a></td>
+					<td><a class="btn btn-sm btn-info" href="{% url 'pdf_way_bill_image' trip_detail.id %} ">Download</a></td>
+					<td><a class="btn btn-sm btn-info" href="{% url 'updatetrip' trip_detail.id %}">Update</a></td>
+					<td><a class="btn btn-sm btn-danger" href="{% url 'deletetrip' trip_detail.id %}">Delete</a></td>
+
+				</tr>
+				{% endfor %}
+
+			</table>
+		</div>
+	</div>
+	
+	<div class="col-md-4">
+		<div class="card card-body">
+			<table class="table table-sm">
+				<tr>
+					<th>Date</th>
+					<th>Tonnes</th>
+					<th>Billing</th>
+					<th>Advances</th>
+					<th>Amount</th>
+					<th>Status</th>
+				</tr>
+				{% for vehicle_detail in vehicle_details %}
+				<tr>
+					
+				</tr>
+				{% endfor %}
+
+			</table>
+		</div>
+	</div>
+</div>		
+	
+</div>
+</div>
+
+{% endblock %}
+</body>
+	  
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</html>

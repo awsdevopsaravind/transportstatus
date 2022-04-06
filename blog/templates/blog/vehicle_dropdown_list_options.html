@@ -1,0 +1,4 @@
+<option value="">---------</option>
+{% for vehicle_number1 in vehicle_numbers %}
+<option value="{{ vehicle_number1.pk }}">{{ vehicle_number1.vehicle_number }}</option>
+{% endfor %}
