@@ -4,7 +4,8 @@ ENV PYTHONUNBUFFERED 1
 #WORKDIR /code
 COPY requirements.txt .
 RUN pip install --user -r requirements.txt
-COPY . .
+#COPY . .
+VOLUME . .
 # Use this command if you use bind mount
 #WINDOWS: docker run --mount src=%cd%,target=/code,type=bind -p 8001:8000 -it --rm django-dev
 #LINUX: docker run --mount src="${pwd}",target=/code,type=bind -p 8001:8000 -it --rm django-dev
