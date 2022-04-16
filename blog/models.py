@@ -1,3 +1,4 @@
+from math import floor
 from secrets import choice
 from PIL import Image
 from django.db import models
@@ -82,18 +83,19 @@ class TransporterDetails(models.Model):
     vehicle_owner_name = models.CharField(max_length=100, null=False, blank=False)
     phoneNumberRegex = RegexValidator(regex = r"^\+?1?\d{8,15}$")
     owner_phone_number = models.CharField(validators = [phoneNumberRegex], max_length = 16, null=False, blank=False)
+    rate_per_tonne = models.CharField(max_length=200, null=True, blank=True)
     
     def __str__(self):
         return self.vehicle_owner_name
 
 class VehicleDetails(models.Model):
     vehicle_number = models.CharField(max_length=10, null=False, blank=False)
-    #owner_name = models.CharField(max_length=200, null=False, blank=False)
     owner_name = models.ForeignKey(TransporterDetails, on_delete=models.SET_NULL, null=True, blank=False)
     phoneNumberRegex = RegexValidator(regex = r"^\+?1?\d{8,15}$")
-    phone_number = models.CharField(validators = [phoneNumberRegex], max_length = 16, null=False, blank=False)
     driver_name = models.CharField(max_length=200, null=True, blank=True)
     driver_phone_number = models.CharField(validators = [phoneNumberRegex], max_length = 16, null=True, blank=True)
+    driver_name2 = models.CharField(max_length=200, null=True, blank=True)
+    driver_phone_number2 = models.CharField(validators = [phoneNumberRegex], max_length = 16, null=True, blank=True)
     rate_per_tonne = models.CharField(max_length=200, null=False, blank=False)
     
     def __str__(self):
@@ -108,6 +110,7 @@ class LoadType(models.Model):
 
 class CompanyName(models.Model):
     company_name = models.CharField(max_length=100, null=False, blank=False)
+
     
     def __str__(self):
         return self.company_name
@@ -193,6 +196,8 @@ class LayerWiseTripDetails(models.Model):
     vehicle_number = models.ForeignKey(
         VehicleDetails , on_delete=models.SET_NULL, null=True, blank=False)
     driver_name = models.CharField(max_length=200,null=True, blank=False)
+    # add driver phone number field details if required
+    #driver_phone_number = models.CharField(max_length=200, blank=True, null=True)
     quarry_owner_name = models.ForeignKey(QuarryDetails, on_delete=models.SET_NULL, null=True, blank=False)
     load_type = models.ForeignKey(LoadType, on_delete=models.SET_NULL, null=True, blank=False)
     tf_number = models.CharField(max_length=200, null=False, blank=False)
@@ -210,12 +215,87 @@ class LayerWiseTripDetails(models.Model):
     verifiedbysuresh = models.CharField(max_length=200, blank=False, null=False, choices=VERIFY, default='No')
     comments = models.CharField(max_length=200, blank=True, null=True)
 
+    @property
+    def qty_m3_actual_submit(self):
+        return round(self.qty_ton/1.5,2)
+    @property
+    def qty_m3_pending(self):
+        return round((self.qty_m3_actual_submit - self.qty_m3),2)
+    @property
+    def rate_ton(self):
+        return self.load_type.load_type_rate_per_tonne
+    @property
+    def trip_amount(self):
+        return self.qty_ton*self.load_type.load_type_rate_per_tonne
 
+    @property
+    def tax_amount(self):
+        return round((self.trip_amount/100)*5,2)
+    @property
+    def trip_total_amount(self):
+        return self.trip_amount+ self.tax_amount
+    @property
+    def round_off_amount(self):
+        abc = self.trip_total_amount-floor(self.trip_total_amount)
+        bcd =round(abc,2)
+        return bcd
+    @property
+    def floor_amount(self):
+        return round((self.trip_total_amount-self.round_off_amount),2)
+    @property
+    def amount_in_words(self):
+        return round((self.trip_total_amount-self.round_off_amount))
+    
+    # fields for vehicle owners payments
+    @property
+    def vehicle_owner_amount(self):
+        return float(self.qty_ton)*float(self.vehicle_number.rate_per_tonne)
+    @property
+    def vehicle_tax_amount(self):
+        return round((self.vehicle_owner_amount/100)*5,2)
+    @property
+    def vehicle_trip_total_amount(self):
+        return self.vehicle_owner_amount+ self.vehicle_tax_amount
+    @property
+    def vehicle_round_off_amount(self):
+        abc = self.vehicle_trip_total_amount-floor(self.vehicle_trip_total_amount)
+        bcd =round(abc,2)
+        return bcd
+    @property
+    def vehicle_floor_amount(self):
+        return round((self.vehicle_trip_total_amount-self.vehicle_round_off_amount),2)
+ 
+
+
+class exceldata1(models.Model):
+    trip_date1 = models.DateField(null=False, blank=False)
+    invoice_date = models.DateField(null=False, blank=False)
+    invoice_number =models.IntegerField(null=False, blank=False)
+    vehicle_number = models.CharField(max_length=200,null=False, blank=False)
+    material = models.CharField(max_length=200,null=False, blank=False)
+    qty_ton = models.FloatField(null=False, blank=False)
+    rate_ton = models.FloatField(null=False, blank=False)
+    total_amount = models.FloatField(null=False, blank=False)
+    tax_amount = models.FloatField(null=False, blank=False)
+    total_amount_rounded = models.FloatField(null=False, blank=False)
+    total_amount_decimal = models.FloatField(null=False, blank=False)
+    round_off = models.FloatField(null=False, blank=False)
+
+AMOUNTTYPE = [
+       ('Advance', 'Advance'),
+       ('Payment', 'Payment'),
+    ]
 class VehiclePayments(models.Model):
-    vehicle_number = models.ForeignKey(VehicleDetails, on_delete=models.SET_NULL, null=True, blank=False)
-    advance_given_date = models.ForeignKey(LayerWiseTripDetails, on_delete=models.SET_NULL, null=True, blank=False)
-    remarks = models.CharField(max_length=200,null=False, blank=False)
+    vehicle_owner_name = models.ForeignKey(
+        TransporterDetails , on_delete=models.SET_NULL, null=True, blank=False)
+    vehicle_number = models.ForeignKey(VehicleDetails, on_delete=models.SET_NULL, null=True, blank=True)
+    amount_type = models.CharField(max_length=200, blank=False, null=False, choices=AMOUNTTYPE, default='Advance')
+    advance_given_date = models.DateField( null=False, blank=False)
     amount_given = models.FloatField(null=False, blank=False)
+    remarks = models.CharField(max_length=200,null=False, blank=False)
+    amount_receipt = models.ImageField( null=False, blank=True)
+
+
 
 from django.db import models
 

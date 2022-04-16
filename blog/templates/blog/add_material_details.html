@@ -1,0 +1,144 @@
+{% extends "blog/base.html" %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+
+<head>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+<style>
+.card{
+    width: 850px;
+    box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
+    margin-top: 20px;
+    margin-left: -25px;
+    
+}
+.form-group {
+    margin-bottom: 1rem;
+    width: 315px;
+    float: left;
+    / padding: 5px; /
+    margin-top: -15px;
+    padding-right: 25px;
+}
+
+.animation-form{
+    animation: fadeInRight;
+    animation-duration: 2s; 
+   
+}
+.fieldWrapper{
+    
+    /* width: 390px;
+    float: left;
+    padding: 20px;
+    height: 100px; */
+}
+.btn-submit-init{
+    width: 120px;
+    height: 40px;
+    float: left;
+    color: white;
+    background-color: #0069D9;
+    border-radius: 5px;
+    border: 1px solid whitesmoke;
+
+}
+.btn-close-init{
+    width: 120px;
+    background: gray;
+    color: white;
+    margin-left: 20px;
+}
+.header-text1{
+    height: 50px;
+    background-color: #009BDA;
+    color: white;
+    text-align: center;
+    margin-top: -20px;
+    width: 848px;
+    margin-left: -20px;
+}
+.text1{
+    color: white;
+    line-height: 44px;
+    font-size: 24px;
+}
+.btn-submit-addpay{
+    width: 120px;
+    height: 40px;
+    float: left;
+    color: white;
+    background-color: #0069D9;
+    border-radius: 5px;
+    border: 1px solid whitesmoke;
+
+}
+.btn-close-addpay{
+    width: 120px;
+    background: gray;
+    color: white;
+    margin-left: 20px;
+}
+
+
+
+</style>
+
+
+
+  </head>
+
+<body class="m-5">
+    <div class="container">
+      <div class="row"> 
+            <div class="col-md-12 animation-form">
+                <div class="card card-body ">
+
+                     <div class="header-text1">
+                        <p class="text1">Add Material Details</p>
+                    </div> 
+                    <!--------form------start-->
+                    <form action="" method="POST" enctype="multipart/form-data" style="margin-left: 98px;margin-right:75px;margin-top:20px">
+                       
+                            {% csrf_token %}
+                            {{form | crispy }}
+                            <br>
+                            <input type="submit" name="Submit" class="btn-submit-addpay" style="margin-left: 0px;">
+                            <a class="btn btn-outline-secondary btn-close-addpay" href="{% url 'engineer_page'  %}">Cancel</a>
+                        </form>
+                <!---------form-------end----------------->
+
+                </div>
+            </div>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+  <script>
+    
+    $("#id_vehicle_owner_name").change(function () {
+        var url = $("#personForm").attr("data-vehicle-numbers-url"); // get the url of the `load_cities` view
+        var countryId = $(this).val(); // get the selected country ID from the HTML input
+        console.log(countryId)
+        $.ajax({                       // initialize an AJAX request
+            url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+            data: {
+            'countryid': countryId       // add the country id to the GET parameters
+            },
+            success: function (data) {
+                console.log(data)   // `data` is the return of the `load_cities` view function
+            $("#id_vehicle_number").html(data);  // replace the contents of the city input with the data that came from the server
+            }
+      });
+
+    });
+
+  </script>  
+ 
+
+{% endblock %}  
+</body>

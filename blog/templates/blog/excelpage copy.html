@@ -1,0 +1,477 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excel Document</title>
+ <!--   <link rel="stylesheet" href="css/bootstrap.min.css"> 
+    <link rel="stylesheet" href="css/page.css"> 
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/css/page.css' %}">
+ -->
+ <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <style>
+        
+.row{
+   
+    border-bottom: 2px solid black;
+}
+.page{
+    border: 2px solid black; 
+    height: auto;
+    padding: 10px;
+}
+ 
+.colm1{
+    text-align: center;
+    font-weight: bolder;
+    font-size: 20px;
+    
+}
+.colm2{
+    text-align: center;
+    margin-top: auto;
+    margin-bottom: auto;
+    padding: 10px 0px;
+    
+}
+.colm3{
+    text-align: left;
+    margin-top: auto;
+    margin-bottom: auto;
+    line-height: 25px;;
+    
+}
+.colm4{
+    text-align: left;
+    margin-top: auto;
+    margin-bottom: auto;
+    line-height: 25px;
+}
+.row3{
+    /* border: 2px solid black; */
+   
+    height: auto;
+    line-height: 14px;
+   
+    padding: 5px;
+    
+}
+.con1{
+    border-bottom: 0px solid black;
+}
+.row4{
+   
+}
+.row4{
+    /* border: 2px solid black; */
+   
+    height: auto;
+    line-height: 14px;
+    
+}
+
+.colm5{
+    
+    font-weight: bolder;
+    margin-top: auto;
+    margin-bottom: auto;
+    border-right: 2px solid black;
+    padding: 5px;
+}
+.colm8{
+    
+    font-weight: bold;
+    margin-top: auto;
+    margin-bottom: auto;
+    border-right: 0px solid black;
+    padding: 5px;
+    font-size: 12px;
+}
+.row6{
+ 
+    
+}
+.colm6{
+    border-right: 0px solid black;
+    padding: 5px;
+
+}
+.row7{
+   
+}
+.colm9{
+    margin-top: auto;
+    margin-bottom: auto; 
+    padding: 5px;
+    font-weight: bold;
+    font-size: 12px;
+}
+.colm91{
+    margin-top: auto;
+    margin-bottom: auto; 
+    padding: 5px;
+    font-size: 14px;
+    font-weight: 400;
+}
+.colm81{
+    margin-top: auto;
+    margin-bottom: auto;
+    text-align: left !important;
+    padding: 5px;
+    font-size: 14px;
+    font-weight: bold;
+}
+.row10{
+    border-bottom: none;
+}
+.stamp{
+    margin-left: 150px;
+}
+.stamp-content{
+    text-align: left;
+    font-size: 18px;
+}
+.data1{
+    font-weight: bold;border-right: 2px solid black;height: auto;padding: 5px;font-size: 14px;
+}
+.data2{
+ font-weight: bold;text-align:center;border-right: 2px solid black;height: auto;padding: 5px;font-size: 14px;
+}
+.data3{
+    font-weight: bold;text-align:center;border-right: 0px solid black;height: auto;padding: 5px;font-size: 14px;
+}
+.data4{
+    text-align:center;border-right: 0px solid black;height: auto;padding: 5px;font-size: 14px;
+}
+.data6{
+    border-right: 2px solid black;height: auto;padding: 5px;font-size: 14px;
+}
+.data7{
+    border-right: 0px solid black;height: auto;padding: 5px;font-size: 14px;
+}
+.data8{
+    border-right: 0px solid black;height: 30px;padding: 5px;font-size: 14px;
+}
+.data9{
+    border-right: 2px solid black;height: 30px;padding: 5px;font-size: 14px;
+}
+.data10{
+    border-right: 2px solid black;font-size: 14px;
+}
+.data11{
+    height: auto;padding: 5px;font-size: 14px;
+}
+.data12{
+    height: 30px;padding: 5px;font-size: 14px;
+}
+.data13{
+    border-right: 2px solid black;
+}
+
+    
+
+
+    </style>
+
+
+
+
+</head>
+<body>
+
+    <section id="excel-page" class="excel-page">
+        <div class="container cont1">
+            <div class="page">
+                <div class="row row1">
+                    <div class="col-md-14">
+                        <p class="colm1">TAXABLE INVOICE</p>
+                    </div>
+                </div>
+                <div class="row row1">
+                    <div class="col-md-12">
+                        <p class="colm2">ORIGINAL COPY FOR RECIPIENT</p>
+                    </div>
+                </div>
+                <div class="row row3">
+                    <div class="col-md-8">
+                        <p class="colm3"> <span style="font-weight: bold;">MANOREDDY TRANSMINING & CONSTRUCTIONS PVT LTD </span><br>
+                            HOUSE NO.1-60-30/1/114/136, G-1, SUBHADRA NILAYAM,<br>
+                            ANJAIAH NAGAAR, GACHIBOWLI , TELANGANA- 500081<br>
+                            GST NO: 36AAMCM8486B1Z3<br>
+                            Email id: manoreddypvtltd@outlook.com</p>
+                    </div>
+                    <div class="col-md-4">
+                        <p class="colm4">   <span style="font-weight: bold;">INVOICE NO: 00062/21-22<br>
+                                            INVOICE DATE: 26/03/22</span> <br>
+                            
+                            
+                    </div>
+                </div>
+                <div class="row row4">
+                    <div class="col-md-2">
+                        <p class="colm5">P NO</p>
+                    </div>
+                    <div class="col-md-2">
+                        <p class="colm5">516360</p>
+                    </div>
+                    <div class="col-md-8">
+                        
+                    </div>
+                </div>
+                <div class="row row6">
+                    <div class="col-md-8" data13>
+                        <p class="colm6"><span style="font-weight: bold;"> BILLED TO( CONSIGNEE) <br>
+                            ABHIRAV INFRA & REALTORS PVT LTD <br></span>
+                            4 TH FLOOR, 735/3839 NRAR KALI MANDIR <br>
+                            AMBAPUA, BRAHMAPUR, <br>
+                            AMBAPUA <br>
+                            GOPALPUR <br>
+                            GST TIN -21AABCE0095M1ZT<br>
+                    </div>
+                    <div class="col-md-4">
+                        <p class="colm7"> <span style="font-weight: bold;"> PLACE OF DELIVERY<br>
+                             5400- CONSTRUCTION OF INNER<br>
+                             HARBOUR PROJECTS<br></span>
+                            LARSEN &TURBO Ltd. INS VARSH<br>
+                            RAMBILLI MANDALAM,<br>
+                            NEAR ATCHUTAPURAM<br>
+                            GST TIN: 37AAACL0140P1ZI
+                            
+                            
+                    </div>
+                </div>
+                <div class="row row7">
+                    <div class="col-md-1 data13">
+                        <p class="colm9">S No</p>
+                    </div>
+                    <div class="col-md-1 data13">
+                        <p class="colm9">Vehicle</p>
+                    </div>
+                    <div class="col-md-2 data13">
+                        <p class="colm9">DESCRIPTION</p>
+                    </div>
+                    <div class="col-md-2 data13">
+                        <p class="colm9">HSN/SAC</p>
+                    </div>
+                    <div class="col-md-2 data13">
+                        <p class="colm9">CHALLAN NO</p>
+                    </div>
+                    <div class="col-md-1 data13">
+                        <p class="colm9">QTY(MT)</p>
+                    </div>
+                    <div class="col-md-2 data13">
+                        <p class="colm9">RATE/ MT
+                            (INCL 
+                            ROYALTY)</p>
+                    </div>
+                    <div class="col-md-1">
+                        <p class="colm8">AMOUNT</p>
+                    </div>
+                </div>
+            <div class="row row7">
+                    <div class="col-md-1 data10">
+                        1
+                    </div>
+                    <div class="col-md-1 data10">
+                        AP31TN5549
+                    </div>
+                    <div class="col-md-2 data10">
+                      
+                        <div class="row">
+                            <div class="col-md-12" >BOULDERS</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 data11">1 KG TO 1 TON</div>
+                        </div>
+                        <div class="row row10">
+                            <div class="col-md-12 data12"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 data10">
+                        <div class="row">
+                            <div class="col-md-6 data6">25171010</div>
+                           
+                            <div class="col-md-6 data7">AS PER EXTRACT</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 data8"></div>
+                           
+                            
+                        </div>
+                        <div class="row row10">
+                            <div class="col-md-6 data9"></div>
+                           
+                            <div class="col-md-6 data7"></div>
+                        </div>
+                    </div>    
+                        <div class="col-md-4">
+                            <div class="row">
+                                    <div class="col-md-12 data8"></div>   
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 data6">32.32</div>
+                               
+                                <div class="col-md-4 data6">660.00</div>
+
+                                <div class="col-md-4 data7">21331.20</div>
+                            </div>
+                            <div class="row row10">
+                                <div class="col-md-12 data7"></div>   
+                            </div>
+                        </div>
+
+
+                </div>
+
+            
+                <!------------next------------->
+
+                <div class="row row7">
+                    <div class="col-md-1 data10">
+                        
+                    </div>
+                   
+                    <div class="col-md-3 data10">
+                      
+                       
+                        
+                    </div>
+                    <div class="col-md-4 data10">
+                        <div class="row">
+                            <div class="col-md-12" data3>TAXABLE AMOUNT</div>  
+                        </div>
+                        
+                        
+                    </div>    
+                        <div class="col-md-4">
+                            
+                            <div class="row">
+                                <div class="col-md-4 data1">32.32</div>
+                               
+                                <div class="col-md-4 data1"></div>
+
+                                <div class="col-md-4" style="font-weight: bold;border-right: 0px solid black;height: auto;padding: 5px;font-size: 14px;">21331.20</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 data6">STATE TAX</div>
+                               
+                                <div class="col-md-4 data6"></div>
+
+                                <div class="col-md-4 data7">0</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 data6">CENTRAL TAX</div>
+                               
+                                <div class="col-md-4 data6"></div>
+
+                                <div class="col-md-4 data7">0</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 data6">INTEGRATED TAX</div>
+                               
+                                <div class="col-md-4 data6">5%</div>
+
+                                <div class="col-md-4 data7">1066.56</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-8 data6">R OFF</div> 
+                                <div class="col-md-4 data7">-0.76</div>
+                            </div>
+                            <div class="row row10">
+                                <div class="col-md-4 data6">TOTAL</div>
+                               
+                                <div class="col-md-4 data6"></div>
+
+                                <div class="col-md-4 data7">22397.00</div>
+                            </div>
+                            
+                        </div>
+
+
+                </div>
+                <!------------next-------------->
+                <div class="row row10">
+                    <div class="col-md-1 data10">
+                        
+                    </div>
+                   
+                    <div class="col-md-3 data10">
+                        <div class="row">
+                            <div class="col-md-6 data2">HSN/CODE</div>  
+                        
+                            <div class="col-md-6 data3">TAXABLE VALUE</div>  
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 data2">25171010</div>  
+                        
+                            <div class="col-md-6 data3">21331.20</div>  
+                        </div>
+                        <div class="row">
+                            
+                            <div class="col-md-12" style="height: 52px;" >Tax is payable on Reverse Charges
+                                (yes/no)</div>  
+                        </div>
+                        
+                    </div>
+                    
+                        <div class="col-md-4">
+                            
+                            <div class="row">
+                                <div class="col-md-4 data1">CENTRAL TAX</div>
+                               
+                                <div class="col-md-4 data1">STATE TAX</div>
+
+                                <div class="col-md-4 data1">INTEGRATED TAX</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 data6">0.00</div>
+                               
+                                <div class="col-md-4 data6">0.00</div>
+
+                                <div class="col-md-4 data6">1066.56</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 data6">NO</div>
+                               
+                                <div class="col-md-4 data6"></div>
+
+                                <div class="col-md-4 data6"></div>
+                            </div>
+                        </div>
+
+                    
+                </div>
+
+                <!------------next-------------------->
+                <div class="row row10 m-5" style="height: 200px;">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-3"></div>
+                    <div class="col-md-7">
+                        <img src="{% static 'blog/image/e_seal_sign.png' %}" width="200px" height="200px" class="stamp">
+                        <p class="stamp-content">Authorized Signatory <br>
+                            For Mano Reddy Transmining & Constructions Pvt Ltd</p>
+                    </div>
+                    
+                </div>
+               
+
+
+
+            </div>
+  
+          
+    </section>
+
+
+    <script src="{% static 'blog/js/bootstrap.js' %}"></script>
+    <script src="{% static 'blog/js/jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'blog/bootstrap.min.js' %}"></script>
+
+    
+   
+</body>
+</html>

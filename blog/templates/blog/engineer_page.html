@@ -1,18 +1,18 @@
 {% extends "blog/base.html" %}
 {% block content %}
 <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+   
     <style>
 
-        * {box-sizing: border-box}
-        
+        /* * {box-sizing: border-box}
+         */
         /* Set height of body and the document to 100% */
-        body, html {
+        /* body, html {
           height: 100%;
           margin: 0;
           font-family: Arial;
-        }
-        
+        } */
+       
         /* Style tab links */
         .tablink {
           background-color: #555;
@@ -25,447 +25,493 @@
           font-size: 17px;
           width: 25%;
         }
-        
+       
         .tablink:hover {
           background-color: #777;
         }
-        
+       
         /* Style the tab content (and add height:100% for full page content) */
         .tabcontent {
-          
+         
           display: none;
           padding: 15px 20px;
           height: 90%;
+          overflow: hidden;
+         
         }
+        .table-styles{
+            width: auto;
+            height: 230px;
+            /* overflow: scroll; */
+             overflow-x: scroll;
+             overflow-y: scroll;
+        }
+       
         #Home {background-color: white;}
         #News {background-color: white;}
         #Contact {background-color: white;}
         #About {background-color: white;}
         body{
-			background-color: #ebeff5;
-		}
-		#total-orders{
-			background-color: #4cb4c7;
-		}
-		#orders-delivered{
-			background-color: #7abecc;
-		}
-		#orders-pending{
-			background-color: #7CD1C0;
-		}
+background-color: #ebeff5;
+}
+#total-orders{
+background-color: #4cb4c7;
+}
+#orders-delivered{
+background-color: #7abecc;
+}
+#orders-pending{
+background-color: #7CD1C0;
+}
+
         table, td, th { border: 1px solid black;} table {border-collapse: collapse;width: 100%;text-align: center;}
         th {height: 35px;            vertical-align: center;}
-        td {height: 30px;vertical-align: center;}
+        td {height: 30px;vertical-align: center;width: 120px;}
+        .td-width{width: 200px; text-align: justify;}
+        .home-bar{
+            margin-top: 20px;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            height: 570px;
+            margin-left: -25px;
+        }
+        body{
+             /* overflow-y: hidden;    */
+        }
+        .table-styles{
+            width: auto;
+            height: 230px;
+            /* overflow: scroll; */
+            overflow-x: scroll;
+            overflow-y: scroll;
+            display: block;
+           
+        }
+        .pagination{
+           
+            position: relative;
+            left: 580px;
+            top: -290px;
+       
+        }
+        .total-trip{
+            position: relative;left: 610px;top: -35px !important;
+        }
+
+
+
+
+
+
 
         </style>
 
-        
+       
 <body class="m-5">
-        <div class="row">
-            <div class="col-md-12  content-section">
-                    <button class="tablink" onclick="openPage('Home', this, 'orange')" id="defaultOpen">Started ({{layer1detailscount}})</button>
-                    <button class="tablink" onclick="openPage('News', this, 'red')">Pending ({{layer2tripdetailscount}})</button>
-                    <button class="tablink" onclick="openPage('Contact', this, 'blue')">Completed ({{layer3tripdetailscount}})</button>
-                    <button class="tablink" onclick="openPage('About', this, 'green')">Verified ({{layer4tripdetailscount}})</button>
-                    
+    <div class="row" style="width: 860px;margin-left:15px;">
+        <div class="col-md-12  content-section home-bar">
+                <button class="tablink" onclick="openPage('Home', this, 'orange')" id="defaultOpen">Started ({{layer1detailscount}})</button>
+                <button class="tablink" onclick="openPage('News', this, 'red')">Pending ({{layer2tripdetailscount}})</button>
+                <button class="tablink" onclick="openPage('Contact', this, 'blue')">Completed ({{layer3tripdetailscount}})</button>
+                <button class="tablink" onclick="openPage('About', this, 'green')">Verified ({{layer4tripdetailscount}})</button>
+               
 
-                    <div id="Home" class="tabcontent table-responsive table-hover ">
+             <div id="Home" class="tabcontent table-responsive table-hover ">
 
-                        {% if layer1detailscount > 0 %} 
-                    
-                        <div class="row">
-                            <div class="col">
-                                <div class="col-md">
-                                    <div class="card text-center text-white  mb-3" id="total-orders">
-                                        <div class="card-header">
-                                            <h5 class="card-title">Total Trips</h5>
-                                        </div>
-                                        <div class="card-body">
-                                            <h3 class="card-title">{{layer1detailscount}}</h3>
-                                        </div>
+                    {% if layer1detailscount > 0 %}
+               
+                    <div class="row" style="padding-bottom: 15px;">
+                        <div class="col">
+                            <div class="col-md">
+                                <div class="card text-center text-white  mb-3" id="total-orders">
+                                    <div class="card-header">
+                                        <h5 class="card-title">Total Trips</h5>
                                     </div>
-                                </div>
-                            </div>
-
-                            <div class="col">
-                                <div class="col-md">
-                                    <div class="card text-center text-white  mb-3" id="orders-delivered">
-                                        <div class="card-header">
-                                            <h5 class="card-title">Total m3</h5>
-                                        </div>
-                                        <div class="card-body">
-                                            <h3 class="card-title">{{layer1totalqty_in_m3}} </h3>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <h5 align="left">Total Started Trips</h5>
-                            <table class="table table-sm">
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Company Name</th>
-                                    <th>Vehicle Number</th>
-                                    <th>Driver Name</th>
-                                    <th>Quarry Name</th>
-                                    <th>Load Type</th>
-                                    <th>TF number</th>
-                                    <th>Qty in m3</th>
-                                    <th>Comments</th>
-                                    <th>Royalty bill</th>
-                                    {% if request.user.groups.all.0.name == "Naidu" or request.user.groups.all.0.name == "admin" %}
-                                    <th>Update</th>
-                                    <th>Proceed</th>
-                                    <th>Remove</th>
-                                    {% endif %}
-                                    
-                                </tr>
-                                {% for initialdetail in posts %}
-                                <tr>
-                                    <td>{{initialdetail.trip_date}}</td>
-                                    <td>{{initialdetail.company_name}}</td>
-                                    <td>{{initialdetail.vehicle_number}}</td>
-                                    <td>{{initialdetail.driver_name}}</td>
-                                    <td>{{initialdetail.quarry_owner_name}}</td>
-                                    <td>{{initialdetail.load_type}}</td>
-                                    <td>{{initialdetail.tf_number}}</td>
-                                    <td>{{initialdetail.qty_m3}}</td>
-                                    <td>{{initialdetail.comments}}</td>
-                                    <td><a class="btn btn-sm btn-info" href="{% url 'get_pdf_royalty_bill' initialdetail.id %}">Get PDF</a></td>
-                                    {% if request.user.groups.all.0.name == "Naidu" or request.user.groups.all.0.name == "admin" %}
-                                    <td><a class="btn btn-sm btn-info" href="{% url 'updatelayer1trip' initialdetail.id %}">Update</a></td>
-                                    <td><a class="btn btn-sm btn-info" href="{% url 'layer2add' initialdetail.id %}">Proceed</a></td>
-                                    <td><a class="btn btn-sm btn-danger" href="{% url 'deletelayer1trip' initialdetail.id %}">Delete</a></td>
-                                    {% endif %}
-                                </tr>
-                                {% endfor %}
-                            </table>
-                        {% else %}
-                        <h5 align="center">Please add initial trip details.</h5>
-                        {% endif %}
-                        {%	include	'blog/pagination.html'	with	page=posts	%}
-                    </div>
-                    
-                    
-                    
-                    <div id="News" class="tabcontent table-responsive table-hover ">
-                        {% if layer2tripdetailscount > 0 %}    
-
-                        <div class="row">
-                            <div class="col">
-                                <div class="col-md">
-                                    <div class="card text-center text-white  mb-3" id="total-orders">
-                                        <div class="card-header">
-                                            <h5 class="card-title">Trips</h5>
-                                        </div>
-                                        <div class="card-body">
-                                            <h3 class="card-title">{{layer2tripdetailscount}}</h3>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col">
-                                <div class="col-md">
-                                    <div class="card text-center text-white  mb-3" id="orders-delivered">
-                                        <div class="card-header">
-                                            <h5 class="card-title">M3</h5>
-                                        </div>
-                                        <div class="card-body">
-                                            <h3 class="card-title">{{layer2totalqty_in_m3}} </h3>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col">
-                                <div class="col-md">
-                                    <div class="card text-center text-white  mb-3" id="orders-pending">
-                                        <div class="card-header">
-                                            <h5 class="card-title">Tonnes</h5>
-                                        </div>
-                                        <div class="card-body">
-                                            <h3 class="card-title">{{layer2totalqty_in_ton}}</h3>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="col-md">
-                                    <div class="card text-center text-white  mb-3" id="orders-pending">
-                                        <div class="card-header">
-                                            <h5 class="card-title" font.color="red">-M3</h5>
-                                        </div>
-                                        <div class="card-body">
-                                            <h3 class="card-title">{{layer2pending_m3}}</h3>
-                                        </div>
+                                    <div class="card-body">
+                                        <h3 class="card-title">{{layer1detailscount}}</h3>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <h5 align="left">Total Pending Trips</h5>
-                            <h5 align="right">View All</h5>
-                            <table class="table table-sm">
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Company Name</th>
-                                    <th>Vehicle Number</th>
-                                    <th>Driver Name</th>
-                                    <th>Quarry Name</th>
-                                    <th>Load Type</th>
-                                    <th>TF number</th>
-                                    <th>Qty in m3</th>
-                                    <th>Qty in Tonne</th>
-                                    <th>Comments</th>
-                                    <th>Royalty bill</th>
-                                    <th>Way bill</th>
-                                    {% if request.user.groups.all.0.name == "Malli" %}
-                                    <th>Update</th>
-                                    {% endif %}
-                                </tr>
-                                {% for layer2tripdetail in layer2tripdetails %}
-                                <tr>
-                                    <td>{{layer2tripdetail.trip_date}}</td>
-                                    <td>{{layer2tripdetail.company_name}}</td>
-                                    <td>{{layer2tripdetail.vehicle_number}}</td>
-                                    <td>{{layer2tripdetail.driver_name}}</td>
-                                    <td>{{layer2tripdetail.quarry_owner_name}}</td>
-                                    <td>{{layer2tripdetail.load_type}}</td>
-                                    <td>{{layer2tripdetail.tf_number}}</td>
-                                    <td>{{layer2tripdetail.qty_m3}}</td>
-                                    <td>{{layer2tripdetail.qty_ton}}</td>
-                                    <td>{{layer2tripdetail.comments}}</td>
-                                    <td><a class="btn btn-sm btn-info" href="{% url 'get_pdf_royalty_bill' layer2tripdetail.id %}">Get PDF</a></td>
-                                    <td><a class="btn btn-sm btn-info" href="{% url 'get_pdf_way_bill' layer2tripdetail.id %} ">Get PDF</a></td>
-                                    <!--these both fields should be hidden for engineer and suresh-->
-                                    {% if request.user.groups.all.0.name == "Malli" %}
-                                    <td><a class="btn btn-sm btn-info" href="{% url 'layer3add' layer2tripdetail.id %}">Update</a></td>
-                                    {% endif %}
-                                </tr>
-                            
-                                {% endfor %}
-                            </table>
-                        {% else %}
-                        <h5 align="center">Please add initial trip details.</h5>
-                        {% endif %}
-                        {%	include	'blog/pagination.html'	with	page=layer2posts	%}
+                        <div class="col">
+                            <div class="col-md">
+                                <div class="card text-center text-white  mb-3" id="orders-delivered">
+                                    <div class="card-header">
+                                        <h5 class="card-title">Total m3</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <h3 class="card-title">{{layer1totalqty_in_m3}} </h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    
-                    <div id="Contact" class="tabcontent table-responsive table-hover ">
-                        {% if layer3tripdetailscount > 0 %}    
+                    <h5 align="left">Total Started Trips</h5>
+                        <table class="table table-sm table-styles">
+                            <tr>
+                                <th>Date</th>
+                                <th>Company Name</th>
+                                <th>Vehicle Number</th>
+                                <th>Driver Name</th>
+                                <th>Quarry Name</th>
+                                <th>Material</th>
+                                <th>TF number</th>
+                                <th>Qty (M3)</th>
+                                <th>Comments</th>
+                                <th>Royalty bill</th>
+                                {% if request.user.groups.all.0.name == "engineer" or request.user.groups.all.0.name == "admin" %}
+                                <th>Update</th>
+                                <th>Proceed</th>
+                                <th>Remove</th>
+                                {% endif %}
+                               
+                            </tr>
+                            {% for initialdetail in posts %}
+                            <tr>
+                                <td>{{initialdetail.trip_date|date:"d-m-Y"}}</td>
+                                <td>{{initialdetail.company_name}}</td>
+                                <td>{{initialdetail.vehicle_number}}</td>
+                                <td>{{initialdetail.driver_name}}</td>
+                                <td>{{initialdetail.quarry_owner_name}}</td>
+                                <td>{{initialdetail.load_type}}</td>
+                                <td>{{initialdetail.tf_number}}</td>
+                                <td>{{initialdetail.qty_m3}}</td>
+                                <td>{{initialdetail.comments}}</td>
+                                <td><a class="btn btn-sm btn-info" href="{% url 'get_pdf_royalty_bill' initialdetail.id %}">Get PDF</a></td>
+                                {% if request.user.groups.all.0.name == "engineer" or request.user.groups.all.0.name == "admin" %}
+                                <td><a class="btn btn-sm btn-info" href="{% url 'updatelayer1trip' initialdetail.id %}">Update</a></td>
+                                <td><a class="btn btn-sm btn-info" href="{% url 'layer2add' initialdetail.id %}">Proceed</a></td>
+                                <td><a class="btn btn-sm btn-danger" href="{% url 'deletelayer1trip' initialdetail.id %}">Delete</a></td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    {% else %}
+                    <h5 align="center">Please add initial trip details.</h5>
+                    {% endif %}
+                    {% include 'blog/pagination.html' with page=posts %}
+              </div>
+               
+               
+               
+                <div id="News" class="tabcontent table-responsive table-hover ">
+                    {% if layer2tripdetailscount > 0 %}    
 
-                        <div class="row">
-                            <div class="col">
-                                <div class="col-md">
-                                    <div class="card text-center text-white  mb-3" id="total-orders">
-                                        <div class="card-header">
-                                            <h5 class="card-title">Trips</h5>
-                                        </div>
-                                        <div class="card-body">
-                                            <h3 class="card-title">{{layer3tripdetailscount}}</h3>
-                                        </div>
+                    <div class="row" style="padding-bottom: 15px;">
+                        <div class="col">
+                            <div class="col-md">
+                                <div class="card text-center text-white  mb-3" id="total-orders">
+                                    <div class="card-header">
+                                        <h5 class="card-title">Trips</h5>
                                     </div>
-                                </div>
-                            </div>
-
-                            <div class="col">
-                                <div class="col-md">
-                                    <div class="card text-center text-white  mb-3" id="orders-delivered">
-                                        <div class="card-header">
-                                            <h5 class="card-title">M3</h5>
-                                        </div>
-                                        <div class="card-body">
-                                            <h3 class="card-title">{{layer3totalqty_in_m3}} </h3>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col">
-                                <div class="col-md">
-                                    <div class="card text-center text-white  mb-3" id="orders-pending">
-                                        <div class="card-header">
-                                            <h5 class="card-title">Tonnes</h5>
-                                        </div>
-                                        <div class="card-body">
-                                            <h3 class="card-title">{{layer3totalqty_in_ton}}</h3>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="col-md">
-                                    <div class="card text-center text-white  mb-3" id="orders-pending">
-                                        <div class="card-header">
-                                            <h5 class="card-title" font.color="red">-M3</h5>
-                                        </div>
-                                        <div class="card-body">
-                                            <h3 class="card-title">{{layer3pending_m3}}</h3>
-                                        </div>
+                                    <div class="card-body">
+                                        <h3 class="card-title">{{layer2tripdetailscount}}</h3>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <h5 align="left">Total Being verified Trips</h5>
-                            <table class="table table-sm">
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Company Name</th>
-                                    <th>Vehicle Number</th>
-                                    <th>Load Type</th>
-                                    <th>TF number</th>
-                                    <th>Qty in m3</th>
-                                    <th>Qty in Tonne</th>
-                                    <th>Comments</th>
-                                    <th>Royalty bill</th>
-                                    <th>Way bill</th>
-                                    {% if request.user.groups.all.0.name == "Suresh" %}
-                                    <th>Update</th>
-                                    {% endif %}
-                                </tr>
-                                {% for layer3tripdetail in layer3tripdetails %}
-                                <tr>
-                                    <td>{{layer3tripdetail.trip_date}}</td>
-                                    <td>{{layer3tripdetail.company_name}}</td>
-                                    <td>{{layer3tripdetail.vehicle_number}}</td>
-                                    <td>{{layer3tripdetail.load_type}}</td>
-                                    <td>{{layer3tripdetail.tf_number}}</td>
-                                    <td>{{layer3tripdetail.qty_m3}}</td>
-                                    <td>{{layer3tripdetail.qty_ton}}</td>
-                                    <td>{{layer3tripdetail.comments}}</td>
-                                    <td><a class="btn btn-sm btn-info" href="{% url 'get_pdf_royalty_bill' layer3tripdetail.id %}">Get PDF</a></td>
-                                    <td><a class="btn btn-sm btn-info" href="{% url 'get_pdf_way_bill' layer3tripdetail.id %} ">Get PDF</a></td>
-                                    <!--these both fields should be hidden for engineer and malli-->
-                                    {% if request.user.groups.all.0.name == "Suresh" %}
-                                    <td><a class="btn btn-sm btn-info" href="{% url 'layer4add' layer3tripdetail.id %}">Update</a></td>
-                                    {% endif %}
-                                </tr>
-                            
-                                {% endfor %}
-                            </table>
-                        {% else %}
-                        <h5 align="center">Please add initial trip details.</h5>
-                        {% endif %}
-                        {%	include	'blog/pagination.html'	with	page=layer2posts	%}
-                    </div>
-                    
-                    <div id="About" class="tabcontent table-responsive table-hover ">
-                        {% if layer4tripdetailscount > 0 %}    
-
-                        <div class="row">
-                            <div class="col">
-                                <div class="col-md">
-                                    <div class="card text-center text-white  mb-3" id="total-orders">
-                                        <div class="card-header">
-                                            <h5 class="card-title">Trips</h5>
-                                        </div>
-                                        <div class="card-body">
-                                            <h3 class="card-title">{{layer4tripdetailscount}}</h3>
-                                        </div>
+                        <div class="col">
+                            <div class="col-md">
+                                <div class="card text-center text-white  mb-3" id="orders-delivered">
+                                    <div class="card-header">
+                                        <h5 class="card-title">M3</h5>
                                     </div>
-                                </div>
-                            </div>
-
-                            <div class="col">
-                                <div class="col-md">
-                                    <div class="card text-center text-white  mb-3" id="orders-delivered">
-                                        <div class="card-header">
-                                            <h5 class="card-title">M3</h5>
-                                        </div>
-                                        <div class="card-body">
-                                            <h3 class="card-title">{{layer4totalqty_in_m3}} </h3>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col">
-                                <div class="col-md">
-                                    <div class="card text-center text-white  mb-3" id="orders-pending">
-                                        <div class="card-header">
-                                            <h5 class="card-title">Tonnes</h5>
-                                        </div>
-                                        <div class="card-body">
-                                            <h3 class="card-title">{{layer4totalqty_in_ton}}</h3>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="col-md">
-                                    <div class="card text-center text-white  mb-3" id="orders-pending">
-                                        <div class="card-header">
-                                            <h5 class="card-title" font.color="red">-M3</h5>
-                                        </div>
-                                        <div class="card-body">
-                                            <h3 class="card-title">{{layer4pending_m3}}</h3>
-                                        </div>
+                                    <div class="card-body">
+                                        <h3 class="card-title">{{layer2totalqty_in_m3}} </h3>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <h5 align="left">Total Being verified Trips</h5>
-                            <table class="table table-sm">
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Company Name</th>
-                                    <th>Vehicle Number</th>
-                                    <th>Load Type</th>
-                                    <th>TF number</th>
-                                    <th>Qty in m3</th>
-                                    <th>Qty in Tonne</th>
-                                    <th>Royalty bill</th>
-                                    <th>Way bill</th>
-                                </tr>
-                                {% for layer4tripdetail in layer4tripdetails %}
-                                <tr>
-                                    <td>{{layer4tripdetail.trip_date}}</td>
-                                    <td>{{layer4tripdetail.company_name}}</td>
-                                    <td>{{layer4tripdetail.vehicle_number}}</td>
-                                    <td>{{layer4tripdetail.load_type}}</td>
-                                    <td>{{layer4tripdetail.tf_number}}</td>
-                                    <td>{{layer4tripdetail.qty_m3}}</td>
-                                    <td>{{layer4tripdetail.qty_ton}}</td>
-                                    <td><a class="btn btn-sm btn-info" href="{% url 'get_pdf_royalty_bill' layer4tripdetail.id %}">Get PDF</a></td>
-                                    <td><a class="btn btn-sm btn-info" href="{% url 'get_pdf_way_bill' layer4tripdetail.id %} ">Get PDF</a></td>
-                                    <!--these both fields should be hidden for all-->
-
-                                </tr>
-                            
-                                {% endfor %}
-                            </table>
-                        {% else %}
-                        <h5 align="center">Please add initial trip details.</h5>
-                        {% endif %}
-                        {%	include	'blog/pagination.html'	with	page=layer2posts	%}
+                        <div class="col">
+                            <div class="col-md">
+                                <div class="card text-center text-white  mb-3" id="orders-pending">
+                                    <div class="card-header">
+                                        <h5 class="card-title">Tonnes</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <h3 class="card-title">{{layer2totalqty_in_ton}}</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="col-md">
+                                <div class="card text-center text-white  mb-3" id="-m3">
+                                    <div class="card-header">
+                                        <h5 class="card-title" style="color: red;">-M3</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <h3 class="card-title" style="color: red;">{{layer2pending_m3}}</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                
+
+                    <h5 align="left">Pending Trips</h5>
+                        <!-- <h5 align="right">View All</h5> -->
+                        <table class="table table-sm table-styles">
+                            <tr>
+                                <th>Date</th>
+                                <th>Company Name</th>
+                                <th>Vehicle Number</th>
+                                <th>Driver Name</th>
+                                <th>Quarry Name</th>
+                                <th>Material</th>
+                                <th>TF number</th>
+                                <th>Qty (M3)</th>
+                                <th>Qty (Ton)</th>
+                                <th>Comments</th>
+                                <th>Royalty bill</th>
+                                <th>Way bill</th>
+                                {% if request.user.groups.all.0.name == "incharge"  or request.user.groups.all.0.name == "admin" %}
+                                <th>Approve</th>
+                                {% endif %}
+                            </tr>
+                            {% for layer2tripdetail in layer2tripdetails %}
+                            <tr>
+                                <td>{{layer2tripdetail.trip_date}}</td>
+                                <td>{{layer2tripdetail.company_name}}</td>
+                                <td>{{layer2tripdetail.vehicle_number}}</td>
+                                <td>{{layer2tripdetail.driver_name}}</td>
+                                <td>{{layer2tripdetail.quarry_owner_name}}</td>
+                                <td>{{layer2tripdetail.load_type}}</td>
+                                <td>{{layer2tripdetail.tf_number}}</td>
+                                <td>{{layer2tripdetail.qty_m3}}</td>
+                                <td>{{layer2tripdetail.qty_ton}}</td>
+                                <td>{{layer2tripdetail.comments}}</td>
+                                <td><a class="btn btn-sm btn-info" href="{% url 'get_pdf_royalty_bill' layer2tripdetail.id %}">Get PDF</a></td>
+                                <td><a class="btn btn-sm btn-info" href="{% url 'get_pdf_way_bill' layer2tripdetail.id %} ">Get PDF</a></td>
+                                <!--these both fields should be hidden for engineer and suresh-->
+                                {% if request.user.groups.all.0.name == "incharge"  or request.user.groups.all.0.name == "admin" %}
+                                <td><a class="btn btn-sm btn-info" href="{% url 'layer3add' layer2tripdetail.id %}">Approve</a></td>
+                                {% endif %}
+                            </tr>
+                       
+                            {% endfor %}
+                        </table>
+                    {% else %}
+                    <h5 align="center">Please add initial trip details.</h5>
+                    {% endif %}
+                    {% include 'blog/pagination.html' with page=layer2posts %}
+                </div>
+               
+                <div id="Contact" class="tabcontent table-responsive table-hover ">
+                    {% if layer3tripdetailscount > 0 %}    
+
+                    <div class="row" style="padding-bottom: 15px;">
+                        <div class="col">
+                            <div class="col-md">
+                                <div class="card text-center text-white  mb-3" id="total-orders">
+                                    <div class="card-header">
+                                        <h5 class="card-title">Trips</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <h3 class="card-title">{{layer3tripdetailscount}}</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="col-md">
+                                <div class="card text-center text-white  mb-3" id="orders-delivered">
+                                    <div class="card-header">
+                                        <h5 class="card-title">M3</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <h3 class="card-title">{{layer3totalqty_in_m3}} </h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="col-md">
+                                <div class="card text-center text-white  mb-3" id="orders-pending">
+                                    <div class="card-header">
+                                        <h5 class="card-title">Tonnes</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <h3 class="card-title">{{layer3totalqty_in_ton}}</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="col-md">
+                                <div class="card text-center text-white  mb-3" id="orders-pending">
+                                    <div class="card-header">
+                                        <h5 class="card-title" style="color: red;">-M3</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <h3 class="card-title" style="color: red;">{{layer3pending_m3}}</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h5 align="left">Total Trips for Verification </h5>
+                        <table class="table table-sm table-styles">
+                            <tr>
+                                <th>Date</th>
+                                <th>Company Name</th>
+                                <th>Vehicle Number</th>
+                                <th>Material</th>
+                                <th>TF number</th>
+                                <th>Qty (M3)</th>
+                                <th>Qty (Ton)</th>
+                                <th>Comments</th>
+                                <th>Royalty bill</th>
+                                <th>Way bill</th>
+                                {% if request.user.groups.all.0.name == "finance"   or request.user.groups.all.0.name == "admin" %}
+                                <th>Update</th>
+                                {% endif %}
+                            </tr>
+                            {% for layer3tripdetail in layer3tripdetails %}
+                            <tr>
+                                <td>{{layer3tripdetail.trip_date}}</td>
+                                <td>{{layer3tripdetail.company_name}}</td>
+                                <td>{{layer3tripdetail.vehicle_number}}</td>
+                                <td>{{layer3tripdetail.load_type}}</td>
+                                <td>{{layer3tripdetail.tf_number}}</td>
+                                <td>{{layer3tripdetail.qty_m3}}</td>
+                                <td>{{layer3tripdetail.qty_ton}}</td>
+                                <td>{{layer3tripdetail.comments}}</td>
+                                <td><a class="btn btn-sm btn-info" href="{% url 'get_pdf_royalty_bill' layer3tripdetail.id %}">Get PDF</a></td>
+                                <td><a class="btn btn-sm btn-info" href="{% url 'get_pdf_way_bill' layer3tripdetail.id %} ">Get PDF</a></td>
+                                <!--these both fields should be hidden for engineer and malli-->
+                                {% if request.user.groups.all.0.name == "finance"   or request.user.groups.all.0.name == "admin" %}
+                                <td><a class="btn btn-sm btn-info" href="{% url 'layer4add' layer3tripdetail.id %}">Update</a></td>
+                                {% endif %}
+                            </tr>
+                       
+                            {% endfor %}
+                        </table>
+                    {% else %}
+                    <h5 align="center">Please add initial trip details.</h5>
+                    {% endif %}
+                    {% include 'blog/pagination.html' with page=layer2posts %}
+                </div>
+               
+                <div id="About" class="tabcontent table-responsive table-hover ">
+                    {% if layer4tripdetailscount > 0 %}    
+
+                    <div class="row" style="padding-bottom: 15px;">
+                        <div class="col">
+                            <div class="col-md">
+                                <div class="card text-center text-white  mb-3" id="total-orders">
+                                    <div class="card-header">
+                                        <h5 class="card-title">Trips</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <h3 class="card-title">{{layer4tripdetailscount}}</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="col-md">
+                                <div class="card text-center text-white  mb-3" id="orders-delivered">
+                                    <div class="card-header">
+                                        <h5 class="card-title">M3</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <h3 class="card-title">{{layer4totalqty_in_m3}} </h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="col-md">
+                                <div class="card text-center text-white  mb-3" id="orders-pending">
+                                    <div class="card-header">
+                                        <h5 class="card-title">Tonnes</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <h3 class="card-title">{{layer4totalqty_in_ton}}</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="col-md">
+                                <div class="card text-center text-white  mb-3" id="orders-pending">
+                                    <div class="card-header">
+                                        <h5 class="card-title" font.color="red">-M3</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <h3 class="card-title">{{layer4pending_m3}}</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h5 align="left">Total Verified Trips</h5>
+                        <table class="table table-sm table-styles">
+                            <tr>
+                                <th>Date</th>
+                                <th>Company Name</th>
+                                <th>Vehicle Number</th>
+                                <th>Material</th>
+                                <th>TF number</th>
+                                <th>Qty (M3)</th>
+                                <th>Qty (Ton)</th>
+                                <th>Royalty bill</th>
+                                <th>Way bill</th>
+                            </tr>
+                            {% for layer4tripdetail in layer4tripdetails %}
+                            <tr>
+                                <td>{{layer4tripdetail.trip_date}}</td>
+                                <td>{{layer4tripdetail.company_name}}</td>
+                                <td>{{layer4tripdetail.vehicle_number}}</td>
+                                <td>{{layer4tripdetail.load_type}}</td>
+                                <td>{{layer4tripdetail.tf_number}}</td>
+                                <td>{{layer4tripdetail.qty_m3}}</td>
+                                <td>{{layer4tripdetail.qty_ton}}</td>
+                                <td><a class="btn btn-sm btn-info" href="{% url 'get_pdf_royalty_bill' layer4tripdetail.id %}">Get PDF</a></td>
+                                <td><a class="btn btn-sm btn-info" href="{% url 'get_pdf_way_bill' layer4tripdetail.id %} ">Get PDF</a></td>
+                                <!--these both fields should be hidden for all-->
+
+                            </tr>
+                       
+                            {% endfor %}
+                        </table>
+                    {% else %}
+                    <h5 align="center">Please add initial trip details.</h5>
+                    {% endif %}
+                    {% include 'blog/pagination.html' with page=layer2posts %}
+                </div>
            
+       
 
-            </div>
-            
-        
-    </div>
-    <script>
-        function openPage(pageName,elmnt,color) {
-          var i, tabcontent, tablinks;
-          tabcontent = document.getElementsByClassName("tabcontent");
-          for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].style.display = "none";
-          }
-          tablinks = document.getElementsByClassName("tablink");
-          for (i = 0; i < tablinks.length; i++) {
-            tablinks[i].style.backgroundColor = "";
-          }
-          document.getElementById(pageName).style.display = "block";
-          elmnt.style.backgroundColor = color;
-        }
-        
-        // Get the element with id="defaultOpen" and click on it
-        document.getElementById("defaultOpen").click();
-        </script>
+        </div>
+       
+   
+</div>
+<script>
+    function openPage(pageName,elmnt,color) {
+      var i, tabcontent, tablinks;
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+      tablinks = document.getElementsByClassName("tablink");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].style.backgroundColor = "";
+      }
+      document.getElementById(pageName).style.display = "block";
+      elmnt.style.backgroundColor = color;
+    }
+   
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();
+    </script>
 </body>
 {% endblock content %}

@@ -89,7 +89,7 @@
 		<div class="col-md-4">
 			
 			<div class="card card-body">
-				<a class="btn btn-primary  btn-sm btn-block" href="">details </a>
+				<a class="btn btn-primary  btn-sm btn-block" href="">Add Pending M3 </a>
 				<table class="table table-sm">
 					<tr>
 						<th></th>
@@ -99,10 +99,11 @@
 					</tr>
 					{% for distinct_date in distinct_dates %}
 					<tr>
-						<td><a class="btn btn-sm btn-info" href="#">View</a></td>
+						<td><a class="btn btn-sm btn-info" href="#">Add</a></td>
 						<td>{{ distinct_date.trip_date|date:"d-m-Y" }}</td>
 						<td>{{ distinct_date.qty_m3__sum }}</td>
 						<td>{{ distinct_date.qty_ton__sum }}</td>
+						
 
 					</tr>
 					{% endfor %}

@@ -1,0 +1,140 @@
+{% load crispy_forms_tags %}
+{% load multiply_float %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Get Reports</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+</head>
+
+<body class="m-5">
+    <div class="container">
+
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <a href="{% url 'engineer_page' %}" class="btn btn-dark my-3">Go Back</a>
+                <div class="card">
+                        <br> 
+                        <div>
+                            <div class="col-md-8">
+                                {% if messages %}
+                                  {% for message in messages %}
+                                    <div class="alert alert-{{ message.tags }}">
+                                      {{ message }}
+                                    </div>
+                                  {% endfor %}
+                                {% endif %}
+                            </div>
+                            <form method='GET' action=''>{% csrf_token %}
+                                {{dailyvehicleowner_form|crispy}}
+                                    <input type="submit" name="search" value='Search'/>                          
+                            </form>
+                        </div>
+                        <br> 
+                </div>
+            </div>
+
+                            
+                            {% if dailyvehicleowner_querysets.count == 0 %}
+                            <p>Please select atleast one date..</p>
+                            {% else %}
+                            {{title}}<br>
+                            
+                            <div>
+                                <div> {%	include	'blog/pagination.html'	with	page=vehicleownertripslist	%}                   
+                                    <table class="table table-sm">
+                                        <tr>
+                                            <th>S.No. Number</th>
+                                            <th>Trip Date</th>
+                                            <th>Vehicle Number</th>
+                                            <th>Load Type</th>
+                                            <th>Qty m3</th>
+                                            <th>TF Number</th>
+                                            <th>Qty in Ton</th>
+                                            <th>Actual Qty m3</th>
+                                            <th>Pending m3</th>
+                                            <th>Rate per Ton</th>
+                                            <th>Trip Amount</th>
+                                            <th>Tax Amount</th>
+                                            <th>Trip Total Amount</th>
+                                            <th>Roundoff Amount</th>
+                                            <th>Trip Final Amount</th>
+                                        </tr>
+                                       
+                                        {% for dailyvehicleowner_queryset in dailyvehicleowner_querysets %}
+                                        <tr>
+                                            <td>{{forloop.counter}}</td> 
+                                            <td>{{dailyvehicleowner_queryset.trip_date}}</td> 
+                                            <td>{{dailyvehicleowner_queryset.vehicle_number}}</td>
+                                            <td>{{dailyvehicleowner_queryset.load_type}}</td>
+                                            <td>{{dailyvehicleowner_queryset.qty_m3}}</td>
+                                            <td>{{dailyvehicleowner_queryset.tf_number}}</td>
+                                            <td>{{dailyvehicleowner_queryset.qty_ton|floatformat:2}}</td>
+                                            <td>{{dailyvehicleowner_queryset.qty_m3_actual_submit|floatformat:2}}</td>
+                                            <td>{{dailyvehicleowner_queryset.qty_m3_pending|floatformat:2}}</td>
+                                            <td>{{dailyvehicleowner_queryset.vehicle_number.rate_per_tonne|floatformat:2}}</td>
+                                            <td>{{dailyvehicleowner_queryset.vehicle_owner_amount|floatformat:2}}</td>
+                                            <td>{{dailyvehicleowner_queryset.vehicle_tax_amount|floatformat:2}}</td>
+                                            <td>{{dailyvehicleowner_queryset.vehicle_trip_total_amount|floatformat:2}}</td>
+                                            <td>{{dailyvehicleowner_queryset.vehicle_round_off_amount|floatformat:2}}</td>
+                                            <td>{{dailyvehicleowner_queryset.vehicle_floor_amount|floatformat:0}}<br>
+                                        </tr>
+                
+                                    {% endfor %}
+                                    </table>
+                            <hr>
+                            {% for vehicleownertotalamounts in vehicleownertotalamount%}
+                            <h5> Total Tons: {{vehicleownertotalamounts.qty_ton__sum|floatformat:2}} </h5>
+                            <h5> Actual Amount: {{ totalamount|floatformat:2}}</h5>
+                            <h5> Advance Given: {{ total_advance_given|floatformat:2}}</h5>
+                            <h5> Yet to Pay: {{ total_payment_tobedone|floatformat:2}}</h5>
+                            {% endfor %}
+                            <a href="{% url 'add_payment' %}" class="btn btn-dark my-3">Pay Now</a>
+
+                            </div>
+                
+                        </div>
+                        {% if total_advance_given > 0 %}
+                        <div> {%	include	'blog/pagination.html'	with	page=vehicleownertripslist	%}                   
+                            <table class="table table-sm">
+                                <tr>
+                                    <th>S.No. Number</th>
+                                    <th>Advance Given Date</th>
+                                    <th>Vehicle Owner Name</th>
+                                    <th>Vehicle Number</th>
+                                    <th>Amount Type</th>
+                                    <th>Amount Given</th>
+                                    <th>Remarks</th>
+                                </tr>
+                               
+                                {% for payment_data in payments_data %}
+                                <tr>
+                                    <td>{{forloop.counter}}</td> 
+                                    <td>{{payment_data.advance_given_date}}</td> 
+                                    <td>{{payment_data.vehicle_owner_name}}</td>
+                                    <td>{{payment_data.vehicle_number}}</td>
+                                    <td>{{payment_data.amount_type}}</td>
+                                    <td>{{payment_data.amount_given|floatformat:2}}</td>
+                                    <td>{{payment_data.remarks}}<br>
+                                </tr>
+        
+                            {% endfor %}
+                            </table>
+                        </div>
+                        {% endif %}
+
+                        {% endif %}
+            </div>
+        </div>
+
+</body>
+
+</html>

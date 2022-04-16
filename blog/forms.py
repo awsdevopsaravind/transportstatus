@@ -1,8 +1,9 @@
 from faulthandler import disable
+from multiprocessing import AuthenticationError
 from xml.etree.ElementInclude import include
 from django import forms
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 from .models import Profile
 from .models import *
 
@@ -12,6 +13,11 @@ class UserRegisterForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
+
+class LoginForm(AuthenticationForm):
+    class Meta:
+        model = User
+        fields = ['username', 'password']
 
 class UserUpdateForm(forms.ModelForm):
     email = forms.EmailField()
@@ -77,11 +83,20 @@ class VehiclePaymentsForm(forms.ModelForm):
         model = VehiclePayments
         fields = '__all__'
 
-class ReportsForm(forms.ModelForm):
-    trip_date = forms.DateField(required=True)
+class AddCompanyDetailsForm(forms.ModelForm):
     class Meta:
-        model = LayerWiseTripDetails
-        fields = ['trip_date', 'vehicle_owner_name']
+        model = CompanyName
+        fields = '__all__'
+
+class AddLoadtypeDetailsForm(forms.ModelForm):
+    class Meta:
+        model = LoadType
+        fields = '__all__'
+
+class AddQuarryOwnerDetailsForm(forms.ModelForm):
+    class Meta:
+        model = QuarryDetails
+        fields = '__all__'
 
 class AddOwnerDetailsForm(forms.ModelForm):
     class Meta:
@@ -92,6 +107,34 @@ class AddVehicleDetailsForm(forms.ModelForm):
     class Meta:
         model = VehicleDetails
         fields = '__all__'
+
+class DailyReportForm(forms.ModelForm):
+    trip_date = forms.DateField(required=True)
+    class Meta:
+        model = LayerWiseTripDetails
+        fields = ['trip_date', 'vehicle_owner_name']
+
+class TripSearchForm(forms.ModelForm):
+   class Meta:
+     model = LayerWiseTripDetails
+     fields = ['trip_date', 'load_type']
+
+class TripSearchForm_old(forms.ModelForm):
+   class Meta:
+     model = exceldata1
+     fields = ['trip_date1', 'material']
+
+class QuarryOwnerForm(forms.ModelForm):
+   class Meta:
+     model = LayerWiseTripDetails
+     fields = ['trip_date', 'load_type', 'quarry_owner_name']
+
+class DailyGstInvoicesForm(forms.ModelForm):
+
+   class Meta:
+     model = LayerWiseTripDetails
+     fields = ['trip_date']
+
 
 from django import forms
 from .models import Person, City

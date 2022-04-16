@@ -1,0 +1,249 @@
+{% load static %}
+{% load total_amount_float %}
+{% load getnumtoWords %}
+{% load multiply_float %}
+{% load tax_amount %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excel Document</title>
+ <!--   <link rel="stylesheet" href="css/bootstrap.min.css"> 
+    <link rel="stylesheet" href="css/page.css"> 
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/css/page.css' %}">
+ -->
+ <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+ <style>table, td, th { border: 1px solid black;} table {}
+    th {height: auto;text-align: center;padding: 0px;}
+    td {height: auto;text-align: left;padding: 3px;}
+    
+     /* @page { size: a4 portrait; @frame header_frame { -pdf-frame-content: header_content;
+            left: 50pt; width: 512pt; top: 0pt; height: auto;
+        }@frame content_frame { left: 50pt; width: 512pt; top: 20pt; height: auto;
+        }@frame footer_frame { -pdf-frame-content: footer_content;left: 50pt; width: 512pt; top: 672pt; height: auto;}
+    }  */
+    .company-name{
+        font-size: 14px;text-align: left !important;padding: 5px;
+    }
+    .text-bold{
+        font-weight: bold;
+    }
+    .text-size{
+        font-size: 12px !important;
+    }
+.pono{
+    font-size:12px;
+    font-weight: bold;
+    text-align: right !important;
+}
+.padding-lines{
+    padding: 5px !important;
+    
+}
+.firstc{
+    text-align: center !important;
+}
+.row1{
+    height: auto;
+    font-weight: bold;
+    
+}
+.head-width{
+   font-size: 9px !important;
+   text-align: center !important;
+}
+.empty-col{
+    width: 90px !important;
+}
+.padding-td{
+    padding-top: 6px;
+
+}
+.height-td{
+    height: 200px;
+}
+.img-space{
+    margin-left: 390px;
+    margin-top:20px;
+}
+.stamp-content{
+    font-size: 12px;
+}
+
+
+
+
+</style>
+
+
+</head>
+<body>
+    {% for dbframe in dbframes %}
+    <div class="card card-body">
+    <table class="table table-sm">
+        <tr>
+            <td colspan="8" class="firstc"><span style="font-weight: bolder;font-size: 16px;">TAXABLE INVOICE</span></td>
+        </tr>
+        <tr>
+            <td colspan="8" class="firstc"><span style="font-size: 16px;">ORIGINAL COPY FOR RECIPIENT</span></td>
+        </tr>
+    </table>
+    <table class="table table-sm table-responsive table-bordered">
+        <tr>
+            <td colspan="5" class="company-name"> <span class="text-bold">MANOREDDY TRANSMINING & CONSTRUCTIONS PVT LTD </span><br>
+                <span class="text-size" >HOUSE NO.1-60-30/1/114/136, G-1, SUBHADRA NILAYAM,<br>
+                ANJAIAH NAGAAR, GACHIBOWLI , TELANGANA- 500081<br>
+                GST NO: 36AAMCM8486B1Z3<br>
+                Email id: manoreddypvtltd@outlook.com</span></td>
+            <td colspan="3"> <span style="font-weight: bold; margin-top:20px;font-size: 14px;">
+               
+                INVOICE NO: 000{{dbframe.invoice_number}}/21-22<br>
+                INVOICE DATE: 30/03/22</span> <br>
+                <span class="pono">  PO NO : </span><br><br><br><br><br>
+                </td>
+                         
+        </tr>
+        <tr>
+            <td colspan="4" class="padding-lines"><span style="font-weight: bold;font-size: 14px;"> BILLED TO( CONSIGNEE) <br>
+                            ABHIRAV INFRA & REALTORS PVT LTD <br></span>
+                           <span style="font-size: 12px;"> 4 TH FLOOR, 735/3839 NRAR KALI MANDIR <br>
+                            AMBAPUA, BRAHMAPUR, <br>
+                            AMBAPUA <br>
+                            GOPALPUR <br>
+                            GST TIN -21AABCE0095M1ZT</span><br>
+            </td>
+            <td colspan="4"><span style="font-weight: bold;font-size: 14px;"> PLACE OF DELIVERY<br>
+                5400- CONSTRUCTION OF INNER<br>
+                HARBOUR PROJECTS<br></span>
+                <span style="font-size: 12px;" LARSEN &TURBO Ltd. INS VARSH<br>
+               RAMBILLI MANDALAM,<br>
+               NEAR ATCHUTAPURAM<br><br>
+               GST TIN: 37AAACL0140P1ZI<br></span>
+            </td>
+
+        </tr>
+   
+        <tr class="row1">
+            <td class="head-width">S. No.</td>
+            <td class="head-width">Vehicle No.</td>
+            <td class="head-width">DESCRIPTION</td>
+            <td class="head-width">HSN/SAC</td>
+            <td class="head-width">CHALLAN NO</td>
+            <td class="head-width">QTY(MT)</td>
+            <td class="head-width">RATE/MT (INCL.ROYALTY)</td>
+             <td class="head-width">AMOUNT</td>
+        </tr>
+   
+                
+        <tr>
+            <td class="head-width">01</td> 
+            <td class="head-width">{{dbframe.vehicle_number}}</td>
+            <td class="head-width">BOULDERS<br>
+                1 KG TO 1 TON</td>
+            <td class="head-width">25171010</td>
+            <td class="head-width">AS PER EXTRACT</td>
+            <td class="head-width">{{dbframe.qty_ton}}</td>
+            <td class="head-width">{{dbframe.rate_ton}}</td>
+            <td class="head-width">{{ dbframe.total_amount|floatformat:2  }}</td>
+            <!--
+            <td class="head-width">{% widthratio 37.22 1 dbframe.rate_ton as total_amount %}{{blocktranslate}}{{total_amount|floatformat:2}}{{endblocktranslate}}</td>
+-->
+        </tr>
+
+    </table>
+    <table class="table table-sm">
+    
+      <tr>
+            <td rowspan="6" colspan="3"></td>
+            <td colspan="2" class="head-width padding-td text-bold">TAXABLE AMOUNT</td>
+            <td class="head-width padding-td text-bold">{{dbframe.qty_ton}}</td>
+            <td class="empty-col"></td>
+             <td class="head-width padding-td text-bold">{{  dbframe.total_amount|floatformat:2 }}</td>
+        </tr> 
+        
+      <tr>
+            <td rowspan="5" colspan="2"></td>
+            <td class="head-width padding-td">STATE TAX</td>
+            <td class="head-width padding-td"> @0% </td>
+             <td class="head-width padding-td"> 0.00 </td>
+        </tr>
+        <tr>
+            <td class="head-width padding-td">CENTRAL TAX</td>
+            <td class="head-width padding-td"> @0% </td>
+            <td class="head-width padding-td"> 0.00 </td>
+        </tr>
+        <tr>
+            <td class="head-width padding-td">INTEGRATED TAX</td>
+            <td class="head-width padding-td"> @5% </td>
+            <td class="head-width padding-td text-bold">{{  dbframe.tax_amount|floatformat:2 }}</td>
+        </tr>
+    
+        <tr>
+            <td colspan="2" class="head-width">R OFF</td>
+             <td class="head-width padding-td">{{  dbframe.round_off|floatformat:2 }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="head-width text-bold">TOTAL</td>
+             <td class="head-width padding-td text-bold">{{  dbframe.total_amount_rounded|floatformat:2 }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="head-width padding-td text-bold">Amount in words</td>
+            <td class="head-width padding-td text-bold" colspan="6">{{  dbframe.total_amount_rounded|floatformat:0|getnumtoWords }}</td>
+        </tr>
+    </table>
+    <table class="table table-sm">
+        <tr>
+            <td rowspan="3" class="empty-col"></td>
+            <td class="head-width padding-td text-bold">HSN/SAC</td>
+            <td class="head-width padding-td text-bold">TAXABLE VALUE</td>
+            <td class="head-width padding-td text-bold">CENTRAL TAX</td>
+            <td class="head-width padding-td text-bold">STATE TAX</td>
+             <td class="head-width padding-td text-bold">INTEGRATED TAX</td>
+             <td  colspan="2" rowspan="3"></td>
+        </tr>
+        <tr>
+            
+            <td class="head-width padding-td text-bold">251142974</td>
+            <td class="head-width padding-td text-bold">{{  dbframe.total_amount|floatformat:2 }}</td>
+            <td class="head-width padding-td">0.00</td>
+            <td class="head-width padding-td">0.00</td>
+            <td class="head-width padding-td text-bold">{{  dbframe.tax_amount|floatformat:2 }}</td>
+        </tr>
+        <tr>
+            <td class="head-width padding-td" colspan="4">Tax is payable on Reverse Charges (yes/no)</td>
+            <td class="head-width padding-td"> NO </td>
+        </tr>
+         
+    </table>
+    
+    <div class="row m-5 img-space">
+        <div class="col-md-2"></div>
+        <div class="col-md-3"></div>
+        <div class="col-md-7">
+            <img src="media/images/profile_pics/e_seal_sign.png" width="250px" height="250px" class="stamp">
+            <p class="stamp-content">Authorized Signatory <br>
+                For Mano Reddy Transmining & Constructions Pvt Ltd</p>
+        </div>
+        
+    </div>
+
+
+    
+    
+    <div style="margin-top: 20px;" id="footer_content">(c) - page is autogenerated with e-seal & e-signature. 
+        
+    </div>     
+
+    <script src="{% static 'blog/js/bootstrap.js' %}"></script>
+    <script src="{% static 'blog/js/jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'blog/bootstrap.min.js' %}"></script>
+
+    {% endfor %}
+   
+</body>
+</html>
+
+

@@ -1,0 +1,96 @@
+{% extends "blog/base.html" %}
+{% block content %}
+
+    <style>
+        .image-thumbail {
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .list-group-item a {
+            text-decoration: none;
+            color: black;
+        }
+    </style>
+
+
+<body class="m-5">
+
+    <div class="container">
+        <div class="row">
+           <!-- <div class="col-md-3">
+                 {% if request.user.is_authenticated %}
+                <p>Hello {{request.user}}</p>
+                {% endif %}
+                
+                <div class="card">
+                    <div class="card-header">
+                        Categories
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <a href="{% url 'bills_gallery' %}">All</a>
+                        </li>
+                        {% for category in categories %}
+                        <li class=" list-group-item">
+                            <a href="{% url 'bills_gallery' %}?category={{category.name}}">
+                                {{category.name}}
+                            </a>
+                        </li>
+                        {% endfor %}
+
+
+                        <a hidden href="{% url 'add' %}" class="btn btn-dark btn-block btn-sm m-1">Add Photo</a>
+                        <a hidden href="{% url 'logout' %}" class="btn btn-dark btn-block btn-sm m-1">Logout</a>
+                    </ul>
+                </div>
+
+            </div>
+        -->
+            <div class="col-md-14">
+                
+
+                    {% for bills_photo in bills_photos %}
+                    
+                    <div class="col-md-12">
+                        <div class="row">
+                        <div class="card my-3 col-md-4 col">
+                            <img class="image-thumbail" src="{{bills_photo.royalty_image_front.url}}" alt="Card image cap">
+
+                            <div class="card-body">
+                                <small> {{bills_photo.trip_date}}_{{bills_photo.vehicle_number}}_{{bills_photo.qty_m3}}</small>
+                            </div>
+                            <a href="{{bills_photo.royalty_image_front.url}}" class="btn btn-outline-dark btn-sm m-1">View Royalty Bill</a>
+                        </div>
+                        <div class="card my-3 col-md-4 col">
+                            <img class="image-thumbail" src="{{bills_photo.waybill_image_front.url}}" alt="Card image cap">
+
+                            <div class="card-body">
+                                <small> {{bills_photo.trip_date}}_{{bills_photo.vehicle_number}}_{{bills_photo.qty_ton}}</small>
+                            </div>
+                            <a href="{{bills_photo.waybill_image_front.url}}" class="btn btn-outline-dark btn-sm m-1">View Waybill</a>
+                        </div>
+                        {% if bills_photo.waybill_image_back %}
+                        <div class="card my-3 col-md-4 col">
+                            <img class="image-thumbail" src="{{bills_photo.waybill_image_back.url}}" alt="Card image cap">
+
+                            <div class="card-body">
+                                <small> {{bills_photo.trip_date}}_{{bills_photo.vehicle_number}}_{{bills_photo.qty_ton}}</small>
+                            </div>
+                            <a href="{{bills_photo.waybill_image_back.url}}" class="btn btn-outline-dark btn-sm m-1">View Waybill Back</a>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                    {% empty %}
+                    <div class=" my-3 ">
+                    <h3>No photos...</h3>
+                    </div>
+                    {% endfor %}
+                
+            </div>
+        </div>
+    </div>
+
+</body>
+{% endblock content %}

@@ -13,7 +13,7 @@ from .views import (
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    path('home/', PostListView.as_view(), name='blog-home'),
+    path('home1/', PostListView.as_view(), name='blog-home'),
     path('houselist/', views.houselist, name='house-list'),
     path('user/<str:username>', UserPostListView.as_view(), name='user-posts'),
     path('post/<int:pk>/', PostDetailView.as_view(), name='post-detail'),
@@ -22,6 +22,8 @@ urlpatterns = [
     path('post/<int:pk>/delete/', PostDeleteView.as_view(), name='post-delete'),
     path('about/', views.about, name='blog-about'),
     path('register/', views.register1, name='register'),
+    #path('loginnew/', views.loginUser, name='loginnew'),
+     
     path('profile/', views.profile, name='profile'),
     path('password-reset/',
          auth_views.PasswordResetView.as_view(
@@ -61,6 +63,9 @@ urlpatterns = [
     path('owner_details/<str:pk_owner>/', views.ownerDetails, name="owner_details"),
 
     path('addpayment/', views.addPaymentDetails, name='add_payment'),
+    path('addcompany/', views.addCompanyDetails, name='add_company'),
+    path('addmaterial/', views.addLoadtypeDetails, name='add_material'),
+    path('addquarry/', views.addQuarryDetails, name='add_quarry'),
 
 
 
@@ -71,6 +76,10 @@ urlpatterns = [
     path('pdfday/<str:pk_day>/', views.pdf_day_view, name='pdf_day'),
     path('', views.engineerView, name='engineer_page'),
     path('home/', views.engineerView, name='home_page'),
+    path('billsgallery/', views.billsgallery, name='bills_gallery'),
+    path('billphoto/<str:pk>/', views.billPhoto, name='gallery_bills_view'),
+     
+
     
 
     path('initialadd/', views.layer1TripDetails, name='layer1add'),
@@ -85,9 +94,13 @@ urlpatterns = [
 
 
     path('dashboardnew/', views.dashboard_new, name='dashboard_new'),
-    path('reports/', views.reports_all_view, name='reports_all'),
+    path('dailyvehicleownerreport/', views.daily_vehicle_owner_view, name='daily_vehicle_owner_report'),
+    path('dailygstinvoicereport/', views.daily_gst_invoice_view, name='daily_gst_invoice_report'),
+    path('dailymaterialtypereport/', views.daily_material_type_view, name='daily_material_type_report'),
+    path('dailymaterialtypereport_old/', views.daily_material_type_view_old, name='daily_material_type_report_old'),
+    path('dailyquarryownerreport/', views.daily_quarry_onwer_view, name='daily_quarry_owner_report'),
     path('pdfdaytotal/<str:pk_day>/', views.pdf_day_total_view, name='pdf_day_total'),
-    path('pdfdayreport/<slug:pk_day>/<slug:pk_load_type/', views.pdf_day_report_view, name='pdf_day_report'),
-
+    path('pdfdaygst/', views.pdf_day_gst_view, name='pdf_day_gst'),
+    path('pdfdayreport/', views.pdf_day_report_view, name='pdf_day_report'),
     
 ]

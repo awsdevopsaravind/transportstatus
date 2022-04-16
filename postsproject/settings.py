@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'blog',
     'crispy_forms',
     'storages',
-    'bootstrapform'
+    'bootstrapform',
 ]
 
 MIDDLEWARE = [
@@ -78,13 +78,24 @@ WSGI_APPLICATION = 'postsproject.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
+'''
+DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'myworkdatabase1',
+            'USER': 'myworkadmin',
+            'PASSWORD': 'myworkadmin2022',
+            'HOST': 'myworkdb-1.cbjrsfqwea0e.us-east-2.rds.amazonaws.com',
+            'PORT': '3306',
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -127,7 +138,7 @@ MEDIA_URL = '/media/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-LOGIN_REDIRECT_URL = 'blog-home'
+LOGIN_REDIRECT_URL = 'engineer_page'
 LOGIN_URL = 'login'
 
 # Default primary key field type
