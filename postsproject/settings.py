@@ -25,8 +25,8 @@ SECRET_KEY = 'django-insecure-d%)v(6-h(cf!mn!&+b(rhhdlqoe+o6zm=gh*imy#u*7i(-(k4l
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-#ALLOWED_HOSTS = ['18.220.216.102']
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['3.141.117.117']
+#ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -150,6 +150,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #AWS_QUERYSTRING_AUTH = False
 #DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-AWS_ACCESS_KEY_ID = 'AKIA5YHSXZV2VARZU4VS'
-AWS_SECRET_ACCESS_KEY = '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'
+AWS_ACCESS_KEY_ID = ''
+AWS_SECRET_ACCESS_KEY = ''
 AWS_STORAGE_BUCKET_NAME = 'allbillsphotos'

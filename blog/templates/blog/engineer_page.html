@@ -368,7 +368,7 @@ background-color: #7CD1C0;
                                 <th>Royalty bill</th>
                                 <th>Way bill</th>
                                 {% if request.user.groups.all.0.name == "finance"   or request.user.groups.all.0.name == "admin" %}
-                                <th>Update</th>
+                                <th>Verify</th>
                                 {% endif %}
                             </tr>
                             {% for layer3tripdetail in layer3tripdetails %}
@@ -385,7 +385,7 @@ background-color: #7CD1C0;
                                 <td><a class="btn btn-sm btn-info" href="{% url 'get_pdf_way_bill' layer3tripdetail.id %} ">Get PDF</a></td>
                                 <!--these both fields should be hidden for engineer and malli-->
                                 {% if request.user.groups.all.0.name == "finance"   or request.user.groups.all.0.name == "admin" %}
-                                <td><a class="btn btn-sm btn-info" href="{% url 'layer4add' layer3tripdetail.id %}">Update</a></td>
+                                <td><a class="btn btn-sm btn-info" href="{% url 'layer4add' layer3tripdetail.id %}">Verify</a></td>
                                 {% endif %}
                             </tr>
                        
@@ -394,7 +394,7 @@ background-color: #7CD1C0;
                     {% else %}
                     <h5 align="center">Please add initial trip details.</h5>
                     {% endif %}
-                    {% include 'blog/pagination.html' with page=layer2posts %}
+                    {% include 'blog/pagination.html' with page=layer3posts %}
                 </div>
                
                 <div id="About" class="tabcontent table-responsive table-hover ">
@@ -486,7 +486,7 @@ background-color: #7CD1C0;
                     {% else %}
                     <h5 align="center">Please add initial trip details.</h5>
                     {% endif %}
-                    {% include 'blog/pagination.html' with page=layer2posts %}
+                    {% include 'blog/pagination.html' with page=layer4posts %}
                 </div>
            
        

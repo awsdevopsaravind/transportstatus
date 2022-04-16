@@ -662,7 +662,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 @login_required(login_url='login')
 def engineerView(request):
     a = request.user.groups
-    layer1details = LayerWiseTripDetails.objects.filter(Q(verifiedbyengineer='No')).order_by('-id')
+    layer1details = LayerWiseTripDetails.objects.filter(Q(verifiedbyengineer='No')).order_by('-id')[:25]
     layer1detailscount = layer1details.count()
     if layer1detailscount >0:
         layer1totalqty_in_m3 = "{:.2f}".format(layer1details.aggregate(Sum('qty_m3'))['qty_m3__sum'])
@@ -677,7 +677,7 @@ def engineerView(request):
     except EmptyPage:
         posts = paginator.page(paginator.num_pages)
     #layer2tripdetails = LayerWiseTripDetails.objects.filter((Q(sendtomalli=1) & Q(verifiedbymalli=0)) | (Q(verifiedbysuresh=2) & Q(verifiedbymalli=1)))
-    layer2tripdetails = LayerWiseTripDetails.objects.filter((Q(verifiedbymalli='No') & Q(verifiedbyengineer='Yes'))).order_by('-id')
+    layer2tripdetails = LayerWiseTripDetails.objects.filter((Q(verifiedbymalli='No') & Q(verifiedbyengineer='Yes'))).order_by('-id')[:25]
     layer2tripdetailscount = layer2tripdetails.count()
     if layer2tripdetailscount >0:
         layer2totalqty_in_m3 = "{:.2f}".format(layer2tripdetails.aggregate(Sum('qty_m3'))['qty_m3__sum'])
@@ -697,7 +697,7 @@ def engineerView(request):
         layer2posts = layer2paginator.page(layer2paginator.num_pages)
 
     #layer3tripdetails = LayerWiseTripDetails.objects.filter(Q(verifiedbymalli=1) & Q(verifiedbysuresh=0))
-    layer3tripdetails = LayerWiseTripDetails.objects.filter(Q(verifiedbysuresh='No') & Q(verifiedbymalli='Yes') ).order_by('-id')
+    layer3tripdetails = LayerWiseTripDetails.objects.filter(Q(verifiedbysuresh='No') & Q(verifiedbymalli='Yes') ).order_by('-id')[:25]
     layer3tripdetailscount = layer3tripdetails.count()
     if layer3tripdetailscount >0:
         layer3totalqty_in_m3 = "{:.2f}".format(layer3tripdetails.aggregate(Sum('qty_m3'))['qty_m3__sum'])
@@ -716,7 +716,7 @@ def engineerView(request):
     except EmptyPage:
         layer3posts = layer3paginator.page(layer3paginator.num_pages)
 
-    layer4tripdetails = LayerWiseTripDetails.objects.filter(Q(verifiedbymalli='Yes') & Q(verifiedbysuresh='Yes') ).order_by('-id')[:2]
+    layer4tripdetails = LayerWiseTripDetails.objects.filter(Q(verifiedbymalli='Yes') & Q(verifiedbysuresh='Yes') ).order_by('-id')[:25]
     layer4tripdetailscount = layer4tripdetails.count()
     if layer4tripdetailscount >0:
         layer4totalqty_in_m3 = "{:.2f}".format(layer4tripdetails.aggregate(Sum('qty_m3'))['qty_m3__sum'])
