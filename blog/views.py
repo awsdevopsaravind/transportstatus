@@ -19,11 +19,13 @@ from .forms import (
     AddCompanyDetailsForm,
     AddLoadtypeDetailsForm,
     AddQuarryOwnerDetailsForm,
+    CompanyPaymentsForm,
     DailyGstInvoicesForm,
     LoginForm,
     PersonForm,
     DailyReportForm,
     QuarryOwnerForm,
+    QuarryPaymentsForm,
     TripSearchForm,
     TripSearchForm_old,
     UserRegisterForm, 
@@ -513,17 +515,43 @@ def addLoadtypeDetails(request):
     return render(request, 'blog/add_material_details.html', context)
 
 @login_required(login_url='login')
-def addPaymentDetails(request):
+def addVehiclePaymentDetails(request):
     user = request.user
     form = VehiclePaymentsForm()
     if request.method == 'POST':
         form = VehiclePaymentsForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, f'Your new Payment details has been saved!')
+            messages.success(request, f'Your Vehicle Payment details has been saved!')
             return redirect('/')
     context = {'form':form}
-    return render(request, 'blog/add_payment_details.html', context)
+    return render(request, 'blog/add_vehicle_payment_details.html', context)
+
+@login_required(login_url='login')
+def addQuarryPaymentDetails(request):
+    user = request.user
+    form = QuarryPaymentsForm()
+    if request.method == 'POST':
+        form = QuarryPaymentsForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Your Quarry Payment details has been saved!')
+            return redirect('/')
+    context = {'form':form}
+    return render(request, 'blog/add_quarry_payment_details.html', context)
+
+@login_required(login_url='login')
+def addCompanyPaymentDetails(request):
+    user = request.user
+    form = CompanyPaymentsForm()
+    if request.method == 'POST':
+        form = CompanyPaymentsForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Your Company Payment details has been saved!')
+            return redirect('/')
+    context = {'form':form}
+    return render(request, 'blog/add_company_payment_details.html', context)
 
 @login_required(login_url='login')
 def updateTripDetails(request, pk):
@@ -1315,25 +1343,60 @@ def daily_material_type_view(request):
 
 @login_required(login_url='login')
 def daily_quarry_onwer_view(request):
-    queryset = []
-    title = 'List of Items'
+    dailyquarryowner_querysets = []
+    selected_quarry_owner=request.GET.get('quarry_owner_name')
+    if selected_quarry_owner == 'None':
+        title = 'List of Trips for '+selected_quarry_owner+' quarry '
+    else:
+        title = ''
     dailyquarryowner_form = QuarryOwnerForm(request.GET or None)
     context = {   'title':title
                 , 'dailyquarryowner_form':dailyquarryowner_form
-                , 'queryset':queryset
+                , 'dailyquarryowner_querysets':dailyquarryowner_querysets
                 }
-    if request.method == 'GET':
-        dailyquarryowner_querysets = LayerWiseTripDetails.objects.filter(Q(load_type=dailyquarryowner_form['load_type'].value()),Q(trip_date=dailyquarryowner_form['trip_date'].value()),Q(quarry_owner_name=dailyquarryowner_form['quarry_owner_name'].value()))
-        print(dailyquarryowner_querysets)
-        for a in dailyquarryowner_querysets:
-            print(a.qty_ton)
-            print(a.qty_m3)
-            print(a.trip_amount)
-        context = {   'title':title
-                    , 'dailyquarryowner_form':dailyquarryowner_form
-                    ,  "dailyquarryowner_querysets": dailyquarryowner_querysets
-                    }
-        #return redirect('/reports/')
+    dailyquarryowner_querysets = LayerWiseTripDetails.objects.filter(Q(load_type=dailyquarryowner_form['load_type'].value()),Q(trip_date=dailyquarryowner_form['trip_date'].value()),Q(quarry_owner_name=dailyquarryowner_form['quarry_owner_name'].value()))
+    dailyquarryowner_querysets_count = dailyquarryowner_querysets.count()
+    if dailyquarryowner_querysets_count >=1:
+        g2 = 0
+        g3=0
+        for a2 in dailyquarryowner_querysets:
+            d2 = a2.quarry_owner_amount
+            f2 = d2+g2
+            g3 += f2
+        totalamount_quarry = g3
+    else:
+        totalamount_quarry=0
+    quarry_payments_data = QuarryPayments.objects.filter(Q(amount_given_date=dailyquarryowner_form['trip_date'].value()))
+    quarryownertotalamount = dailyquarryowner_querysets.values('trip_date','quarry_owner_name').annotate(Sum('qty_ton'))
+    quarry_total_advance = quarry_payments_data.values('amount_given_date').annotate(Sum('amount_given'))
+    if quarry_total_advance.count() >=1:
+        total_advance_given_quarry = quarry_total_advance[0].get('amount_given__sum')
+        total_payment_tobedone_quarry = totalamount_quarry-quarry_total_advance[0].get('amount_given__sum')
+    else:
+        total_advance_given_quarry = 0
+        total_payment_tobedone_quarry = totalamount_quarry
+    print(dailyquarryowner_querysets)
+    for a in dailyquarryowner_querysets:
+        print(a.qty_ton)
+        print(a.qty_m3)
+        print(a.trip_amount)
+    quarryownertripspaginator = Paginator(dailyquarryowner_querysets, 3)
+    page = request.GET.get('page')
+    try:
+        quarryownertripslist = quarryownertripspaginator.page(page)
+    except PageNotAnInteger:
+        quarryownertripslist = quarryownertripspaginator.page(1)
+    except EmptyPage:
+        quarryownertripslist = quarryownertripspaginator.page(quarryownertripspaginator.num_pages)
+    context = {   'title':title
+                , 'page':page, 'quarryownertripslist':quarryownertripslist
+                , 'dailyquarryowner_form':dailyquarryowner_form
+                ,  "dailyquarryowner_querysets": dailyquarryowner_querysets
+                , 'quarryownertotalamount':quarryownertotalamount, 'quarry_total_advance':quarry_total_advance,'totalamount_quarry':totalamount_quarry
+               , 'quarry_payments_data':quarry_payments_data,'total_advance_given_quarry':total_advance_given_quarry,'total_payment_tobedone_quarry':total_payment_tobedone_quarry
+               
+                }
+    #return redirect('/reports/')
     return render(request, 'blog/dailyquarryownerreport.html', context)
 
 

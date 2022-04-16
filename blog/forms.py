@@ -83,6 +83,16 @@ class VehiclePaymentsForm(forms.ModelForm):
         model = VehiclePayments
         fields = '__all__'
 
+class QuarryPaymentsForm(forms.ModelForm):
+    class Meta:
+        model = QuarryPayments
+        fields = '__all__'
+
+class CompanyPaymentsForm(forms.ModelForm):
+    class Meta:
+        model = CompanyPayments
+        fields = '__all__'
+
 class AddCompanyDetailsForm(forms.ModelForm):
     class Meta:
         model = CompanyName

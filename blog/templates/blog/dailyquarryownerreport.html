@@ -1,11 +1,12 @@
 {% load crispy_forms_tags %}
+{% load multiply_float %}
 <!DOCTYPE html>
 <html>
 
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Get Reports</title>
+    <title>Get Quarry Reports</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
 
     <!-- CSS only -->
@@ -21,71 +22,96 @@
             <div class="col-md-4">
                 <a href="{% url 'engineer_page' %}" class="btn btn-dark my-3">Go Back</a>
                 <div class="card">
-
-
-                    <form method='GET' action="{% url 'pdf_day_report'  %}%%" enctype="multipart/form-data">
-                        {% csrf_token %}
-						
-					
-						<button type="submit" class="btn btn-primary m-3" onclick="getInputValue();">
-							<a class="nav-item nav-link" href=""></a>Get PDF</button>
-                        
-                            <button type="button" onclick="getInputValue();">Get Value</button>
-    
-                            <p> The value of the option selected is:
-                                <span class="output"></span>
-                            </p>
-                         
-                         
-                             
-                        </form> 
                         <br> 
                         <div>
-                        <form method='GET' action=''>{% csrf_token %}
-                            {{dailyquarryowner_form|crispy}}
-                                <input type="submit" value='Search'/>
-                        </form>
+                            <div class="col-md-8">
+                                {% if messages %}
+                                  {% for message in messages %}
+                                    <div class="alert alert-{{ message.tags }}">
+                                      {{ message }}
+                                    </div>
+                                  {% endfor %}
+                                {% endif %}
+                            </div>
+                            <form method='GET' action=''>{% csrf_token %}
+                                {{dailyquarryowner_form|crispy}}
+                                    <input type="submit" name="search" value='Search'/>                          
+                            </form>
                         </div>
                         <br> 
-                        <div>
+                </div>
+            </div>
+
                             
-                            {% if dailyvehicleowner_querysets.count == 0 %}
+                            {% if dailyquarryowner_querysets.count == 0 %}
                             <p>Please select atleast one date..</p>
                             {% else %}
                             {{title}}<br>
-                            {% for dailyquarryowner_queryset in dailyquarryowner_querysets %}
-                            {{dailyquarryowner_queryset.trip_date}}, {{dailyquarryowner_queryset.quarry_owner_name}}, {{dailyquarryowner_queryset.load_type}}<br>
-                            {{dailyquarryowner_queryset.qty_ton}}<br>
-                            {{dailyquarryowner_queryset.qty_m3}}<br>
-                            {{dailyquarryowner_queryset.qty_m3_actual_submit}}<br>
-                            {{dailyquarryowner_queryset.rate_ton}}<br>
-                            {{dailyquarryowner_queryset.qty_m3_pending}}<br>
-                            {{dailyquarryowner_queryset.trip_amount}}<br>
-                            {{dailyquarryowner_queryset.tax_amount}}<br>
-                            {{dailyquarryowner_queryset.trip_total_amount}}<br>
-                            {{dailyquarryowner_queryset.round_off_amount}}<br>
-                            {{dailyquarryowner_queryset.floor_amount}}<br>
+                            
+                            <div>
+                                <div> {%	include	'blog/pagination.html'	with	page=quarryownertripslist	%}                   
+                                    <table class="table table-sm">
+                                        <tr>
+                                            <th>S.No. Number</th>
+                                            <th>Trip Date</th>
+                                            <th>Vehicle Number</th>
+                                            <th>Load Type</th>
+                                            <th>Qty m3</th>
+                                            <th>TF Number</th>
+                                            <th>Qty in Ton</th>
+                                            <th>Actual Qty m3</th>
+                                            <th>Pending m3</th>
+                                            <th>Rate per Ton</th>
+                                            <th>Trip Amount</th>
+                                            <th>Tax Amount</th>
+                                            <th>Trip Total Amount</th>
+                                            <th>Roundoff Amount</th>
+                                            <th>Trip Final Amount</th>
+                                        </tr>
+                                       
+                                        {% for dailyquarryowner_queryset in dailyquarryowner_querysets %}
+                                        <tr>
+                                            <td>{{forloop.counter}}</td> 
+                                            <td>{{dailyquarryowner_queryset.trip_date}}</td> 
+                                            <td>{{dailyquarryowner_queryset.vehicle_number}}</td>
+                                            <td>{{dailyquarryowner_queryset.load_type}}</td>
+                                            <td>{{dailyquarryowner_queryset.qty_m3}}</td>
+                                            <td>{{dailyquarryowner_queryset.tf_number}}</td>
+                                            <td>{{dailyquarryowner_queryset.qty_ton|floatformat:2}}</td>
+                                            <td>{{dailyquarryowner_queryset.qty_m3_actual_submit|floatformat:2}}</td>
+                                            <td>{{dailyquarryowner_queryset.qty_m3_pending|floatformat:2}}</td>
+                                            <td>{{dailyquarryowner_queryset.quarry_owner_name.quarry_ton_rate|floatformat:2}}</td>
+                                            <td>{{dailyquarryowner_queryset.quarry_owner_amount|floatformat:2}}</td>
+                                            <td>{{dailyquarryowner_queryset.quarry_tax_amount|floatformat:2}}</td>
+                                            <td>{{dailyquarryowner_queryset.quarry_trip_total_amount|floatformat:2}}</td>
+                                            <td>{{dailyquarryowner_queryset.quarry_round_off_amount|floatformat:2}}</td>
+                                            <td>{{dailyquarryowner_queryset.quarry_floor_amount|floatformat:0}}<br>
+                                        </tr>
+                
+                                    {% endfor %}
+                                    </table>
+                            <hr>
+                            {% for quarryownertotalamounts in quarryownertotalamount%}
+                            <h5> Total Tons: {{quarryownertotalamounts.qty_ton__sum|floatformat:2}} </h5>
+                            <h5> Actual Amount: {{ totalamount_quarry|floatformat:2}}</h5>
+                            <h5> Advance Given: {{ total_advance_given_quarry|floatformat:2}}</h5>
+                            <h5> Yet to Pay: {{ total_payment_tobedone_quarry|floatformat:2}}</h5>
                             {% endfor %}
-                            {% endif %}
+                            <a href="{% url 'add_quarry_payment' %}" class="btn btn-dark my-3">Pay Now</a>
 
+                            </div>
+                
                         </div>
-					
-                </div>
+                          
+                            </div>
+                
+                        </div>
+                   
+
+                        {% endif %}
             </div>
         </div>
-    </div>
-   <script>
-        function getInputValue(){
-            // Selecting the input element and get its value 
-            var inputVal = document.getElementById("description").value;
-            
-            // Displaying the value
-            alert(inputVal);
-            selectElement = document.querySelector('#selected_date');
-            output = selectElement.value;
-            document.querySelector('.output').textContent = output;
-        }
-    </script>
+
 </body>
 
 </html>

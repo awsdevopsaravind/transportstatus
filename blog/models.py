@@ -258,13 +258,32 @@ class LayerWiseTripDetails(models.Model):
         return self.vehicle_owner_amount+ self.vehicle_tax_amount
     @property
     def vehicle_round_off_amount(self):
-        abc = self.vehicle_trip_total_amount-floor(self.vehicle_trip_total_amount)
-        bcd =round(abc,2)
-        return bcd
+        abcd = self.vehicle_trip_total_amount-floor(self.vehicle_trip_total_amount)
+        bcde =round(abcd,2)
+        return bcde
     @property
     def vehicle_floor_amount(self):
         return round((self.vehicle_trip_total_amount-self.vehicle_round_off_amount),2)
- 
+    
+        # fields for quarry owners payments
+    @property
+    def quarry_owner_amount(self):
+        return float(self.qty_ton)*float(self.quarry_owner_name.quarry_ton_rate)
+    @property
+    def quarry_tax_amount(self):
+        return round((self.quarry_owner_amount/100)*5,2)
+    @property
+    def quarry_trip_total_amount(self):
+        return self.quarry_owner_amount+ self.quarry_tax_amount
+    @property
+    def quarry_round_off_amount(self):
+        abcde = self.quarry_trip_total_amount-floor(self.quarry_trip_total_amount)
+        bcdef =round(abcde,2)
+        return bcdef
+    @property
+    def quarry_floor_amount(self):
+        return round((self.quarry_trip_total_amount-self.quarry_round_off_amount),2)
+
 
 
 class exceldata1(models.Model):
@@ -292,6 +311,24 @@ class VehiclePayments(models.Model):
     amount_type = models.CharField(max_length=200, blank=False, null=False, choices=AMOUNTTYPE, default='Advance')
     advance_given_date = models.DateField( null=False, blank=False)
     amount_given = models.FloatField(null=False, blank=False)
+    remarks = models.CharField(max_length=200,null=False, blank=False)
+    amount_receipt = models.ImageField( null=False, blank=True)
+
+class QuarryPayments(models.Model):
+    quarry_owner_name = models.ForeignKey(
+        QuarryDetails , on_delete=models.SET_NULL, null=True, blank=False)
+    amount_type = models.CharField(max_length=200, blank=False, null=False, choices=AMOUNTTYPE, default='Advance')
+    amount_given_date = models.DateField( null=False, blank=False)
+    amount_given = models.FloatField(null=False, blank=False)
+    remarks = models.CharField(max_length=200,null=False, blank=False)
+    amount_receipt = models.ImageField( null=False, blank=True)
+
+class CompanyPayments(models.Model):
+    company_name = models.ForeignKey(
+        CompanyName , on_delete=models.SET_NULL, null=True, blank=False)
+    amount_type = models.CharField(max_length=200, blank=False, null=False, choices=AMOUNTTYPE, default='Advance')
+    amount_received_date = models.DateField( null=False, blank=False)
+    amount_received = models.FloatField(null=False, blank=False)
     remarks = models.CharField(max_length=200,null=False, blank=False)
     amount_receipt = models.ImageField( null=False, blank=True)
 

@@ -62,7 +62,9 @@ urlpatterns = [
     path('addowner/', views.addOwnerDetails, name='add_owner'),
     path('owner_details/<str:pk_owner>/', views.ownerDetails, name="owner_details"),
 
-    path('addpayment/', views.addPaymentDetails, name='add_payment'),
+    path('addvehiclepayment/', views.addVehiclePaymentDetails, name='add_vehicle_payment'),
+    path('addquarrypayment/', views.addQuarryPaymentDetails, name='add_quarry_payment'),
+    path('addcompanypayment/', views.addCompanyPaymentDetails, name='add_company_payment'),
     path('addcompany/', views.addCompanyDetails, name='add_company'),
     path('addmaterial/', views.addLoadtypeDetails, name='add_material'),
     path('addquarry/', views.addQuarryDetails, name='add_quarry'),

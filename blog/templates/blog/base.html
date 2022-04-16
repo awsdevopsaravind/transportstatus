@@ -90,6 +90,7 @@
               <a hidden class="nav-item nav-link" href="{% url 'dashboard' %}">Dashboard</a>
               {% if request.user.groups.all.0.name != "finance" %}
               <a class="nav-item nav-link" href="{% url 'daily_vehicle_owner_report' %}">Vehicles Reports</a>
+              <a class="nav-item nav-link" href="{% url 'daily_quarry_owner_report' %}">Quarry Reports</a>
               {% endif %}
               {% if request.user.groups.all.0.name != "engineer" %}
               <a class="nav-item nav-link" href="{% url 'daily_gst_invoice_report' %}">Daily Reports</a>
@@ -101,7 +102,6 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                   <a class="dropdown-item" href="{% url 'layer1add' %}">Trip</a>
-                  <a class="dropdown-item" href="{% url 'add_payment' %}">Payment</a>
                   <a class="dropdown-item" href="{% url 'add_owner' %}">Driver</a>
                   <a class="dropdown-item" href="{% url 'add_vehicle' %}">Vehicle</a>
                   <a class="dropdown-item" href="{% url 'add_owner' %}">Owner</a>
@@ -139,8 +139,10 @@
             <h3>Add New </h3>
               <ul class="list-group">
                 <li class="list-group-item list-group-item-light"><a id="AddNewTrip" href="{% url 'layer1add' %}" > Trip </a></li>
-                <li class="list-group-item list-group-item-light"><a href="{% url 'add_payment' %}"> Payment </a></li>
-                <li class="list-group-item list-group-item-light"><a href="{% url 'add_owner' %}">Owner</a></li>
+                <li class="list-group-item list-group-item-light"><a href="{% url 'add_vehicle_payment' %}">Vehicle Payment </a></li>
+                <li class="list-group-item list-group-item-light"><a href="{% url 'add_quarry_payment' %}">Quarry Payment </a></li>
+                <li class="list-group-item list-group-item-light"><a href="{% url 'add_company_payment' %}">Company Payment </a></li>
+                <li class="list-group-item list-group-item-light"><a href="{% url 'add_owner' %}">Transporter</a></li>
                 <li class="list-group-item list-group-item-light"><a href="{% url 'add_vehicle' %}"> Vehicle </a></li>
                 <li class="list-group-item list-group-item-light"><a href="{% url 'add_material' %}"> Material </a></li>
                 <li class="list-group-item list-group-item-light"><a href="{% url 'add_company' %}"> Company </a></li>
@@ -149,7 +151,7 @@
             </p>
           </div>
           <div class=" card2 left-card">
-            <a class="btn btn-primary  btn-sm btn-block" href="" style="height: 40px;line-height: 30px;border-radius:0px;">Add Pending M3 </a>
+            <a class="btn btn-primary  btn-sm btn-block" href="#" style="height: 40px;line-height: 30px;border-radius:0px;">Add Pending M3 </a>
             
             <div style="    overflow: auto;width: 320px;height: 200px;">
             <table class="table table-sm">
@@ -158,11 +160,12 @@
                   
                   <marquee id='scroll_news' style="font-family:Book Antiqua;color: blue;" >
                     <div onMouseOver="document.getElementById('scroll_news').stop();" onMouseOut="document.getElementById('scroll_news').start();">
-                      <a href="" style="color: red;">HTML</a>  | <a href="" style="color: red;">CSS</a>  |  <a href=../ style="color: red;">Java Script</a>
+                      <a href="" style="color: red;">28-03-2022::26.76</a> 
                     </div>
                   </marquee>
                 </td>
               </tr>
+              <!--
               <tr class="">
                 <td class="">
                   
@@ -194,10 +197,10 @@
                   </marquee>
                 </td>
               </tr>
-           
+            -->
               </table> </div>
               </div>
-        </div>
+      </div>
         {% endif %}
         <div class="col-md-8">
           {% if messages %}
