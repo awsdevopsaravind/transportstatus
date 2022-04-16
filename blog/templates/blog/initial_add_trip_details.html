@@ -155,27 +155,29 @@ body{
                             <label for="{{ form.qty_m3.id_for_label }}">Qty m3: *</label>
                             {{ form.qty_m3 }}
                         </div></div>
-                       
+                        <div class="col">
+                            <div class="fieldWrapper">
+                                {{ form.comments.errors }}
+                                <label for="{{ form.comments.id_for_label }}">Comments: *</label>
+                                {{ form.comments }}
+                            </div></div></div>
+
+                            <div class="row">
                             <div class="col">
                          <div class="fieldWrapper">
                             {{ form.royalty_image_front.errors }}
                             <label for="{{ form.royalty_image_front.id_for_label }}">Royalty image front: *</label>
                             {{ form.royalty_image_front }}
-                        </div></div></div>
-                        <div class="row">
+                        </div></div>
+                       
                             <div class="col">
                         <div class="fieldWrapper">
                             {{ form.royalty_image_back.errors }}
                             <label for="{{ form.royalty_image_back.id_for_label }}">Royalty image back:</label>
                             {{ form.royalty_image_back }}
-                        </div> </div>
+                        </div> </div></div>
                         
-                            <div class="col">
-                        <div class="fieldWrapper">
-                            {{ form.comments.errors }}
-                            <label for="{{ form.comments.id_for_label }}">Comments: *</label>
-                            {{ form.comments }}
-                        </div></div></div>
+                          
                      
                         <div  class="btn-form-init" style="margin: 15px; position: relative;top:20px;">
                            

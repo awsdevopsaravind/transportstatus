@@ -756,6 +756,104 @@ def engineerView(request):
     return render(request, 'blog/engineer_page.html', context)
 
 @login_required(login_url='login')
+def engineerViewNew(request):
+    a = request.user.groups
+    layer1details = LayerWiseTripDetails.objects.filter(Q(verifiedbyengineer='No')).order_by('-id')[:25]
+    layer1detailscount = layer1details.count()
+    if layer1detailscount >0:
+        layer1totalqty_in_m3 = "{:.2f}".format(layer1details.aggregate(Sum('qty_m3'))['qty_m3__sum'])
+    else:
+        layer1totalqty_in_m3 = 0
+    paginator = Paginator(layer1details, 3)
+    page = request.GET.get('page')
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+    #layer2tripdetails = LayerWiseTripDetails.objects.filter((Q(sendtomalli=1) & Q(verifiedbymalli=0)) | (Q(verifiedbysuresh=2) & Q(verifiedbymalli=1)))
+    layer2tripdetails = LayerWiseTripDetails.objects.filter((Q(verifiedbymalli='No') & Q(verifiedbyengineer='Yes'))).order_by('-id')[:25]
+    layer2tripdetailscount = layer2tripdetails.count()
+    if layer2tripdetailscount >0:
+        layer2totalqty_in_m3 = "{:.2f}".format(layer2tripdetails.aggregate(Sum('qty_m3'))['qty_m3__sum'])
+        layer2totalqty_in_ton = "{:.2f}".format(layer2tripdetails.aggregate(Sum('qty_ton'))['qty_ton__sum'])
+        layer2pending_m3 = "{:.2f}".format(float(layer2totalqty_in_m3) - (float(layer2totalqty_in_ton)/1.5))
+    else:
+        layer2totalqty_in_m3 = 0
+        layer2totalqty_in_ton = 0
+        layer2pending_m3 = 0
+    layer2paginator = Paginator(layer2tripdetails, 3)
+    page2 = request.GET.get('page')
+    try:
+        layer2posts = layer2paginator.page(page2)
+    except PageNotAnInteger:
+        layer2posts = layer2paginator.page(1)
+    except EmptyPage:
+        layer2posts = layer2paginator.page(layer2paginator.num_pages)
+
+    #layer3tripdetails = LayerWiseTripDetails.objects.filter(Q(verifiedbymalli=1) & Q(verifiedbysuresh=0))
+    layer3tripdetails = LayerWiseTripDetails.objects.filter(Q(verifiedbysuresh='No') & Q(verifiedbymalli='Yes') ).order_by('-id')[:25]
+    layer3tripdetailscount = layer3tripdetails.count()
+    if layer3tripdetailscount >0:
+        layer3totalqty_in_m3 = "{:.2f}".format(layer3tripdetails.aggregate(Sum('qty_m3'))['qty_m3__sum'])
+        layer3totalqty_in_ton = "{:.2f}".format(layer3tripdetails.aggregate(Sum('qty_ton'))['qty_ton__sum'])
+        layer3pending_m3 = "{:.2f}".format(float(layer3totalqty_in_m3)-(float(layer3totalqty_in_ton)/1.5))
+    else:
+        layer3totalqty_in_m3 = 0
+        layer3totalqty_in_ton = 0
+        layer3pending_m3 = 0
+    layer3paginator = Paginator(layer3tripdetails, 3)
+    page = request.GET.get('page')
+    try:
+        layer3posts = layer3paginator.page(page)
+    except PageNotAnInteger:
+        layer3posts = layer3paginator.page(1)
+    except EmptyPage:
+        layer3posts = layer3paginator.page(layer3paginator.num_pages)
+
+    layer4tripdetails = LayerWiseTripDetails.objects.filter(Q(verifiedbymalli='Yes') & Q(verifiedbysuresh='Yes') ).order_by('-id')[:25]
+    layer4tripdetailscount = layer4tripdetails.count()
+    if layer4tripdetailscount >0:
+        layer4totalqty_in_m3 = "{:.2f}".format(layer4tripdetails.aggregate(Sum('qty_m3'))['qty_m3__sum'])
+        layer4totalqty_in_ton = "{:.2f}".format(layer4tripdetails.aggregate(Sum('qty_ton'))['qty_ton__sum'])
+        layer4pending_m3 = "{:.2f}".format(float(layer4totalqty_in_m3)-(float(layer4totalqty_in_ton)/1.5))
+    else:
+        layer4totalqty_in_m3 = 0
+        layer4totalqty_in_ton = 0
+        layer4pending_m3 = 0
+    layer4paginator = Paginator(layer4tripdetails, 3)
+    page = request.GET.get('page')
+    try:
+        layer4posts = layer4paginator.page(page)
+    except PageNotAnInteger:
+        layer4posts = layer4paginator.page(1)
+    except EmptyPage:
+        layer4posts = layer4paginator.page(layer4paginator.num_pages)
+    
+    trip_details = LayerWiseTripDetails.objects.all()
+    distinct_dates = trip_details.values('trip_date','load_type').annotate(Sum('qty_m3'), Sum('qty_ton'))
+
+    form = Layerwise1TripDetailsForm()
+    if request.method == 'POST':
+        form = Layerwise1TripDetailsForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Your new initial trip details has been saved!')
+            return redirect('/')
+        else:
+            print('data is not valid')
+    context = { 'page':page, 'posts':posts, 'initialdetails':layer1details, 'layer1detailscount':layer1detailscount,'layer1totalqty_in_m3':layer1totalqty_in_m3
+                ,'layer2posts':layer2posts,'layer2tripdetailscount':layer2tripdetailscount, 'layer2tripdetails':layer2tripdetails, 'layer2totalqty_in_m3':layer2totalqty_in_m3, 'layer2totalqty_in_ton':layer2totalqty_in_ton, 'layer2pending_m3':layer2pending_m3
+                ,'layer3posts':layer3posts,'layer3tripdetailscount':layer3tripdetailscount, 'layer3tripdetails':layer3tripdetails, 'layer3totalqty_in_m3':layer3totalqty_in_m3, 'layer3totalqty_in_ton':layer3totalqty_in_ton, 'layer3pending_m3':layer3pending_m3
+                ,'layer4posts':layer4posts,'layer4tripdetailscount':layer4tripdetailscount, 'layer4tripdetails':layer4tripdetails, 'layer4totalqty_in_m3':layer4totalqty_in_m3, 'layer4totalqty_in_ton':layer4totalqty_in_ton, 'layer4pending_m3':layer4pending_m3
+                , 'distinct_dates': distinct_dates, 'trip_details':trip_details
+                , 'form':form}
+    return render(request, 'blog/engineer_page_new.html', context)
+
+
+
+@login_required(login_url='login')
 def layer1TripDetails(request):
     form = Layerwise1TripDetailsForm()
     if request.method == 'POST':

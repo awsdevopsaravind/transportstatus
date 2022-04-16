@@ -75,6 +75,7 @@ urlpatterns = [
     path('pdfall/<str:pk_day>/', views.pdf_alldata_view, name='pdf_all'),
     path('pdfday/<str:pk_day>/', views.pdf_day_view, name='pdf_day'),
     path('', views.engineerView, name='engineer_page'),
+    path('homenew/', views.engineerViewNew, name='engineer_page_new'),
     path('home/', views.engineerView, name='home_page'),
     path('billsgallery/', views.billsgallery, name='bills_gallery'),
     path('billphoto/<str:pk>/', views.billPhoto, name='gallery_bills_view'),

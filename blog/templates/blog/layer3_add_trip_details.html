@@ -1,6 +1,88 @@
 {% extends "blog/base.html" %}
 {% block content %}
 {% load crispy_forms_tags %}
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</head>
+
+<style>
+    .btn-submit-init{
+    width: 120px;
+    height: 40px;
+    float: left;
+    color: white;
+    background-color: #0069D9;
+    border-radius: 5px;
+    border: 1px solid whitesmoke;
+
+}
+.btn-close-init{
+    width: 120px;
+    background: gray;
+    color: white;
+    margin-left: 20px;
+}
+.card{
+    width: 850px;
+    box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
+    margin-top: 20px;
+    margin-left: -25px;
+    
+}
+form{
+    font-size: 14px !important;
+}
+
+/* disabled for date */
+input[name=trip_date]{
+    pointer-events: none;
+    background-color: #E9ECEF;
+}
+/* disabled for number using name*/
+input[name=qty_m3] {
+    pointer-events: none;
+    background-color: #E9ECEF;
+}
+
+input[name=qty_ton]{
+    pointer-events: none;
+    background-color: #E9ECEF;
+}
+input[name=tf_number]{
+    pointer-events: none;
+    background-color: #E9ECEF;
+}
+
+/* disabled for image using name*/
+input[name=royalty_image_front]   {
+    pointer-events:none;
+    background-color: #E9ECEF;
+}input[name=royalty_image_back]   {
+    pointer-events:none;
+    background-color: #E9ECEF;
+}input[name=waybill_image_front]   {
+    pointer-events:none;
+    background-color: #E9ECEF;
+}input[name=waybill_image_back]   {
+    pointer-events:none;
+    background-color: #E9ECEF;
+}
+/* disabled for  text using name */
+input[name=driver_name]   {
+    pointer-events:none;
+    background-color: #E9ECEF;
+}
+
+
+
+
+</style>
+
+
 
 <body class="m-5">
     <div class="container">
@@ -8,7 +90,7 @@
             <div class="col-md-12">
                 <div class="card card-body">
         
-                    <form action="" method="POST" enctype="multipart/form-data" id="personForm" data-vehicle-numbers-url="{% url 'ajax_load_vehicle_numbers' %}" novalidate>
+                    <form action="" method="POST" enctype="multipart/form-data" style="margin-left: 25px;margin-right:25px;" id="personForm" data-vehicle-numbers-url="{% url 'ajax_load_vehicle_numbers' %}" novalidate>
                         {% csrf_token %}
                         <!--<p>{{form | crispy }} </p>-->
                         <br>
@@ -16,98 +98,153 @@
                        
                         {{ form.non_field_errors }}
                         
-                        
+                        <div class="row">
+                            <div class="col">
                         <div class="fieldWrapper">
                             {{ form.trip_date.errors }}
                             <label for="{{ form.trip_date.id_for_label }}">Trip date: * </label>
                             {{ form.trip_date }}
-                        </div>
-
+                        </div></div>
+                        
+                            <div class="col">
                         <div class="fieldWrapper">
                             {{ form.company_name.errors }}
                             <label for="{{ form.company_name.id_for_label }}">Company name: *</label>
                             {{ form.company_name }}
-                        </div>
+                        </div></div>
+                       
+                            <div class="col">
                         <div class="fieldWrapper">
                             {{ form.vehicle_owner_name.errors }}
                             <label for="{{ form.vehicle_owner_name.id_for_label }}">Vehicle owner name: *</label>
                             {{ form.vehicle_owner_name }}
-                        </div>
+                        </div></div></div>
+                        <div class="row">
+                            <div class="col">
                         <div class="fieldWrapper">
                             {{ form.vehicle_number.errors }}
                             <label for="{{ form.vehicle_number.id_for_label }}">Vehicle number: *</label>
                             {{ form.vehicle_number }}
-                        </div>
+                        </div></div>
+                        
+                            <div class="col">
                         <div class="fieldWrapper">
                             {{ form.driver_name.errors }}
                             <label for="{{ form.driver_name.id_for_label }}">Driver name: * </label>
                             {{ form.driver_name }}
-                        </div>
+                        </div></div>
+                     
+                            <div class="col">
                         <div class="fieldWrapper">
                             {{ form.quarry_owner_name.errors }}
                             <label for="{{ form.quarry_owner_name.id_for_label }}">Quarry owner name: *</label>
                             {{ form.quarry_owner_name }}
-                        </div>
+                        </div></div></div>
+                        <div class="row">
+                            <div class="col">
                         <div class="fieldWrapper">
                             {{ form.load_type.errors }}
                             <label for="{{ form.load_type.id_for_label }}">Load type: *</label>
                             {{ form.load_type }}
-                        </div>
+                        </div></div>
+                        
+                            <div class="col">
                         <div class="fieldWrapper">
                             {{ form.tf_number.errors }}
                             <label for="{{ form.tf_number.id_for_label }}">Tf number:*</label>
                             {{ form.tf_number }}
-                        </div>
+                        </div></div>
+                     
+                            <div class="col">
                         <div class="fieldWrapper">
                             {{ form.qty_m3.errors }}
                             <label for="{{ form.qty_m3.id_for_label }}">Qty m3: *</label>
                             {{ form.qty_m3 }}
-                        </div>
-
-                        <div class="fieldWrapper">
-                            {{ form.royalty_image_front.errors }}
-                            <label for="{{ form.royalty_image_front.id_for_label }}">Royalty image front: *</label>
-                            {{ form.royalty_image_front }}
-                        </div>
-                        <div class="fieldWrapper">
-                            {{ form.royalty_image_back.errors }}
-                            <label for="{{ form.royalty_image_back.id_for_label }}">Royalty image back:</label>
-                            {{ form.royalty_image_back }}
-                        </div>
+                        </div></div></div>
+                        <div class="row">
+                            <div class="col">
                         <div class="fieldWrapper">
                             {{ form.qty_ton.errors }}
                             <label for="{{ form.qty_ton.id_for_label }}">Qty Ton: *</label>
                             {{ form.qty_ton }}
+                        </div></div>
+
+                        <div class="col">
+                            <div class="fieldWrapper"></div>
                         </div>
+
+                        <div class="col">
+                            <div class="fieldWrapper"></div>
+                        </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col">
+                        <div class="fieldWrapper">
+                            {{ form.royalty_image_front.errors }}
+                            <label for="{{ form.royalty_image_front.id_for_label }}">Royalty image front: *</label>
+                            {{ form.royalty_image_front }}
+                        </div></div>
+                       <!--
+                            <div class="col">
+                        <div class="fieldWrapper">
+                            {{ form.royalty_image_back.errors }}
+                            <label for="{{ form.royalty_image_back.id_for_label }}">Royalty image back:</label>
+                            {{ form.royalty_image_back }}
+                        </div></div>
+                    -->
+                            <div class="col">
                         <div class="fieldWrapper">
                             {{ form.waybill_image_front.errors }}
                             <label for="{{ form.waybill_image_front.id_for_label }}">Waybill image front: * </label>
                             {{ form.waybill_image_front }}
-                        </div>
-                        <div class="fieldWrapper">
-                            {{ form.waybill_image_back.errors }}
-                            <label for="{{ form.waybill_image_back.id_for_label }}">Waybill image back:</label>
-                            {{ form.waybill_image_back }}
-                        </div>
-                        <div class="fieldWrapper">
-                            {{ form.verifiedbyengineer.errors }}
-                            <label for="{{ form.verifiedbyengineer.id_for_label }}">Verifiedbyengineer: * </label>
-                            {{ form.verifiedbyengineer }}
-                        </div>
-                        <div class="fieldWrapper">
-                            {{ form.verifiedbymalli.errors }}
-                            <label for="{{ form.verifiedbymalli.id_for_label }}">Verifiedbymalli: * </label>
-                            {{ form.verifiedbymalli }}
-                        </div>
+                        </div></div>
+                        <div class="col">
+                            <div class="fieldWrapper">
+                                {{ form.waybill_image_back.errors }}
+                                <label for="{{ form.waybill_image_back.id_for_label }}">Waybill image back:</label>
+                                {{ form.waybill_image_back }}
+                            </div></div>
+                    </div>
+                    <br>
+                        <div class="row">
+                       
+                        <div class="col">
+                            <div class="fieldWrapper">
+                                {{ form.verifiedbyengineer.errors }}
+                                <label for="{{ form.verifiedbyengineer.id_for_label }}">Forwarded by Engineer: * </label>
+                                {{ form.verifiedbyengineer }}
+                            </div></div>
+                           
+                                <div class="col">
+                            <div class="fieldWrapper">
+                                {{ form.verifiedbymalli.errors }}
+                                <label for="{{ form.verifiedbymalli.id_for_label }}">Approved by Manager: * </label>
+                                {{ form.verifiedbymalli }}
+                            </div></div>
+                            <div class="col">
                         <div class="fieldWrapper">
                             {{ form.comments.errors }}
                             <label for="{{ form.comments.id_for_label }}">Comments: *</label>
                             {{ form.comments }}
-                        </div>
-                        <input type="submit" name="Submit">
+                        </div></div>
+                            </div>
+                            
+                            
+
+                       
+                        <!-- <input type="submit" name="Submit">
 
                         <a class="btn btn-outline-secondary" href="{% url 'engineer_page'  %}">Cancel</a>
-                        <br>
+                        <br> -->
+                        <div class="row"><div class="col">
+                            <div  class="btn-form-init" style="margin: 15px; position: relative;top:20px;">
+                               
+                                <input type="submit" name="Submit" class="btn-submit-init" style="margin-left: -15px;">
+    
+                                <a class="btn btn-outline-secondary btn-close-init" href="{% url 'engineer_page'  %}">Cancel</a>
+                                
+                        </div> </div></div>
                         
                     </form>
         
@@ -115,6 +252,22 @@
             </div>
       </div>
     </div>
-      
+    <!------disabled for select option------------>
+    <script>
+        //disabled for select option by using ID
+        document.getElementById("id_company_name").setAttribute("disabled", "disabled");
+        document.getElementById("id_vehicle_owner_name").setAttribute("disabled", "disabled");
+        document.getElementById("id_vehicle_number").setAttribute("disabled", "disabled");
+        document.getElementById("id_quarry_owner_name").setAttribute("disabled", "disabled");
+        document.getElementById("id_load_type").setAttribute("disabled", "disabled");
+        // if (this.value == 'L & T')
+        //     document.getElementById("id_company_name").removeAttribute("disabled");
+    
+    </script>
+
+
+
+
+
 {% endblock %}  
 </body>
