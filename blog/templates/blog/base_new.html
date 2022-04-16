@@ -91,33 +91,10 @@
           <div class="collapse navbar-collapse" id="navbarToggle">
             <div class="navbar-nav mr-auto">
               <a class="nav-item nav-link" href="{% url 'engineer_page' %}">Home</a>
-              <a hidden class="nav-item nav-link" href="{% url 'dashboard' %}">Dashboard</a>
-              <a hidden class="nav-item nav-link" href="{% url 'daily_vehicle_owner_report' %}">Reports</a>
-              <li hidden class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Add New
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="{% url 'layer1add' %}">Trip</a>
-                  <a class="dropdown-item" href="{% url 'add_payment' %}">Payment</a>
-                  <a class="dropdown-item" href="{% url 'add_owner' %}">Driver</a>
-                  <a class="dropdown-item" href="{% url 'add_vehicle' %}">Vehicle</a>
-                  <a class="dropdown-item" href="{% url 'add_owner' %}">Owner</a>
-                  <a class="dropdown-item" href="{% url 'add_owner' %}">Add Pending Royalty Dates Box</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                </div>
-              </li>
-              <a hidden class="nav-item nav-link" href="{% url 'blog-home' %}">Blog</a>
-              <a hidden class="nav-item nav-link" href="{% url 'house-list' %}">House List</a>
-              <a hidden class="nav-item nav-link" href="{% url 'bills_gallery' %}">Gallery</a>
-              <a hidden class="nav-item nav-link" href="{% url 'blog-about' %}">About</a>
             </div>
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
               {% if user.is_authenticated %}
-              <a hidden class="nav-item nav-link" href="{% url 'layer1add' %}">Add Trip details</a>
-              <a hidden class="nav-item nav-link" href="{% url 'post-create' %}">New Post</a>
                 <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
                 <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
               {% else %}
