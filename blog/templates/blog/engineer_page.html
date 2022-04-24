@@ -160,9 +160,7 @@ background-color: #7CD1C0;
                                 <th>Comments</th>
                                 <th>Royalty bill</th>
                                 {% if request.user.groups.all.0.name == "engineer" or request.user.groups.all.0.name == "admin" %}
-                                <th>Update</th>
-                                <th>Proceed</th>
-                                <th>Remove</th>
+                                <th colspan=3>Actions</th>
                                 {% endif %}
                                
                             </tr>
@@ -180,7 +178,7 @@ background-color: #7CD1C0;
                                 <td><a class="btn btn-sm btn-info" href="{% url 'get_pdf_royalty_bill' initialdetail.id %}">Get PDF</a></td>
                                 {% if request.user.groups.all.0.name == "engineer" or request.user.groups.all.0.name == "admin" %}
                                 <td><a class="btn btn-sm btn-info" href="{% url 'updatelayer1trip' initialdetail.id %}">Update</a></td>
-                                <td><a class="btn btn-sm btn-info" href="{% url 'layer2add' initialdetail.id %}">Proceed</a></td>
+                                <td><a class="btn btn-sm btn-info" href="{% url 'layer2add' initialdetail.id %}">Forward</a></td>
                                 <td><a class="btn btn-sm btn-danger" href="{% url 'deletelayer1trip' initialdetail.id %}">Delete</a></td>
                                 {% endif %}
                             </tr>

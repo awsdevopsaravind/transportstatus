@@ -15,7 +15,7 @@
 
 </head>
 
-<body class="m-5">
+<body  onload="document.FormName.reset();" class="m-5">
     <div class="container">
 
         <div class="row justify-content-center">
@@ -34,9 +34,39 @@
                                 {% endif %}
                             </div>
                             <form method='GET' action=''>{% csrf_token %}
-                                {{dailyvehicleowner_form|crispy}}
+                               <!-- {{dailyvehicleowner_form|crispy}}
                                     <input type="submit" name="search" value='Search'/>                          
                             </form>
+                            <form action="" style="height:550px;margin-left: 75px;margin-right: 75px;margin-top: -20px;" method="GET" enctype="multipart/form-data" >
+                                {% csrf_token %}
+-->
+                            {{ dailyvehicleowner_form.non_field_errors }}
+                            <div class="row">
+                                <div class="col">
+                                    From Date: <input type="date" name="fromdate">
+                                </div>
+                                <div class="col">
+                                    To Date: <input type="date" name="todate">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col"> 
+                                    <div class="fieldWrapper">
+                                        {{ dailyvehicleowner_form.vehicle_owner_name.errors }}
+                                        <label for="{{ dailyvehicleowner_form.vehicle_owner_name.id_for_label }}">Vehicle owner name: *</label>
+                                        {{ dailyvehicleowner_form.vehicle_owner_name }}
+                                    </div>
+                                </div>
+                            </div>
+                           
+                            
+                            <div  class="btn-form-init" style="margin: 15px; position: relative;top:20px;">
+                            <input type="submit" name="search" value='Search' class="btn-submit-init" style="margin-left: -15px;">
+                            <input type="submit" name="cancel" value='Cancel' class="btn-close-init" style="margin-left: 55px;" href="{% url 'engineer_page'  %}">
+                        
+                            </div> 
+                            </form>
+                            
                         </div>
                         <br> 
                 </div>
@@ -92,12 +122,17 @@
                                     </table>
                             <hr>
                             {% for vehicleownertotalamounts in vehicleownertotalamount%}
-                            <h5> Total Tons: {{vehicleownertotalamounts.qty_ton__sum|floatformat:2}} </h5>
-                            <h5> Actual Amount: {{ totalamount|floatformat:2}}</h5>
-                            <h5> Advance Given: {{ total_advance_given|floatformat:2}}</h5>
-                            <h5> Yet to Pay: {{ total_payment_tobedone|floatformat:2}}</h5>
+                            
+                                    <h5> Trip Date: {{vehicleownertotalamounts.trip_date}} </h5>
+                                    <h5> Total Tons: {{vehicleownertotalamounts.qty_ton__sum|floatformat:2}} </h5>
+                                    <h5> Actual Amount: {{ totalamount|floatformat:2}}</h5>
+                                    <h5> Advance Given: {{ total_advance_given|floatformat:2}}</h5>
+                                    <h5> Yet to Pay: {{ total_payment_tobedone|floatformat:2}}</h5>
+                            
                             {% endfor %}
-                            <a href="{% url 'add_vehicle_payment' %}" class="btn btn-dark my-3">Pay Now</a>
+                                
+                            <a href="{% url 'pay_vehicle_payment' total_payment_tobedone|floatformat:2 %}" class="btn btn-dark my-3">Pay Total</a>
+                            <a href="#" class="btn btn-dark my-3">View Advances</a>
 
                             </div>
                 

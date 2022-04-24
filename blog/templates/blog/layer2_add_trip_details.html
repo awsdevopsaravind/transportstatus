@@ -187,29 +187,35 @@ input[name=driver_name]   {
                       
                         <div class="row">
                             <div class="col">
-                        <div class="fieldWrapper">
-                            {{ form.qty_ton.errors }}
-                            <label for="{{ form.qty_ton.id_for_label }}">Qty Ton: *</label>
-                            {{ form.qty_ton }}
-                        </div></div>
-                        <div class="col-4">
-                            <div class="fieldWrapper">
-                                {{ form.verifiedbyengineer.errors }}
-                                <label for="{{ form.verifiedbyengineer.id_for_label }}">Forwarded by Engineer: </label>
-                                {{ form.verifiedbyengineer }}
-                            </div></div>
+                                <div class="fieldWrapper">
+                                    {{ form.qty_ton.errors }}
+                                    <label for="{{ form.qty_ton.id_for_label }}">Qty Ton: *</label>
+                                    {{ form.qty_ton }}
+                                </div>
+                            </div> 
+                            <!--<div class="col">
+                                <div class="fieldWrapper">
+                                    {{ form.verifiedbyengineer.errors }}
+                                    <label for="{{ form.verifiedbyengineer.id_for_label }}">Verified by engineer: *</label>
+                                    {{ form.verifiedbyengineer }}
+                                </div>
+                            </div>
+                        -->
                             <div class="col">
                                 <div class="fieldWrapper">
                                     {{ form.comments.errors }}
                                     <label for="{{ form.comments.id_for_label }}">Comments: *</label>
                                     {{ form.comments }}
-                                </div></div>
-                           </div>
+                                </div>
+                            </div>
+                        </div>
                      
                         <div  class="btn-form-init" style="margin: 15px; position: relative;top:20px;">
                            
-                            <input type="submit" name="Submit" class="btn-submit-init" style="margin-left: -15px;">
-
+                            <input type="submit" name="status" value="Forward" class="btn-submit-init" style="margin-left: -15px;">
+                           <!-- <input type="submit" value="reject" name="status" class="btn-submit-init" style="margin-left: -15px;">
+                            <input type="submit" value="accept" name="status" class="btn-submit-init" style="margin-left: -15px;">
+                           -->
                             <a class="btn btn-outline-secondary btn-close-init" href="{% url 'engineer_page'  %}">Cancel</a>
                             
                     </div> 

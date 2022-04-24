@@ -1,0 +1,143 @@
+.list-group{
+    overflow: auto;
+    width: 312px;
+    height: 200px;
+  }
+ 
+  label {
+      display: inline-block;
+      margin-bottom: 0.5rem;
+      font-size: 12px;
+      font-weight: bold;
+  }
+  /* .modal-body {
+      
+      padding-left: 50px !important;
+      padding-right: 50px !important;
+      padding-bottom: 30px !important;
+  } */
+  .oursidebar{
+    margin-top: 20px !important;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+      
+  }
+  .left-card{
+     
+      margin-top: 20px;
+      box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
+     
+  }
+  .left-sidebar{
+    position: fixed;
+    top: 140px;
+    width: 345px;
+    box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
+  }
+  .card2{
+    padding: 15px;
+    background-color: white;
+    border-radius: 3px;
+    / height: 290px; /
+  }
+ table,th,td{
+   border: 1px solid #dbd0d0 !important;
+ }
+.navbar-dark .navbar-nav .nav-link {
+color: rgba(255,255,255,.5);
+padding: 15px;
+}
+
+/* navigation vertica bar*/
+
+
+
+.sidenav {
+height: auto;
+width: 0;
+position: absolute;
+z-index: 1;
+top: 10px;
+left: -50px;
+background-color: #64868d;
+overflow: hidden;
+transition: 0.5s;
+padding-top: 40px;
+}
+
+.sidenav a {
+padding: 12px 8px 8px 32px;
+text-decoration: none;
+font-size: 14px;
+font-weight: bold;
+height: 40px;
+color: white;
+display: block;
+/ transition: 0.3s; /
+border-bottom: 1px solid rgb(33, 62, 73);
+
+margin-left: -35px;
+
+}
+
+.sidenav a:hover {
+background-color: #4AAEC1;
+animation: fadeIn; / referring directly to the animation's @keyframe declaration /
+animation-duration: 1s; / don't forget to set a duration! /
+}
+.sidenav .closebtn:hover {
+background-color: none;
+}
+
+.sidenav .closebtn {
+
+font-size: 25px;
+margin-left: 150px;
+margin-top: -55px;
+height: 54px;
+
+}
+
+/* @media screen and (max-height: 450px) {
+.sidenav {padding-top: 15px;}
+.sidenav a {font-size: 18px;}
+} */
+.addnew-btn{
+font-size: 20px;
+font-weight: bold;
+cursor: pointer;
+width: 250px;
+height: 50px;
+background-color: #4AAEC1;
+line-height: 47px;
+color: white;
+text-align: center;
+}
+.sidenav li{
+list-style: none !important;
+}
+
+
+
+
+
+
+.dropdown-container {
+display: none;
+background-color: #262626;
+padding-left: 8px;
+margin-left: -35px;
+text-align:center;
+}
+
+/ Optional: Style the caret down icon /
+.fa-caret-down {
+float: right;
+padding-right: 8px;
+}
+
+/ Some media queries for responsiveness /
+/* @media screen and (max-height: 450px) {
+.sidenav {padding-top: 15px;}
+.sidenav a {font-size: 12px;}
+} */
+

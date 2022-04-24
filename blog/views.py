@@ -528,6 +528,19 @@ def addVehiclePaymentDetails(request):
     return render(request, 'blog/add_vehicle_payment_details.html', context)
 
 @login_required(login_url='login')
+def payVehiclePaymentDetails(request, amount):
+    user = request.user
+    form = VehiclePaymentsForm()
+    if request.method == 'POST':
+        form = VehiclePaymentsForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Your Vehicle Payment details has been saved!')
+            return redirect('/')
+    context = {'form':form}
+    return render(request, 'blog/add_vehicle_payment_details.html', context)
+
+@login_required(login_url='login')
 def addQuarryPaymentDetails(request):
     user = request.user
     form = QuarryPaymentsForm()
@@ -690,7 +703,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 @login_required(login_url='login')
 def engineerView(request):
     a = request.user.groups
-    layer1details = LayerWiseTripDetails.objects.filter(Q(verifiedbyengineer='No')).order_by('-id')[:25]
+    layer1details = LayerWiseTripDetails.objects.filter(Q(forwarded='No')).order_by('-id')[:25]
     layer1detailscount = layer1details.count()
     if layer1detailscount >0:
         layer1totalqty_in_m3 = "{:.2f}".format(layer1details.aggregate(Sum('qty_m3'))['qty_m3__sum'])
@@ -705,7 +718,7 @@ def engineerView(request):
     except EmptyPage:
         posts = paginator.page(paginator.num_pages)
     #layer2tripdetails = LayerWiseTripDetails.objects.filter((Q(sendtomalli=1) & Q(verifiedbymalli=0)) | (Q(verifiedbysuresh=2) & Q(verifiedbymalli=1)))
-    layer2tripdetails = LayerWiseTripDetails.objects.filter((Q(verifiedbymalli='No') & Q(verifiedbyengineer='Yes'))).order_by('-id')[:25]
+    layer2tripdetails = LayerWiseTripDetails.objects.filter((Q(verifiedbymalli='No') & Q(forwarded='Forward'))).order_by('-id')[:25]
     layer2tripdetailscount = layer2tripdetails.count()
     if layer2tripdetailscount >0:
         layer2totalqty_in_m3 = "{:.2f}".format(layer2tripdetails.aggregate(Sum('qty_m3'))['qty_m3__sum'])
@@ -926,7 +939,10 @@ def layer2TripDetails(request, pk):
         form = Layerwise2TripDetailsForm(request.POST, request.FILES, instance=layer1trip_detail)
         if form.is_valid():
             if form.cleaned_data['qty_ton'] >= (form.cleaned_data['qty_m3'] * 1.5 ):
-                form.save()
+                post = form.save(commit=False)
+                post.forwarded = request.POST.get('status')
+                post.save()
+                print(post)
                 messages.success(request, f'Your trip details has been updated!')
                 return redirect('/')
             else:
@@ -1192,7 +1208,9 @@ def daily_vehicle_owner_view(request):
                 , 'dailyvehicleowner_form':dailyvehicleowner_form
                 , 'dailyvehicleowner_querysets':dailyvehicleowner_querysets
                 }
-    dailyvehicleowner_querysets = LayerWiseTripDetails.objects.filter(Q(trip_date=dailyvehicleowner_form['trip_date'].value()),Q(vehicle_owner_name=dailyvehicleowner_form['vehicle_owner_name'].value())).filter(Q(verifiedbymalli='Yes'))
+    to_date = request.GET.get('todate')
+    from_date = request.GET.get('fromdate')
+    dailyvehicleowner_querysets = LayerWiseTripDetails.objects.filter(Q(trip_date__range=[from_date,to_date]),Q(vehicle_owner_name=dailyvehicleowner_form['vehicle_owner_name'].value())).filter(Q(verifiedbymalli='Yes'))
     dailyvehicleowner_querysets_count = dailyvehicleowner_querysets.count()
     if dailyvehicleowner_querysets_count >=1:
         g1 = 0
@@ -1204,7 +1222,7 @@ def daily_vehicle_owner_view(request):
         totalamount = g
     else:
         totalamount=0
-    payments_data = VehiclePayments.objects.filter(Q(advance_given_date=dailyvehicleowner_form['trip_date'].value()))
+    payments_data = VehiclePayments.objects.filter(Q(advance_given_date__range=[from_date,to_date]))
     vehicleownertotalamount = dailyvehicleowner_querysets.values('trip_date','vehicle_owner_name').annotate(Sum('qty_ton'))
     total_advance = payments_data.values('advance_given_date').annotate(Sum('amount_given'))
     if total_advance.count() >=1:
@@ -1333,7 +1351,7 @@ def daily_material_type_view(request):
                 , 'queryset':queryset
                 }
     if request.method == 'GET':
-        dailymaterialtype_querysets = LayerWiseTripDetails.objects.filter(Q(load_type=dailymaterialtype_form['load_type'].value()),Q(trip_date=dailymaterialtype_form['trip_date'].value()))
+        dailymaterialtype_querysets = LayerWiseTripDetails.objects.filter(Q(load_type=dailymaterialtype_form['load_type'].value()),Q(trip_date__range=[dailymaterialtype_form['trip_date'].value(),"2022-03-30"]))
         context = {   'title':title
                     , 'dailymaterialtype_form':dailymaterialtype_form
                     ,  "dailymaterialtype_querysets": dailymaterialtype_querysets

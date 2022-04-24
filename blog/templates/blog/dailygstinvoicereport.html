@@ -32,11 +32,11 @@
                                   {% endfor %}
                                 {% endif %}
                               </div>
-                        <form method='GET' action=''>{% csrf_token %}
+                        <form method='GET' target=”_blank” action=''>{% csrf_token %}
                             {{daily_gstinvoice_form|crispy}}
                                 <input type="submit" name="search" value='Search'/>
-                                <input type="submit" name="getgstpdf" value='Get GST PDF'/> 
-                                <input type="submit" name="getwaybillspdf" value='Get Way Bills PDF'/> 
+                                <input type="submit" name="getgstpdf" value='Get GST PDF' /> 
+                                <input type="submit" name="getwaybillspdf" value='Get Way Bills PDF' target=”_blank”/> 
                             
                         </form>
                         </div>

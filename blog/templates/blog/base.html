@@ -13,10 +13,20 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+ 
     <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
 
     <link rel="stylesheet" type="text/css" href="{% static 'blog/main.css' %}">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/styles.css' %}">
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
     {% if title %}
         <title>Django Blog - {{ title }}</title>
@@ -27,130 +37,240 @@
 
     
     <style>
-      .list-group{
-        overflow: auto;
-        width: 312px;
-        height: 200px;
+
+      .bg-steel {
+          background-color:  #6C757D;
+        }
+            .list-group{
+              overflow: auto;
+              width: 312px;
+              height: 200px;
+            }
+           
+            label {
+                display: inline-block;
+                margin-bottom: 0.5rem;
+                font-size: 12px;
+                font-weight: bold;
+            }
+            /* .modal-body {
+                
+                padding-left: 50px !important;
+                padding-right: 50px !important;
+                padding-bottom: 30px !important;
+            } */
+            .oursidebar{
+              margin-top: 20px !important;
+              box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+                
+            }
+            .left-card{
+               
+                margin-top: 20px;
+                box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
+               
+            }
+            .left-sidebar{
+              position: fixed;
+              top: 140px;
+              width: 345px;
+              box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
+            }
+            .card2{
+              padding: 15px;
+              background-color: white;
+              border-radius: 3px;
+              /* height: 290px; */
+            }
+           table,th,td{
+             border: 1px solid #dbd0d0 !important;
+           }
+      .navbar-dark .navbar-nav .nav-link {
+          color: white;
+          padding: 15px;
       }
-     
-      label {
-          display: inline-block;
-          margin-bottom: 0.5rem;
-          font-size: 12px;
-          font-weight: bold;
-      }
-      /* .modal-body {
-          
-          padding-left: 50px !important;
-          padding-right: 50px !important;
-          padding-bottom: 30px !important;
-      } */
-      .oursidebar{
-        margin-top: 20px !important;
-        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-          
-      }
-      .left-card{
-         
-          margin-top: 20px;
-          box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
-         
-      }
-      .left-sidebar{
-        position: fixed;
-        top: 140px;
-        width: 345px;
-        box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
-      }
-      .card2{
-        padding: 15px;
-        background-color: white;
-        border-radius: 3px;
-        /* height: 290px; */
-      }
-     table,th,td{
-       border: 1px solid #dbd0d0 !important;
-     };
       
-    
+      
+      
+      /* Optional: Style the caret down icon */
+      .fa-caret-down {
+        float: right;
+        padding-right: 8px;
+      }
+      
+      .dropdown-item:focus, .dropdown-item:hover {
+          color: white;
+          text-decoration: none;
+          background-color: #4CB4C7; 
+      }
+      
+      
+      .dropdown ul {
+            width: 280px;
+            background-color: #4CB4C7; 
+            height: auto;
+            /* padding:0px !important; */
+           
+           
+      }
+      .navbar-expand-lg .navbar-nav .dropdown-menu {
+          position: absolute;
+          padding: 0px;
+      }
+      .dropdown li a{
+        text-decoration: none;
+        text-transform: none;
+        color:white;
+        padding: 10px !important;
+       
+      }
+      
+      .dropdown li {
+        margin-top: 0px;
+          background-color: none;
+          position:relative;
+          top: 0px;
+          height: 50px;
+          line-height: 46px;
+          border-bottom: 1px solid white;
+      }
+      .dropdown li:hover{
+      
+        background-color: #6C757D; 
+        color: white;
+      
+      }
+      
+      
+      .navbar-nav li:hover > ul.dropdown-menu {
+          display: block;
+      }
+      .dropdown-submenu {
+          position:relative;
+      }
+      .dropdown-submenu > .dropdown-menu {
+          top: 0;
+          left: 100%;
+          margin-top:-6px;
+      }
+      
+      /* rotate caret on hover */
+      .dropdown-menu[data-bs-popper] {    
+       margin-top: 0px !important;
+      }
+      .dropdown-menu{
+        height: auto;
+      }
+      .dropdown-item {
+          display: block;
+          width: 100%;
+          padding: 15px 15px !important;
+          clear: both;
+          font-weight: 400;
+          color: #212529;
+          text-align: inherit;
+          white-space: nowrap;
+          background-color: transparent;
+          border: 0;
+          margin-top: -8px;
+      }
+      .dropdown-item:focus, .dropdown-item:hover {
+          color: white;
+          text-decoration: none;
+          background-color: #4CB4C7; 
+      }
+          
       </style>
 
 </head>
 <body>
-    <header class="site-header">
-      <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
-        <div class="container">
-          <a hidden class="navbar-brand mr-4" href="{% url 'engineer_page' %}">Django Blog</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarToggle">
-            <div class="navbar-nav mr-auto">
-              <a class="nav-item nav-link" href="{% url 'engineer_page' %}">Home</a>
-              <a hidden class="nav-item nav-link" href="{% url 'dashboard' %}">Dashboard</a>
-              {% if request.user.groups.all.0.name != "finance" %}
-              <a class="nav-item nav-link" href="{% url 'daily_vehicle_owner_report' %}">Vehicles Reports</a>
-              <a class="nav-item nav-link" href="{% url 'daily_quarry_owner_report' %}">Quarry Reports</a>
-              {% endif %}
-              {% if request.user.groups.all.0.name != "engineer" %}
-              <a class="nav-item nav-link" href="{% url 'daily_gst_invoice_report' %}">Daily Reports</a>
-              {% endif %}
-              <a hidden class="nav-item nav-link" href="{% url 'daily_vehicle_owner_report' %}">Reports</a>
-              <li hidden class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Add New
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="{% url 'layer1add' %}">Trip</a>
-                  <a class="dropdown-item" href="{% url 'add_owner' %}">Driver</a>
-                  <a class="dropdown-item" href="{% url 'add_vehicle' %}">Vehicle</a>
-                  <a class="dropdown-item" href="{% url 'add_owner' %}">Owner</a>
-                  <a class="dropdown-item" href="{% url 'add_owner' %}">Add Pending Royalty Dates Box</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                </div>
-              </li>
-              <a hidden class="nav-item nav-link" href="{% url 'blog-home' %}">Blog</a>
-              <a hidden class="nav-item nav-link" href="{% url 'house-list' %}">House List</a>
-              <a class="nav-item nav-link" href="{% url 'bills_gallery' %}">Gallery</a>
-              <a hidden class="nav-item nav-link" href="{% url 'blog-about' %}">About</a>
-            </div>
-            <!-- Navbar Right Side -->
-            <div class="navbar-nav">
-              {% if user.is_authenticated %}
-              <a hidden class="nav-item nav-link" href="{% url 'layer1add' %}">Add Trip details</a>
-              <a hidden class="nav-item nav-link" href="{% url 'post-create' %}">New Post</a>
-                <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
-                <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
-              {% else %}
-                <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
-                <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
-              {% endif %}
-            </div>
-          </div>
-        </div>
+  <div class="row">
+    <div class="col-md-12">    
+    <!----------------------------nav bar----started-------------------------------->
+    <div class="m-4">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-steel fixed-top">
+          <div class="container-fluid">
+              <a hidden href="{% url 'blog-home' %}" class="navbar-brand">Django Pages</a>
+              <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                  <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarCollapse">
+                  <div class="navbar-nav">
+                      <a class="nav-item nav-link active" href="{% url 'engineer_page' %}">Home</a>
+                      <a class="nav-item nav-link" href="{% url 'reports_all' %}">Reports</a>
+                          <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add New</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                              <li> <a id="AddNewTrip" href="{% url 'layer1add' %}" target="">Trip</a></li>
+                              <li class="dropdown-submenu"><a class="dropdown-toggle" href="http://google.com">Payment</a>
+                                <ul class="dropdown-menu">
+                                  <li><a href="{% url 'add_vehicle_payment' %}">Add New Payment</a></li>
+                                  <li><a href="{% url 'add_quarry_payment' %}">Quarry Payment </a></li>
+                                  <li ><a href="{% url 'add_company_payment' %}">Company Payment </a></li>
+                                </ul>
+                              </li>                              
+                              <li ><a href="{% url 'add_owner' %}">Transporter</a></li>
+                              <li ><a href="{% url 'add_vehicle' %}"> Vehicle </a></li>
+                              <li ><a href="{% url 'add_material' %}"> Material </a></li>
+                              <li ><a href="{% url 'add_company' %}"> Company </a></li>
+                              <li ><a href="{% url 'add_quarry' %}"> Quarry </a></li>
+                              <li> <a href="{% url 'add_owner' %}">Add Pending Royalty Dates Box</a></li>
+                              <li class="dropdown-submenu"><a class="dropdown-toggle" href="http://google.com">Payment-2</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">Submenu</a></li>
+                                        <li><a  href="#">Submenu0</a></li>
+                                        <!-- <li class="dropdown-submenu"><a class="dropdown-toggle" href="#">Submenu 1</a>
+                                            <ul class="dropdown-menu">
+                                                <li><a  href="#">Subsubmenu1</a></li>
+                                                <li><a href="#">Subsubmenu1</a></li>
+                                            </ul> 
+                                        </li> -->
+                                        <!-- <li class="dropdown-submenu"><a class="dropdown-toggle" href="#">Submenu 2</a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="#">Subsubmenu2</a></li>
+                                                <li><a href="#">Subsubmenu2</a></li>
+                                            </ul>
+                                        </li> -->
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+
+
+                  </div>     
+                  <!--------right---side------>
+                  <div class="navbar-nav ms-auto">
+                    {% if user.is_authenticated %}
+                    <a class="nav-item nav-link" href="{% url 'layer1add' %}">Add Trip details</a>
+                    <a class="nav-item nav-link" href="{% url 'post-create' %}">New Post</a>
+                      <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
+                      <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+                    {% else %}
+                      <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+                      <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
+                    {% endif %}
+                  </div>
+                <!-- </div> -->
+              
+                  </div>
+              </div>
+        
       </nav>
-    </header>
+  </div>
+
+
+
+
+    <!------------------------nav bar ---end------------------------------------>
+  </div>
+</div>
+
     <main role="main" class="container" style="margin: 0px !important;">
       <div class="row mb-5">
         {% if request.user.groups.all.0.name != "finance" %}
-        <div class="col-md-4">
-          <div class="content-section oursidebar">
-            <h3>Add New </h3>
-              <ul class="list-group">
-                <li class="list-group-item list-group-item-light"><a id="AddNewTrip" href="{% url 'layer1add' %}" > Trip </a></li>
-                <li class="list-group-item list-group-item-light"><a href="{% url 'add_vehicle_payment' %}">Vehicle Payment </a></li>
-                <li class="list-group-item list-group-item-light"><a href="{% url 'add_quarry_payment' %}">Quarry Payment </a></li>
-                <li class="list-group-item list-group-item-light"><a href="{% url 'add_company_payment' %}">Company Payment </a></li>
-                <li class="list-group-item list-group-item-light"><a href="{% url 'add_owner' %}">Transporter</a></li>
-                <li class="list-group-item list-group-item-light"><a href="{% url 'add_vehicle' %}"> Vehicle </a></li>
-                <li class="list-group-item list-group-item-light"><a href="{% url 'add_material' %}"> Material </a></li>
-                <li class="list-group-item list-group-item-light"><a href="{% url 'add_company' %}"> Company </a></li>
-                <li class="list-group-item list-group-item-light"><a href="{% url 'add_quarry' %}"> Quarry </a></li>
-              </ul>
-            </p>
-          </div>
-          <div class=" card2 left-card">
+      
+          {% endif %}
+         <!-- <div class=" card2 left-card">
             <a class="btn btn-primary  btn-sm btn-block" href="#" style="height: 40px;line-height: 30px;border-radius:0px;">Add Pending M3 </a>
             
             <div style="    overflow: auto;width: 320px;height: 200px;">
@@ -165,102 +285,83 @@
                   </marquee>
                 </td>
               </tr>
-              <!--
-              <tr class="">
-                <td class="">
-                  
-                  <marquee id='scroll_news2' style="font-family:Book Antiqua;color: blue;" >
-                    <div onMouseOver="document.getElementById('scroll_news').stop();" onMouseOut="document.getElementById('scroll_news').start();">
-                      <a href="" style="color: red;">HTML</a>  | <a href="" style="color: red;">CSS</a>  |  <a href=../ style="color: red;">Java Script</a>
-                    </div>
-                  </marquee>
-                </td>
-              </tr>
-              <tr class="">
-                <td class="">
-                  
-                  <marquee id='scroll_news3' style="font-family:Book Antiqua;color: blue;" >
-                    <div onMouseOver="document.getElementById('scroll_news').stop();" onMouseOut="document.getElementById('scroll_news').start();">
-                      <a href="" style="color: red;">HTML</a>  | <a href="" style="color: red;">CSS</a>  |  <a href=../ style="color: red;">Java Script</a>
-                    </div>
-                  </marquee>
-                </td>
-              </tr>
               
-              <tr class="">
-                <td class="">
-                  
-                  <marquee id='scroll_news' style="font-family:Book Antiqua;color: blue;" >
-                    <div onMouseOver="document.getElementById('scroll_news').stop();" onMouseOut="document.getElementById('scroll_news').start();">
-                      <a href="" style="color: red;">HTML</a>  | <a href="" style="color: red;">CSS</a>  |  <a href=../ style="color: red;">Java Script</a>
-                    </div>
-                  </marquee>
-                </td>
-              </tr>
-            -->
               </table> </div>
               </div>
-      </div>
-        {% endif %}
-        <div class="col-md-8">
+      </div>-->
+        <div class="col-md-12 table-content">
+          
           {% if messages %}
             {% for message in messages %}
               <div class="alert alert-{{ message.tags }}">
                 {{ message }}
-                <a href="#" class="del-msg">&times;</a>
               </div>
             {% endfor %}
           {% endif %}
           {% block content %}{% endblock %}
         </div>
-        
+      
       </div>
      
 
     </main>
 
+
     <script type="text/javascript">
-          // Data Picker Initialization
-          $('#trip_date').datepicker({
-          format: 'dd-mm-yyyy (D)',
-          autoclose: true,
-          keyboardNavigation : true ,
-          endDate : dateFormat(date, "dd-mm-yyyy (ddd)"),
-          daysOfWeekDisabled : [0]
-      });
-      $(document).ready(function() {
-        // messages timeout for 10 sec 
-        setTimeout(function() {
-            $('.alert').fadeOut('slow');
-        }, 1000); // <-- time in milliseconds, 1000 =  1 sec
+      // Data Picker Initialization
+      $('#trip_date').datepicker({
+      format: 'dd-mm-yyyy (D)',
+      autoclose: true,
+      keyboardNavigation : true ,
+      endDate : dateFormat(date, "dd-mm-yyyy (ddd)"),
+      daysOfWeekDisabled : [0]
+  });
+</script>
 
-        // delete message
-        $('.del-msg').live('click',function(){
-            $('.del-msg').parent().attr('style', 'display:none;');
-        })
-    });
-    </script>
- 
+<script>
+function openNav() {
+  document.getElementById("mySidenav").style.width = "255px";
+}
 
-    <!-- Optional JavaScript -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+}
+</script>
+<script>
+/* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
+var dropdown = document.getElementsByClassName("dropdown-btn");
+var i;
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+for (i = 0; i < dropdown.length; i++) {
+dropdown[i].addEventListener("click", function() {
+this.classList.toggle("active");
+var dropdownContent = this.nextElementSibling;
+if (dropdownContent.style.display === "block") {
+dropdownContent.style.display = "none";
+} else {
+dropdownContent.style.display = "block";
+}
+});
+}
+</script>
+
+
+
+<!-- Optional JavaScript -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-                                                    
+                                                
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
-
-
-
-
-
-
-
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 </body>
 </html>

@@ -122,7 +122,7 @@ class DailyReportForm(forms.ModelForm):
     trip_date = forms.DateField(required=True)
     class Meta:
         model = LayerWiseTripDetails
-        fields = ['trip_date', 'vehicle_owner_name']
+        fields = ['vehicle_owner_name']
 
 class TripSearchForm(forms.ModelForm):
    class Meta:

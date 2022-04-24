@@ -207,13 +207,16 @@ class LayerWiseTripDetails(models.Model):
     qty_ton = models.FloatField(null=False, blank=False, default=0.0)
     waybill_image_front = models.ImageField(null=False, blank=False)
     waybill_image_back = models.ImageField(null=False, blank=True)
-    verifiedbyengineer = models.CharField(max_length=200, blank=False, null=False, choices=STATUS, default='No')
+    #verifiedbyengineer = models.CharField(max_length=200, blank=False, null=False, choices=STATUS, default='No')
     verifiedbymalli = models.CharField(max_length=200, blank=False, null=False, choices=STATUS, default='No')
     qty_ton = models.FloatField(null=False,default=0, blank=False)
     waybill_image_front = models.ImageField(default='logo.png',null=False, blank=False)
     waybill_image_back = models.ImageField( null=False, blank=True)
     verifiedbysuresh = models.CharField(max_length=200, blank=False, null=False, choices=VERIFY, default='No')
     comments = models.CharField(max_length=200, blank=True, null=True)
+    forwarded = models.CharField(max_length=200, blank=True, null=True, default='No')
+    approved = models.CharField(max_length=200, blank=True, null=True,  default='No')
+    verified = models.CharField(max_length=200, blank=True, null=True,  default='No')
 
     @property
     def qty_m3_actual_submit(self):

@@ -83,7 +83,7 @@ body{
                     </div> -->
                     <!--------form------start-->
         
-                    <form action="" style="height:550px;margin-left: 75px;margin-right: 75px;margin-top: -20px;" method="POST" enctype="multipart/form-data"  novalidate>
+                    <form action="" style="height:650px;margin-left: 75px;margin-right: 75px;margin-top: -20px;" method="POST" enctype="multipart/form-data" novalidate>
                         {% csrf_token %}
                         <!--<p>{{form | crispy }} </p>-->
                         <br>
@@ -181,7 +181,7 @@ body{
                      
                         <div  class="btn-form-init" style="margin: 15px; position: relative;top:20px;">
                            
-                            <input type="submit" name="Submit" class="btn-submit-init" style="margin-left: -15px;">
+                            <input type="submit" name="status" value="Submit" class="btn-submit-init" style="margin-left: -15px;">
 
                             <a class="btn btn-outline-secondary btn-close-init" href="{% url 'engineer_page'  %}">Cancel</a>
                             

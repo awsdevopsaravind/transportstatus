@@ -63,6 +63,7 @@ urlpatterns = [
     path('owner_details/<str:pk_owner>/', views.ownerDetails, name="owner_details"),
 
     path('addvehiclepayment/', views.addVehiclePaymentDetails, name='add_vehicle_payment'),
+    path('addvehiclepayment/<str:amount>', views.payVehiclePaymentDetails, name='pay_vehicle_payment'),
     path('addquarrypayment/', views.addQuarryPaymentDetails, name='add_quarry_payment'),
     path('addcompanypayment/', views.addCompanyPaymentDetails, name='add_company_payment'),
     path('addcompany/', views.addCompanyDetails, name='add_company'),
@@ -98,6 +99,7 @@ urlpatterns = [
 
     path('dashboardnew/', views.dashboard_new, name='dashboard_new'),
     path('dailyvehicleownerreport/', views.daily_vehicle_owner_view, name='daily_vehicle_owner_report'),
+    path('reportsall/', views.daily_vehicle_owner_view, name='reports_all'),
     path('dailygstinvoicereport/', views.daily_gst_invoice_view, name='daily_gst_invoice_report'),
     path('dailymaterialtypereport/', views.daily_material_type_view, name='daily_material_type_report'),
     path('dailymaterialtypereport_old/', views.daily_material_type_view_old, name='daily_material_type_report_old'),

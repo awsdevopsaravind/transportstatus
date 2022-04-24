@@ -1,0 +1,446 @@
+{% extends "blog/base.html" %}
+{% block content %}
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.css" rel="stylesheet">
+
+<script src="https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.js"></script>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Data Tables</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+    <script
+  src="http://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" ></script>
+
+  
+ 
+  <style>
+
+    /* * {box-sizing: border-box}
+     */
+    /* Set height of body and the document to 100% */
+    /* body, html {
+      height: 100%;
+      margin: 0;
+      font-family: Arial;
+    } */
+    
+    /* Style tab links */
+    #reports{
+        background-color: #f0f0f0;
+    }
+
+    .tablink {
+      background-color: #555;
+      color: white;
+      float: left;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      padding: 14px 16px;
+      font-size: 17px;
+      width: 25%;
+    }
+    
+    .tablink:hover {
+      background-color: #777;
+    }
+    
+    /* Style the tab content (and add height:100% for full page content) */
+    .tabcontent {
+      
+      display: none;
+      padding: 15px 20px;
+      height: 90%;
+      overflow: hidden; 
+      
+    }
+    .table-styles{
+        width: auto;
+        height: 230px;
+        /* overflow: scroll; */
+         overflow-x: scroll;
+         overflow-y: scroll;
+    }
+    .dropdown-menu[data-bs-popper] {
+    
+    margin-top: 0px !important;
+}
+.dropdown-menu{
+  height: auto;
+}
+.dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 15px 15px !important;
+    clear: both;
+    font-weight: 400;
+    color: #212529;
+    text-align: inherit;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 0;
+    margin-top: -8px;
+}
+.dropdown-item:focus, .dropdown-item:hover {
+    color: white;
+    text-decoration: none;
+    background-color: #4CB4C7; 
+}
+
+
+
+.dropdown-container {
+  display: none;
+  background-color: #262626;
+  padding-left: 8px;
+  margin-left: -35px;
+  text-align:center;
+  height: auto;
+}
+    #Home {background-color: white;}
+    #News {background-color: white;}
+    #Contact {background-color: white;height: auto;}
+    #About {background-color: white;}
+    body{
+  background-color: #ebeff5;
+}
+#total-orders{
+  background-color: #4CB4C7;
+}
+#orders-delivered{
+  background-color: #4CB4C7;
+}
+#orders-pending{
+  background-color: #4CB4C7;;
+}
+    table, td, th { border: 1px solid black;} table {border-collapse: collapse;width: 100%;text-align: center;}
+    th {height: 35px;            vertical-align: center;}
+    td {height: 30px;vertical-align: center;width: 120px;}
+    .td-width{width: 200px; text-align: justify;}
+    .home-bar{
+        margin-top: 10px;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        height: 570px;
+        margin-left: 115px;
+    }
+    body{
+         /* overflow-y: hidden;    */
+    }
+    .table-styles{
+        width: auto;
+        height: 230px;
+        /* overflow: scroll; */
+        overflow-x: scroll;
+        overflow-y: scroll;
+        display: block;
+        
+    }
+    .pagination{
+        
+        position: relative;
+        left: 580px;
+        top: -290px;
+    
+    }
+    .total-trip{
+        position: relative;left: 610px;top: -35px !important;
+    }
+
+.btn-submit-init{
+    width: 120px;
+    height: 40px;
+
+    color: white;
+    background-color: #4CB4C7;
+    border-radius: 5px;
+    border: none;
+
+
+}
+.btn-close-init{
+    width: 146px;
+    height: 40px;
+
+    color: white;
+    background-color: #4CB4C7;
+    border-radius: 5px;
+    border: none;
+}
+.table-styles{
+        width: auto;
+        height: 230px;
+         overflow-x: scroll;
+         overflow-y: scroll;
+    }
+
+  .btn-paynow{
+    width: 110px;
+    height: 40px;
+    color: white;
+    background-color: #4CB4C7;
+    border-radius: 5px;
+    border: none;
+}
+.btn-view{
+    width: 110px;
+    height: 40px;
+    color: white;
+    background-color: #4CB4C7;
+    border-radius: 5px;
+    border: none;
+}
+.model-con{
+  width: 900px;
+  position: relative;
+  left: -190px !important;
+}
+
+.pagination{
+  color: #212529 !important;
+}
+
+
+
+
+
+
+  </style>
+
+    
+
+        
+<body class="m-5">
+    <div class="row" style="width: 980px;">
+        <div class="col-md-12  content-section home-bar">
+                <button class="tablink" onclick="openPage('Home', this, 'orange')" id="defaultOpen">Started ({{layer1detailscount}})</button>
+                <button class="tablink" onclick="openPage('News', this, 'red')">Pending ({{layer2tripdetailscount}})</button>
+                <button class="tablink" onclick="openPage('Contact', this, 'blue')">Completed ({{layer3tripdetailscount}})</button>
+                <button class="tablink" onclick="openPage('About', this, 'green')">Verified ({{layer4tripdetailscount}})</button>
+                <div id="Home" class="tabcontent table-responsive table-hover ">
+
+                 
+                
+                    <div class="row" style="padding-bottom: 15px;">
+                        <div class="col-8">
+                            <div class="col-md">
+                                <div class="card text-center text-white  mb-3" id="reports">
+                                    
+                                    <div class="card-body">
+                                        <!---------------------------->
+
+                                        <form action="" method="POST" enctype="multipart/form-data" style="margin-left: 5px;margin-right:5px;height: 155px;">
+                                            
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="fieldWrapper" style="padding:20px;margin-left:-185px;">
+                                                      <div class="md-form">
+                                                       
+                                                        <label for="{{ form.trip_date.id_for_label }}" style="color:black;font-size: 14px;margin-left: 0px;">Trip date: * </label>
+                                                        <input type="date" id="trip_date" name="trip_date" style="width: 250px; height: 40px;">
+                                                        
+                                                         
+                                                      </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div>
+                                                    <a class="btn btn-outline-secondary btn-close-init float-left mr-4" href="">Search</a>
+                                                    <a class="btn btn-outline-secondary btn-close-init float-left mr-4" href="">Get GST PDF</a>
+                                                    <a class="btn btn-outline-secondary btn-close-init float-left mr-4" href="">Get Way Bills PDF</a>
+                                                  </div>
+                                                </div>
+                                            </div>
+                                        </form>
+
+                                        <!------------form----closed----------------->
+                                       
+                                    </div>
+                              
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4" style="margin-left: -25px;padding: 0px;">
+                          <div class="col-md">
+                            <div class="card text-center text-white  mb-3" id="reports">
+                                
+                                <div class="card-body">
+                                    <!---------------------------->
+
+                                    <form action="" method="POST" enctype="multipart/form-data" style="margin:0;height:auto;">
+                                      <p style="color:#212529;font: size 12px;font-weight:bold;text-align: left;">
+                                        <span id="total_amt">Total Tons: 68.56</span>
+                                        <span id="actual_amt">Actual Amount: 16111.60</span><br>
+                                        <span id="given_amt">Given: 4500.00</span><br>
+                                        <span id="to_pay_amt"> to Pay: 11611.60</span>
+                                      </p>
+                                      <div>
+                                        <a class="btn btn-outline-secondary btn-paynow float-left mr-2" href="">Pay Now</a>
+                                        <a class="btn btn-outline-secondary btn-view float-left" href="" data-bs-toggle="modal" data-bs-target="#staticBackdrop">View</a>
+
+                                        <!-------------------Modal--------------------------- -->
+                                        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                          <div class="modal-dialog">
+                                            <div class="modal-content model-con">
+                                              <!-- <div class="modal-header">
+                                                <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                              </div> -->
+                                              <div class="modal-body" style="margin-top: 20px;">
+                                               <!-------------table----started--------------->
+
+                                               <h5 align="left">Total Reports</h5>
+                          
+   
+                             
+                                               <table class="table table-fluid table-styles" id="myTable">
+                                                 <thead>
+                                                 <tr><th>Name</th><th>Email</th><th>Password</th><th>Name</th><th>Email</th><th>Password</th><th>Name</th><th>Email</th><th>Password</th><th>Name</th><th>Email</th><th>Password</th></tr>
+                                                 </thead>
+                                                 <tbody>
+                                                 <tr><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td></tr>
+                                                 <tr><td>Samuel</td><td>samuel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td></tr>
+                                                 <tr><td>Jack</td><td>jack@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td></tr>
+                                                 <tr><td>Eureka</td><td>eureka@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td></tr>
+                                                 <tr><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td></tr>
+                                                 <tr><td>Samuel</td><td>samuel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td></tr>
+                                                 <tr><td>Jack</td><td>jack@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td></tr>
+                                                 <tr><td>Eureka</td><td>eureka@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td></tr>
+                                                 <tr><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td></tr>
+                                                 <tr><td>Samuel</td><td>samuel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td></tr>
+                                                 <tr><td>Jack</td><td>jack@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td></tr>
+                                                 <tr><td>Eureka</td><td>eureka@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td></tr>
+                                                 <tr><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td></tr>
+                                                 <tr><td>Samuel</td><td>samuel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td></tr>
+                                                 <tr><td>Jack</td><td>jack@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td></tr>
+                                                 <tr><td>Eureka</td><td>eureka@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td></tr>
+                                                 </tbody>
+                                                 </table>
+                                                 {% include 'blog/pagination.html'  with  page=posts  %}
+                                              
+                 
+                 
+                                      
+
+                                               <!----------------table---end------------------------->
+                                              </div>
+                                              <div class="modal-footer" style="border:none">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="width: 130px;">Close</button>
+                                                <!-- <button type="button" class="btn btn-primary">Understood</button> -->
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+
+
+                                        <!------------------model---end----------->
+                                      </div>
+                              </form></div></div></div>
+                        </div>
+                    </div>
+                    <!-----table-----start------>
+                    <div class="row">
+                        <div class="col-md-12">
+                          <h5 align="left">Total Reports</h5>
+                          
+   
+                             
+                              <table class="table table-fluid table-styles" id="myTable">
+                                <thead>
+                                <tr><th>Name</th><th>Email</th><th>Password</th><th>Name</th><th>Email</th><th>Password</th><th>Name</th><th>Email</th><th>Password</th><th>Name</th><th>Email</th><th>Password</th></tr>
+                                </thead>
+                                <tbody>
+                                <tr><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td></tr>
+                                <tr><td>Samuel</td><td>samuel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td></tr>
+                                <tr><td>Jack</td><td>jack@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td></tr>
+                                <tr><td>Eureka</td><td>eureka@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td></tr>
+                                <tr><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td></tr>
+                                <tr><td>Samuel</td><td>samuel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td></tr>
+                                <tr><td>Jack</td><td>jack@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td></tr>
+                                <tr><td>Eureka</td><td>eureka@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td></tr>
+                                <tr><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td></tr>
+                                <tr><td>Samuel</td><td>samuel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td></tr>
+                                <tr><td>Jack</td><td>jack@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td></tr>
+                                <tr><td>Eureka</td><td>eureka@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td></tr>
+                                <tr><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td></tr>
+                                <tr><td>Samuel</td><td>samuel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td></tr>
+                                <tr><td>Jack</td><td>jack@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td></tr>
+                                <tr><td>Eureka</td><td>eureka@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td><td>Daniel Danny</td><td>danny.daniel@gmail.com</td><td>Pass1234</td></tr>
+                                </tbody>
+                                </table>
+                                {%  include 'blog/pagination.html'  with  page=posts  %}
+                             
+
+
+                        </div>
+                    </div>
+                </div>
+      <!----------table --end------------------------>
+                
+</div></div>
+
+
+
+
+
+           
+
+<script>
+    function openPage(pageName,elmnt,color) {
+      var i, tabcontent, tablinks;
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+      tablinks = document.getElementsByClassName("tablink");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].style.backgroundColor = "";
+      }
+      document.getElementById(pageName).style.display = "block";
+      elmnt.style.backgroundColor = color;
+    }
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();
+</script>
+
+
+
+<script>
+  $('id_trip_date').pickadate({
+// Escape any “rule” characters with an exclamation mark (!).
+format: 'You selecte!d: dddd, dd mmm, yyyy',
+formatSubmit: 'yyyy/mm/dd',
+hiddenPrefix: 'prefix__',
+hiddenSuffix: '__suffix'
+})
+</script>
+
+
+
+<script>
+  $(document).ready( function () {
+    $('#myTable').DataTable();
+} );
+</script>
+
+
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/datatables/1.9.4/jquery.dataTables.min.js"></script>
+</body>
+{% endblock content %}
