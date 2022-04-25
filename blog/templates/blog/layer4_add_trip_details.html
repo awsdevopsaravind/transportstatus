@@ -214,7 +214,7 @@ input[name=driver_name]   {
                     </div>
                     <br>
                     <div class="row">
-                        <div class="col">
+                        <!--<div class="col">
                         <div class="fieldWrapper">
                             {{ form.verifiedbymalli.errors }}
                             <label for="{{ form.verifiedbymalli.id_for_label }}">Approved by Manager: * </label>
@@ -226,6 +226,7 @@ input[name=driver_name]   {
                             <label for="{{ form.verifiedbysuresh.id_for_label }}">Verified by Finance: * </label>
                             {{ form.verifiedbysuresh }}
                         </div></div>
+                    -->
                         <div class="col">
                         <div class="fieldWrapper">
                             {{ form.comments.errors }}
@@ -242,7 +243,8 @@ input[name=driver_name]   {
                         <div class="row"><div class="col">
                         <div  class="btn-form-init" style="margin: 15px; position: relative;top:20px;">
                            
-                            <input type="submit" name="Submit" class="btn-submit-init" style="margin-left: -15px;">
+                            <input type="submit" name="verify" value="Verify" class="btn-submit-init" style="margin-left: -15px;">
+                            <input type="submit" name="deny" value="Deny" class="btn-submit-init" style="margin-left: 55px;">
 
                             <a class="btn btn-outline-secondary btn-close-init" href="{% url 'engineer_page'  %}">Cancel</a>
                             

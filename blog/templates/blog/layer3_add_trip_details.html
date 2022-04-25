@@ -215,13 +215,14 @@ input[name=driver_name]   {
                                 <label for="{{ form.verifiedbyengineer.id_for_label }}">Forwarded by Engineer: * </label>
                                 {{ form.verifiedbyengineer }}
                             </div></div>
-                         -->  
+                         
                                 <div class="col">
                             <div class="fieldWrapper">
                                 {{ form.verifiedbymalli.errors }}
                                 <label for="{{ form.verifiedbymalli.id_for_label }}">Approved by Manager: * </label>
                                 {{ form.verifiedbymalli }}
                             </div></div>
+                             --> 
                             <div class="col">
                         <div class="fieldWrapper">
                             {{ form.comments.errors }}
@@ -240,11 +241,14 @@ input[name=driver_name]   {
                         <div class="row"><div class="col">
                             <div  class="btn-form-init" style="margin: 15px; position: relative;top:20px;">
                                
-                                <input type="submit" name="Submit" class="btn-submit-init" style="margin-left: -15px;">
-    
-                                <a class="btn btn-outline-secondary btn-close-init" href="{% url 'engineer_page'  %}">Cancel</a>
-                                
-                        </div> </div></div>
+                               
+
+                            <input type="submit" name="status" value="Approve" class="btn-submit-init" style="margin-left: -15px;">
+                            <input type="submit" name="deny" value="Deny" class="btn-submit-init" style="margin-left: 55px;">
+
+                            <a class="btn btn-outline-secondary btn-close-init" href="{% url 'engineer_page'  %}">Cancel</a>
+                        </div> </div>
+                    </div>
                         
                     </form>
         
@@ -263,11 +267,8 @@ input[name=driver_name]   {
         // if (this.value == 'L & T')
         //     document.getElementById("id_company_name").removeAttribute("disabled");
     
-    </script>-->
-
-
-
-
+    </script>
+    -->
 
 {% endblock %}  
 </body>

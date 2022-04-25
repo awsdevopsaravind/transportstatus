@@ -265,7 +265,7 @@ background-color: #7CD1C0;
                                 <th>Royalty bill</th>
                                 <th>Way bill</th>
                                 {% if request.user.groups.all.0.name == "incharge"  or request.user.groups.all.0.name == "admin" %}
-                                <th>Approve</th>
+                                <th>Actions</th>
                                 {% endif %}
                             </tr>
                             {% for layer2tripdetail in layer2tripdetails %}
@@ -366,7 +366,7 @@ background-color: #7CD1C0;
                                 <th>Royalty bill</th>
                                 <th>Way bill</th>
                                 {% if request.user.groups.all.0.name == "finance"   or request.user.groups.all.0.name == "admin" %}
-                                <th>Verify</th>
+                                <th>Actions</th>
                                 {% endif %}
                             </tr>
                             {% for layer3tripdetail in layer3tripdetails %}

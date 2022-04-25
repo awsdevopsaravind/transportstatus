@@ -53,29 +53,29 @@ class Layer2TripDetailsForm(forms.ModelForm):
         fields = '__all__'
 
 class Layerwise1TripDetailsForm(forms.ModelForm):
-    trip_date = forms.DateField(input_formats=['%d-%m-%Y','%d/%m/%Y', '%Y-%m-%d'])
+    #trip_date = forms.DateField(input_formats=['%d-%m-%Y','%d/%m/%Y', '%Y-%m-%d'])
     class Meta:
         model = LayerWiseTripDetails
         fields = '__all__'
-        exclude = {'qty_ton','waybill_image_front','waybill_image_back','verifiedbyengineer','verifiedbymalli','verifiedbysuresh'}
+        exclude = {'trip_date','qty_ton','waybill_image_front','waybill_image_back'}
 
 class Layerwise2TripDetailsForm(forms.ModelForm):
     class Meta:
         model = LayerWiseTripDetails
         fields = '__all__'
-        exclude = {'verifiedbymalli','verifiedbysuresh'}
+        exclude = {'approved','verified'}
 
 class Layerwise3TripDetailsForm(forms.ModelForm):
     class Meta:
         model = LayerWiseTripDetails
         fields = '__all__'
-        exclude = {'verifiedbysuresh'}
+        exclude = {'verified'}
 
 class Layerwise4TripDetailsForm(forms.ModelForm):
     class Meta:
         model = LayerWiseTripDetails
         fields = '__all__'
-        exclude = {'verifiedbyengineer'}
+        exclude = {'forwarded','approved'}
 
 
 class VehiclePaymentsForm(forms.ModelForm):

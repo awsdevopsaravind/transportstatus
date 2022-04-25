@@ -78,7 +78,6 @@ urlpatterns = [
     path('pdfall/<str:pk_day>/', views.pdf_alldata_view, name='pdf_all'),
     path('pdfday/<str:pk_day>/', views.pdf_day_view, name='pdf_day'),
     path('', views.engineerView, name='engineer_page'),
-    path('homenew/', views.engineerViewNew, name='engineer_page_new'),
     path('home/', views.engineerView, name='home_page'),
     path('billsgallery/', views.billsgallery, name='bills_gallery'),
     path('billphoto/<str:pk>/', views.billPhoto, name='gallery_bills_view'),
@@ -99,7 +98,7 @@ urlpatterns = [
 
     path('dashboardnew/', views.dashboard_new, name='dashboard_new'),
     path('dailyvehicleownerreport/', views.daily_vehicle_owner_view, name='daily_vehicle_owner_report'),
-    path('reportsall/', views.daily_vehicle_owner_view, name='reports_all'),
+    path('reports/', views.reports_view, name='reports_all'),
     path('dailygstinvoicereport/', views.daily_gst_invoice_view, name='daily_gst_invoice_report'),
     path('dailymaterialtypereport/', views.daily_material_type_view, name='daily_material_type_report'),
     path('dailymaterialtypereport_old/', views.daily_material_type_view_old, name='daily_material_type_report_old'),

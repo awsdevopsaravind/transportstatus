@@ -91,13 +91,16 @@ body{
                        
                         {{ form.non_field_errors }}
                         <div class="row">
-                            <div class="col">
+                          <!--  <div class="col">
 
                         <div class="fieldWrapper">
                             {{ form.trip_date.errors }}
                             <label for="{{ form.trip_date.id_for_label }}">Trip date: * </label>
                             {{ form.trip_date }}
                         </div>
+                    </div> -->
+                    <div class="col">
+                        Trip Date: *       <br><input type="date" name="tripdate">
                     </div>
                 
                 <div class="col">
@@ -169,13 +172,16 @@ body{
                             <label for="{{ form.royalty_image_front.id_for_label }}">Royalty image front: *</label>
                             {{ form.royalty_image_front }}
                         </div></div>
-                       
+                       <!--
                             <div class="col">
                         <div class="fieldWrapper">
                             {{ form.royalty_image_back.errors }}
                             <label for="{{ form.royalty_image_back.id_for_label }}">Royalty image back:</label>
                             {{ form.royalty_image_back }}
-                        </div> </div></div>
+                        </div> 
+                    </div>
+                    -->
+                    </div>
                         
                           
                      

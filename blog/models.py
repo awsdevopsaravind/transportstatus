@@ -187,6 +187,16 @@ VERIFY = [
        ('Yes', 'Data is Correct, Verify'),
        ('No', 'Data is wrong, Send back'),
     ]
+COMMENTS = [
+        ('no comments', 'None'),
+        ('trip started', 'Trip Started'),
+        ('trip completed', 'Trip Completed'),
+        ('trip approved', 'Trip Approved'),
+        ('trip verified', 'Trip Verified'),
+        ('m3 wrong', 'M3 Wrong'),
+        ('tf number wrong', 'TF Number Wrong'),
+        ('ton wrong', 'Ton Wrong'),
+]
 class LayerWiseTripDetails(models.Model): 
     trip_date = models.DateField(null=False, blank=False,default='2022-03-20')
     company_name = models.ForeignKey(CompanyName, on_delete=models.SET_NULL, null=True, blank=False)
@@ -196,27 +206,25 @@ class LayerWiseTripDetails(models.Model):
     vehicle_number = models.ForeignKey(
         VehicleDetails , on_delete=models.SET_NULL, null=True, blank=False)
     driver_name = models.CharField(max_length=200,null=True, blank=False)
-    # add driver phone number field details if required
-    #driver_phone_number = models.CharField(max_length=200, blank=True, null=True)
     quarry_owner_name = models.ForeignKey(QuarryDetails, on_delete=models.SET_NULL, null=True, blank=False)
     load_type = models.ForeignKey(LoadType, on_delete=models.SET_NULL, null=True, blank=False)
     tf_number = models.CharField(max_length=200, null=False, blank=False)
     qty_m3 = models.FloatField(null=False, blank=False)
     royalty_image_front = models.ImageField(null=False, blank=False)
-    royalty_image_back = models.ImageField(null=False, blank=True)
+    #royalty_image_back = models.ImageField(null=False, blank=True)
     qty_ton = models.FloatField(null=False, blank=False, default=0.0)
     waybill_image_front = models.ImageField(null=False, blank=False)
     waybill_image_back = models.ImageField(null=False, blank=True)
     #verifiedbyengineer = models.CharField(max_length=200, blank=False, null=False, choices=STATUS, default='No')
-    verifiedbymalli = models.CharField(max_length=200, blank=False, null=False, choices=STATUS, default='No')
+    #verifiedbymalli = models.CharField(max_length=200, blank=False, null=False, choices=STATUS, default='No')
     qty_ton = models.FloatField(null=False,default=0, blank=False)
     waybill_image_front = models.ImageField(default='logo.png',null=False, blank=False)
     waybill_image_back = models.ImageField( null=False, blank=True)
-    verifiedbysuresh = models.CharField(max_length=200, blank=False, null=False, choices=VERIFY, default='No')
-    comments = models.CharField(max_length=200, blank=True, null=True)
-    forwarded = models.CharField(max_length=200, blank=True, null=True, default='No')
-    approved = models.CharField(max_length=200, blank=True, null=True,  default='No')
-    verified = models.CharField(max_length=200, blank=True, null=True,  default='No')
+    #verifiedbysuresh = models.CharField(max_length=200, blank=False, null=False, choices=VERIFY, default='No')
+    comments = models.CharField(max_length=200, blank=True, null=True, choices=COMMENTS, default='none')
+    forwarded = models.CharField(max_length=200, blank=True, null=True, default='Deny')
+    approved = models.CharField(max_length=200, blank=True, null=True,  default='Deny')
+    verified = models.CharField(max_length=200, blank=True, null=True,  default='Deny')
 
     @property
     def qty_m3_actual_submit(self):

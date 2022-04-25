@@ -1,6 +1,7 @@
 from csv import excel
 from functools import total_ordering
 from multiprocessing import context
+from sys import hash_info
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
@@ -703,7 +704,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 @login_required(login_url='login')
 def engineerView(request):
     a = request.user.groups
-    layer1details = LayerWiseTripDetails.objects.filter(Q(forwarded='No')).order_by('-id')[:25]
+    layer1details = LayerWiseTripDetails.objects.filter(Q(forwarded='Deny')).order_by('-id')[:25]
     layer1detailscount = layer1details.count()
     if layer1detailscount >0:
         layer1totalqty_in_m3 = "{:.2f}".format(layer1details.aggregate(Sum('qty_m3'))['qty_m3__sum'])
@@ -717,8 +718,7 @@ def engineerView(request):
         posts = paginator.page(1)
     except EmptyPage:
         posts = paginator.page(paginator.num_pages)
-    #layer2tripdetails = LayerWiseTripDetails.objects.filter((Q(sendtomalli=1) & Q(verifiedbymalli=0)) | (Q(verifiedbysuresh=2) & Q(verifiedbymalli=1)))
-    layer2tripdetails = LayerWiseTripDetails.objects.filter((Q(verifiedbymalli='No') & Q(forwarded='Forward'))).order_by('-id')[:25]
+    layer2tripdetails = LayerWiseTripDetails.objects.filter((Q(approved='Deny') & Q(forwarded='Forward'))).order_by('-id')[:25]
     layer2tripdetailscount = layer2tripdetails.count()
     if layer2tripdetailscount >0:
         layer2totalqty_in_m3 = "{:.2f}".format(layer2tripdetails.aggregate(Sum('qty_m3'))['qty_m3__sum'])
@@ -737,8 +737,7 @@ def engineerView(request):
     except EmptyPage:
         layer2posts = layer2paginator.page(layer2paginator.num_pages)
 
-    #layer3tripdetails = LayerWiseTripDetails.objects.filter(Q(verifiedbymalli=1) & Q(verifiedbysuresh=0))
-    layer3tripdetails = LayerWiseTripDetails.objects.filter(Q(verifiedbysuresh='No') & Q(verifiedbymalli='Yes') ).order_by('-id')[:25]
+    layer3tripdetails = LayerWiseTripDetails.objects.filter(Q(verified='Deny') & Q(approved='Approve') ).order_by('-id')[:25]
     layer3tripdetailscount = layer3tripdetails.count()
     if layer3tripdetailscount >0:
         layer3totalqty_in_m3 = "{:.2f}".format(layer3tripdetails.aggregate(Sum('qty_m3'))['qty_m3__sum'])
@@ -757,7 +756,7 @@ def engineerView(request):
     except EmptyPage:
         layer3posts = layer3paginator.page(layer3paginator.num_pages)
 
-    layer4tripdetails = LayerWiseTripDetails.objects.filter(Q(verifiedbymalli='Yes') & Q(verifiedbysuresh='Yes') ).order_by('-id')[:25]
+    layer4tripdetails = LayerWiseTripDetails.objects.filter(Q(approved='Approve') & Q(verified='Verify') ).order_by('-id')[:25]
     layer4tripdetailscount = layer4tripdetails.count()
     if layer4tripdetailscount >0:
         layer4totalqty_in_m3 = "{:.2f}".format(layer4tripdetails.aggregate(Sum('qty_m3'))['qty_m3__sum'])
@@ -796,103 +795,6 @@ def engineerView(request):
                 , 'form':form}
     return render(request, 'blog/engineer_page.html', context)
 
-@login_required(login_url='login')
-def engineerViewNew(request):
-    a = request.user.groups
-    layer1details = LayerWiseTripDetails.objects.filter(Q(verifiedbyengineer='No')).order_by('-id')[:25]
-    layer1detailscount = layer1details.count()
-    if layer1detailscount >0:
-        layer1totalqty_in_m3 = "{:.2f}".format(layer1details.aggregate(Sum('qty_m3'))['qty_m3__sum'])
-    else:
-        layer1totalqty_in_m3 = 0
-    paginator = Paginator(layer1details, 3)
-    page = request.GET.get('page')
-    try:
-        posts = paginator.page(page)
-    except PageNotAnInteger:
-        posts = paginator.page(1)
-    except EmptyPage:
-        posts = paginator.page(paginator.num_pages)
-    #layer2tripdetails = LayerWiseTripDetails.objects.filter((Q(sendtomalli=1) & Q(verifiedbymalli=0)) | (Q(verifiedbysuresh=2) & Q(verifiedbymalli=1)))
-    layer2tripdetails = LayerWiseTripDetails.objects.filter((Q(verifiedbymalli='No') & Q(verifiedbyengineer='Yes'))).order_by('-id')[:25]
-    layer2tripdetailscount = layer2tripdetails.count()
-    if layer2tripdetailscount >0:
-        layer2totalqty_in_m3 = "{:.2f}".format(layer2tripdetails.aggregate(Sum('qty_m3'))['qty_m3__sum'])
-        layer2totalqty_in_ton = "{:.2f}".format(layer2tripdetails.aggregate(Sum('qty_ton'))['qty_ton__sum'])
-        layer2pending_m3 = "{:.2f}".format(float(layer2totalqty_in_m3) - (float(layer2totalqty_in_ton)/1.5))
-    else:
-        layer2totalqty_in_m3 = 0
-        layer2totalqty_in_ton = 0
-        layer2pending_m3 = 0
-    layer2paginator = Paginator(layer2tripdetails, 3)
-    page2 = request.GET.get('page')
-    try:
-        layer2posts = layer2paginator.page(page2)
-    except PageNotAnInteger:
-        layer2posts = layer2paginator.page(1)
-    except EmptyPage:
-        layer2posts = layer2paginator.page(layer2paginator.num_pages)
-
-    #layer3tripdetails = LayerWiseTripDetails.objects.filter(Q(verifiedbymalli=1) & Q(verifiedbysuresh=0))
-    layer3tripdetails = LayerWiseTripDetails.objects.filter(Q(verifiedbysuresh='No') & Q(verifiedbymalli='Yes') ).order_by('-id')[:25]
-    layer3tripdetailscount = layer3tripdetails.count()
-    if layer3tripdetailscount >0:
-        layer3totalqty_in_m3 = "{:.2f}".format(layer3tripdetails.aggregate(Sum('qty_m3'))['qty_m3__sum'])
-        layer3totalqty_in_ton = "{:.2f}".format(layer3tripdetails.aggregate(Sum('qty_ton'))['qty_ton__sum'])
-        layer3pending_m3 = "{:.2f}".format(float(layer3totalqty_in_m3)-(float(layer3totalqty_in_ton)/1.5))
-    else:
-        layer3totalqty_in_m3 = 0
-        layer3totalqty_in_ton = 0
-        layer3pending_m3 = 0
-    layer3paginator = Paginator(layer3tripdetails, 3)
-    page = request.GET.get('page')
-    try:
-        layer3posts = layer3paginator.page(page)
-    except PageNotAnInteger:
-        layer3posts = layer3paginator.page(1)
-    except EmptyPage:
-        layer3posts = layer3paginator.page(layer3paginator.num_pages)
-
-    layer4tripdetails = LayerWiseTripDetails.objects.filter(Q(verifiedbymalli='Yes') & Q(verifiedbysuresh='Yes') ).order_by('-id')[:25]
-    layer4tripdetailscount = layer4tripdetails.count()
-    if layer4tripdetailscount >0:
-        layer4totalqty_in_m3 = "{:.2f}".format(layer4tripdetails.aggregate(Sum('qty_m3'))['qty_m3__sum'])
-        layer4totalqty_in_ton = "{:.2f}".format(layer4tripdetails.aggregate(Sum('qty_ton'))['qty_ton__sum'])
-        layer4pending_m3 = "{:.2f}".format(float(layer4totalqty_in_m3)-(float(layer4totalqty_in_ton)/1.5))
-    else:
-        layer4totalqty_in_m3 = 0
-        layer4totalqty_in_ton = 0
-        layer4pending_m3 = 0
-    layer4paginator = Paginator(layer4tripdetails, 3)
-    page = request.GET.get('page')
-    try:
-        layer4posts = layer4paginator.page(page)
-    except PageNotAnInteger:
-        layer4posts = layer4paginator.page(1)
-    except EmptyPage:
-        layer4posts = layer4paginator.page(layer4paginator.num_pages)
-    
-    trip_details = LayerWiseTripDetails.objects.all()
-    distinct_dates = trip_details.values('trip_date','load_type').annotate(Sum('qty_m3'), Sum('qty_ton'))
-
-    form = Layerwise1TripDetailsForm()
-    if request.method == 'POST':
-        form = Layerwise1TripDetailsForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            messages.success(request, f'Your new initial trip details has been saved!')
-            return redirect('/')
-        else:
-            print('data is not valid')
-    context = { 'page':page, 'posts':posts, 'initialdetails':layer1details, 'layer1detailscount':layer1detailscount,'layer1totalqty_in_m3':layer1totalqty_in_m3
-                ,'layer2posts':layer2posts,'layer2tripdetailscount':layer2tripdetailscount, 'layer2tripdetails':layer2tripdetails, 'layer2totalqty_in_m3':layer2totalqty_in_m3, 'layer2totalqty_in_ton':layer2totalqty_in_ton, 'layer2pending_m3':layer2pending_m3
-                ,'layer3posts':layer3posts,'layer3tripdetailscount':layer3tripdetailscount, 'layer3tripdetails':layer3tripdetails, 'layer3totalqty_in_m3':layer3totalqty_in_m3, 'layer3totalqty_in_ton':layer3totalqty_in_ton, 'layer3pending_m3':layer3pending_m3
-                ,'layer4posts':layer4posts,'layer4tripdetailscount':layer4tripdetailscount, 'layer4tripdetails':layer4tripdetails, 'layer4totalqty_in_m3':layer4totalqty_in_m3, 'layer4totalqty_in_ton':layer4totalqty_in_ton, 'layer4pending_m3':layer4pending_m3
-                , 'distinct_dates': distinct_dates, 'trip_details':trip_details
-                , 'form':form}
-    return render(request, 'blog/engineer_page_new.html', context)
-
-
 
 @login_required(login_url='login')
 def layer1TripDetails(request):
@@ -900,6 +802,9 @@ def layer1TripDetails(request):
     if request.method == 'POST':
         form = Layerwise1TripDetailsForm(request.POST, request.FILES)
         if form.is_valid():
+            post = form.save(commit=False)
+            post.trip_date = request.POST.get('tripdate')
+            print(post.trip_date)
             form.save()
             messages.success(request, f'Your new initial trip details has been saved!')
             return redirect('/')
@@ -942,7 +847,6 @@ def layer2TripDetails(request, pk):
                 post = form.save(commit=False)
                 post.forwarded = request.POST.get('status')
                 post.save()
-                print(post)
                 messages.success(request, f'Your trip details has been updated!')
                 return redirect('/')
             else:
@@ -956,12 +860,22 @@ from .forms import Layerwise3TripDetailsForm
 def layer3TripDetails(request, pk):
     layer3trip_detail = LayerWiseTripDetails.objects.get(id=pk)
     form = Layerwise3TripDetailsForm(instance=layer3trip_detail)
-    if request.method == 'POST':
+    if request.method == "POST":
         form = Layerwise3TripDetailsForm(request.POST, request.FILES, instance=layer3trip_detail)
         if form.is_valid():
-            form.save()
-            messages.success(request, f'Your trip details has been updated!')
-            return redirect('/')
+            post = form.save(commit=False)
+            approve=request.POST.get('status')
+            deny=request.POST.get('deny')
+            if approve == 'Approve':
+                post.approved = request.POST.get('status')
+                post.save()
+                messages.success(request, f'Your trip details has been approved!')
+                return redirect('/')
+            if deny == 'Deny':
+                post.forwarded = request.POST.get('deny')
+                post.save()
+                messages.error(request, f'Your trip details has been denied!')
+                return redirect('/')        
     context = {'form':form}
     return render(request, 'blog/layer3_add_trip_details.html', context)
 
@@ -973,11 +887,30 @@ def layer4TripDetails(request, pk):
     if request.method == 'POST':
         form = Layerwise4TripDetailsForm(request.POST, request.FILES, instance=layer4trip_detail)
         if form.is_valid():
-            form.save()
-            messages.success(request, f'Trip details has been verified successfully!')
-            return redirect('/')
+            post = form.save(commit=False)
+            verify=request.POST.get('verify')
+            deny=request.POST.get('deny')
+            if verify == 'Verify':
+                post.verified = request.POST.get('verify')
+                print(request.POST.get('verify'))
+                post.save()
+                messages.success(request, f'Your trip details has been verified!')
+                return redirect('/')
+            if deny == 'Deny':
+                post.approved = request.POST.get('deny')
+                print(request.POST.get('deny'))
+                print(request.POST.get('verify'))
+                post.save()
+                messages.error(request, f'Your trip details has been denied!')
+                return redirect('/')
     context = {'form':form}
     return render(request, 'blog/layer4_add_trip_details.html', context)
+
+@login_required(login_url='login')
+def reports_view(request):
+
+    context = {}
+    return render(request, 'blog/reports.html', context)
 
 
 @login_required(login_url='login')
@@ -1210,7 +1143,7 @@ def daily_vehicle_owner_view(request):
                 }
     to_date = request.GET.get('todate')
     from_date = request.GET.get('fromdate')
-    dailyvehicleowner_querysets = LayerWiseTripDetails.objects.filter(Q(trip_date__range=[from_date,to_date]),Q(vehicle_owner_name=dailyvehicleowner_form['vehicle_owner_name'].value())).filter(Q(verifiedbymalli='Yes'))
+    dailyvehicleowner_querysets = LayerWiseTripDetails.objects.filter(Q(trip_date__range=[from_date,to_date]),Q(vehicle_owner_name=dailyvehicleowner_form['vehicle_owner_name'].value())).filter(Q(approved='Approve'))
     dailyvehicleowner_querysets_count = dailyvehicleowner_querysets.count()
     if dailyvehicleowner_querysets_count >=1:
         g1 = 0
@@ -1265,7 +1198,7 @@ def daily_gst_invoice_view(request):
                 }
     get_waybills_pdf=request.GET.get('getwaybillspdf')
     if get_waybills_pdf == 'Get Way Bills PDF':
-        daily_waybills_querysets = LayerWiseTripDetails.objects.filter(Q(trip_date=daily_gstinvoice_form['trip_date'].value())).filter(Q(verifiedbymalli='Yes'))
+        daily_waybills_querysets = LayerWiseTripDetails.objects.filter(Q(trip_date=daily_gstinvoice_form['trip_date'].value())).filter(Q(approved='Approve'))
         if daily_waybills_querysets.count() >= 1:
             selected_date=request.GET.get('trip_date')
             title = 'Way Bills Data '
@@ -1286,7 +1219,7 @@ def daily_gst_invoice_view(request):
             messages.warning(request, f'Please Enter a date which has trips approved !')
     get_gst_pdf=request.GET.get('getgstpdf')
     if get_gst_pdf == 'Get GST PDF':
-        daily_gstinvoice_querysets = LayerWiseTripDetails.objects.filter(Q(trip_date=daily_gstinvoice_form['trip_date'].value())).filter(Q(verifiedbymalli='Yes'))
+        daily_gstinvoice_querysets = LayerWiseTripDetails.objects.filter(Q(trip_date=daily_gstinvoice_form['trip_date'].value())).filter(Q(approved='Approve'))
         if daily_gstinvoice_querysets.count() >= 1:
             selected_date=request.GET.get('trip_date')
             context = {'title':title,
@@ -1306,7 +1239,7 @@ def daily_gst_invoice_view(request):
         else:
             messages.warning(request, f'Please Enter a date which has trips approved !')
     else :
-        daily_gstinvoice_querysets = LayerWiseTripDetails.objects.filter(Q(trip_date=daily_gstinvoice_form['trip_date'].value())).filter(Q(verifiedbymalli='Yes'))
+        daily_gstinvoice_querysets = LayerWiseTripDetails.objects.filter(Q(trip_date=daily_gstinvoice_form['trip_date'].value())).filter(Q(approved='Approve'))
         gstsearchpaginator = Paginator(daily_gstinvoice_querysets, 3)
         page = request.GET.get('page')
         try:
